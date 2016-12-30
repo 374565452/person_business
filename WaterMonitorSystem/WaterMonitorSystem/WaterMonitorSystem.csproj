@@ -40,7 +40,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="CarlosAg.ExcelXmlWriter">
-      <HintPath>E:\农田机井灌溉控制平台\PSBS V3.0\bin\CarlosAg.ExcelXmlWriter.dll</HintPath>
+      <HintPath>..\..\CarlosAg.ExcelXmlWriter.dll</HintPath>
     </Reference>
     <Reference Include="log4net">
       <HintPath>E:\下载\log4net-1.2.15\bin\net\4.5\release\log4net.dll</HintPath>

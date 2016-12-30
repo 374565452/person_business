@@ -34,7 +34,7 @@
       <HintPath>..\..\WaterMonitorSystem\Common\bin\Debug\Common.dll</HintPath>
     </Reference>
     <Reference Include="log4net">
-      <HintPath>E:\下载\log4net-1.2.15\bin\net\4.5\release\log4net.dll</HintPath>
+      <HintPath>..\..\log4net.dll</HintPath>
     </Reference>
     <Reference Include="Model, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>

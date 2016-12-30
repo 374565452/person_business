@@ -32,10 +32,10 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="log4net">
-      <HintPath>E:\下载\log4net-1.2.15\bin\net\4.5\release\log4net.dll</HintPath>
+      <HintPath>..\..\log4net.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json">
-      <HintPath>E:\农田机井灌溉控制平台\PSBS V3.0\bin\Newtonsoft.Json.dll</HintPath>
+      <HintPath>..\..\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />

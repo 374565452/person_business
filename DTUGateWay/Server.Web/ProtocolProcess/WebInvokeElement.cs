@@ -2,6 +2,7 @@
 using Server.Util.Log;
 using Server.Web.ServerCore;
 using System;
+using System.Diagnostics;
 
 namespace Server.Web.ProtocolProcess
 {
@@ -13,7 +14,10 @@ namespace Server.Web.ProtocolProcess
             : base(server, userToken)
         {
         }
-
+        public void printLog(string str)
+        {
+            Debug.Print("hello world");
+        }
         public override bool processCommand(DTU.GateWay.Protocol.Command command)
         {
             string receive = HexStringUtility.ByteArrayToHexString(command.Data);
