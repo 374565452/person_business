@@ -45,6 +45,13 @@ namespace DTU.GateWay.Protocol
             set;
         }
 
+        //kqz 2016-12-31 增加
+        public byte NumAuthenType //号码的认证方式
+        {
+            get;
+            set;
+        }
+        //kqz 2016-12-31 增加
         public string WriteMsg()
         {
             UserData = "";
@@ -52,8 +59,11 @@ namespace DTU.GateWay.Protocol
             UserData += SendTime.ToString("yyMMddHHmmss").PadLeft(12, '0');
             UserData += RType.ToString("X").PadLeft(2, '0');
             UserData += IsSend.ToString("X").PadLeft(2, '0');
-
+            //kqz 2016-12-31 增加
+            UserData += NumAuthenType.ToString("X").PadLeft(2, '0');
+            //kqz 2016-12-31 增加
             UserDataBytes = HexStringUtility.HexStringToByteArray(UserData);
+            
             return WriteMsgBase();
         }
 
@@ -106,7 +116,20 @@ namespace DTU.GateWay.Protocol
                 if (ShowLog) logHelper.Error(ex.Message + Environment.NewLine + "获取是否发送预警短信出错" + " " + RawDataStr);
                 return "获取是否发送预警短信出错";
             }
-
+            //kqz 2016-12-31 增加
+            try
+            {
+                NumAuthenType = Convert.ToByte(UserData.Substring(20, 2), 16);
+            }
+            catch (Exception ex)
+            {
+                if (ShowLog)
+                {
+                    logHelper.Error(ex.Message + Environment.NewLine + "获取号码认证方式出错" + "" + RawDataStr);
+                }
+                return "获取号码认证方式出错";
+            }
+            //kqz 2016-12-31 增加
             return "";
         }
     }

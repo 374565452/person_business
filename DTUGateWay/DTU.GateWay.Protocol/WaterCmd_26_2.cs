@@ -44,6 +44,13 @@ namespace DTU.GateWay.Protocol
             set;
         }
 
+        //kqz 2016-12-31 增加
+        public byte NumAuthenType //号码的认证方式
+        {
+            get;
+            set;
+        }
+        //kqz 2016-12-31 增加
         /// <summary>
         /// 报文正文
         /// </summary>
@@ -74,7 +81,9 @@ namespace DTU.GateWay.Protocol
             UserDataAll += SendTime.ToString("yyMMddHHmmss").PadLeft(12, '0');
             UserDataAll += RType.ToString("X").PadLeft(2, '0');
             UserDataAll += IsSend.ToString("X").PadLeft(2, '0');
-
+            //kqz 2016-12-31 增加
+            UserDataAll += NumAuthenType.ToString("X").PadLeft(2, '0');
+            //kqz 2016-12-31 增加
             byte[] UserDataBytesAllTmp;
             WaterBaseMessage[] MsgListTmp;
             string msg = WaterBaseMessageService.GetMsgList_WriteMsg(this, UserDataAll, out UserDataBytesAllTmp, out MsgListTmp);
@@ -144,7 +153,17 @@ namespace DTU.GateWay.Protocol
                 if (ShowLog) logHelper.Error(ex.Message + Environment.NewLine + "获取是否发送预警短信出错" + " " + RawDataStr);
                 return "获取是否发送预警短信出错";
             }
-
+            //kqz 2016-12-31 增加
+            try
+            {
+                NumAuthenType = Convert.ToByte(UserDataAll.Substring(20, 2), 16);
+            }
+            catch (Exception ex)
+            {
+                if (ShowLog) logHelper.Error(ex.Message + Environment.NewLine + "获取电话加密方式出错" + " " + RawDataStr);
+                return "获取电话加密方式出错";
+            }
+            //kqz 2016-12-31 增加
             return "";
         }
 

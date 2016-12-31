@@ -3294,7 +3294,10 @@ namespace WaterMonitorSystem.WebServices
             else if (ctrlName == "扩展参数设置")
             {
                 string[] Params_Ps = Params.Trim('|').Split('|');
-                if (Params_Ps.Length != 2)
+                //kqz 2016-12-31 修改
+                //if (Params_Ps.Length != 2)
+                if(Params_Ps.Length !=3)
+                //kqz 2016-12-31 修改
                 {
                     obj2["Message"] = "生成命令失败！" + Params;
                     return JavaScriptConvert.SerializeObject(obj2);
@@ -3324,7 +3327,17 @@ namespace WaterMonitorSystem.WebServices
                     obj2["Message"] = "生成命令失败！" + "是否发送短信非法";
                     return JavaScriptConvert.SerializeObject(obj2);
                 }
-
+                //kqz 2016-12-31 增加
+                try
+                {
+                    cmd.NumAuthenType = Convert.ToByte(Params_Ps[2]);
+                }
+                catch
+                {
+                    obj2["Message"] = "生成命令失败！" + "号码认证方式";
+                    return JavaScriptConvert.SerializeObject(obj2);
+                }
+                //kqz 2016-12-31 增加
                 string msg = cmd.WriteMsg();
                 if (msg == "")
                 {
@@ -3545,7 +3558,7 @@ namespace WaterMonitorSystem.WebServices
                         WaterCmd_26_2 cmd = new WaterCmd_26_2();
                         msg_obj = cmd.ReadMsg(cmd_receive);
                         info_obj = msg_obj == "" ? cmd.ToString() : "";
-                        obj2["Vals"] = cmd.RType + "," + cmd.IsSend;
+                        obj2["Vals"] = cmd.RType + "," + cmd.IsSend+","+cmd.NumAuthenType;
                     }
 
                     obj2["Result"] = msg_obj == "";
