@@ -223,6 +223,16 @@ namespace Server.Web.ProtocolProcess
                     {
                         ShowLogData.add("从web端[" + userToken.ConnectedSocket.RemoteEndPoint.ToString() + "]接收到的数据：" + EnumUtils.GetDescription(typeof(WaterBaseProtocol.AFN), AFN));
                     }
+                        //kqz 2017-1-1添加
+                    else if (AFN == (byte)WaterBaseProtocol.AFN._28 && UpOrDown == (int)WaterBaseProtocol.UpOrDown.Down)
+                    {
+                        ShowLogData.add("从web端[" + userToken.ConnectedSocket.RemoteEndPoint.ToString() + "]接收到的数据：" + EnumUtils.GetDescription(typeof(WaterBaseProtocol.AFN), AFN));
+                    }
+                    else if (AFN == (byte)WaterBaseProtocol.AFN._29 && UpOrDown == (int)WaterBaseProtocol.UpOrDown.Down)
+                    {
+                        ShowLogData.add("从web端[" + userToken.ConnectedSocket.RemoteEndPoint.ToString() + "]接收到的数据：" + EnumUtils.GetDescription(typeof(WaterBaseProtocol.AFN), AFN));
+                    }
+                    //kqz 2017-1-1添加
                     else
                     {
                         ShowLogData.add("从web端[" + userToken.ConnectedSocket.RemoteEndPoint.ToString() + "]接收到的数据：水文监测无效数据");
@@ -525,6 +535,24 @@ namespace Server.Web.ProtocolProcess
                                         ShowLogData.add("返回web端[" + userToken.ConnectedSocket.RemoteEndPoint.ToString() + "]结果：" + cmd2.UserDataAll);
                                         break;
                                     }
+                                    //kqz 2017-1-1添加
+                                    else if (message_water.AFN == (byte)WaterBaseProtocol.AFN._28)
+                                    {
+                                        WaterCmd_28_2 cmd2 = (WaterCmd_28_2)res;
+                                        byte[] bs = cmd2.UserDataBytesAll;
+                                        send(bs, 0, bs.Length);
+                                        ShowLogData.add("返回web端[" + userToken.ConnectedSocket.RemoteEndPoint.ToString() + "]结果：" + cmd2.UserDataAll);
+                                        break;
+                                    }
+                                    else if (message_water.AFN == (byte)WaterBaseProtocol.AFN._29)
+                                    {
+                                        WaterCmd_29_2 cmd2 = (WaterCmd_29_2)res;
+                                        byte[] bs = cmd2.UserDataBytesAll;
+                                        send(bs, 0, bs.Length);
+                                        ShowLogData.add("返回web端[" + userToken.ConnectedSocket.RemoteEndPoint.ToString() + "]结果：" + cmd2.UserDataAll);
+                                        break;
+                                    }
+                                    //kqz 2017-1-1添加
                                 }
                                 Thread.Sleep(100);
                                 timeDelay = timeDelay + 1;

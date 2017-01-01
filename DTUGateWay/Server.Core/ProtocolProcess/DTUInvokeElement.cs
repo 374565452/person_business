@@ -5036,6 +5036,184 @@ namespace Server.Core.ProtocolProcess
 
                         #endregion
                     }
+                    //kqz 2017-1-1添加
+                    else if (AFN == (byte)WaterBaseProtocol.AFN._28 && UpOrDown == (int)WaterBaseProtocol.UpOrDown.Up)
+                    {
+                        #region _28
+                        waterInfo += EnumUtils.GetDescription(typeof(WaterBaseProtocol.AFN), AFN);
+                        ShowLogData.add(DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + ":[" + userToken.ConnectedSocket.RemoteEndPoint.ToString() + "]接收：" + waterInfo);
+                        LogHelper.Info(DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + ":[" + userToken.ConnectedSocket.RemoteEndPoint.ToString() + "]接收：" + waterInfo);
+
+                        WaterCmd_28_2 cmdreceive = null;
+                        if (DataEndChar == (byte)WaterBaseProtocol.DataEndChar_Up.ETX
+                            || DataEndChar == (byte)WaterBaseProtocol.DataEndChar_Up.ETB && DataBeginChar == (byte)WaterBaseProtocol.DataBeginChar.STX)
+                        {
+                            cmdreceive = new WaterCmd_28_2();
+                            cmdreceive.MsgList = MsgList;
+                            string msgreceive = cmdreceive.ReadMsg();
+                            if (msgreceive == "")
+                            {
+                                ShowLogData.add(DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + ":[" + userToken.ConnectedSocket.RemoteEndPoint.ToString() + "]接收分析：" + cmdreceive.ToString());
+                                LogHelper.Info(DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + ":[" + userToken.ConnectedSocket.RemoteEndPoint.ToString() + "]接收分析：" + cmdreceive.ToString());
+                            }
+                            else
+                            {
+                                ShowLogData.add(DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + ":[" + userToken.ConnectedSocket.RemoteEndPoint.ToString() + "]接收出错：" + msgreceive);
+                                LogHelper.Info(DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + ":[" + userToken.ConnectedSocket.RemoteEndPoint.ToString() + "]接收出错：" + msgreceive);
+                            }
+
+                            if (ToWaterDtuCommand.GetBaseMessageToDtuByKey(cKey + "-" + AFN) != null)
+                            {
+                                ToWaterDtuCommand.AddBaseMessageFromDtu(cKey + "-" + AFN, cmdreceive);
+                                ShowLogData.add("添加发送命令响应保存！" + cKey + "-" + AFN + "：" + cmdreceive.UserDataAll);
+                            }
+                            else
+                            {
+                                ShowLogData.add("无法添加发送命令响应保存！" + cKey + "-" + AFN + "：" + cmdreceive.UserDataAll);
+                            }
+
+                            WaterCmd_28_3 cmdres = new WaterCmd_28_3();
+                            cmdres.CenterStation = message_water.CenterStation;
+                            cmdres.RemoteStation = message_water.RemoteStation;
+                            cmdres.TotalPackage = message_water.TotalPackage;
+                            cmdres.CurrentPackage = message_water.CurrentPackage;
+                            cmdres.PW = message_water.PW;
+                            if (message_water.DataEndChar == (byte)WaterBaseProtocol.DataEndChar_Up.ETB)
+                                cmdres.DataEndChar = (byte)WaterBaseProtocol.DataEndChar_Down.ACK;
+                            else
+                                cmdres.DataEndChar = (byte)WaterBaseProtocol.DataEndChar_Down.EOT;
+                            cmdres.SerialNumber = cmdreceive.SerialNumber;
+                            cmdres.SendTime = DateTime.Now;
+
+                            string msgres = cmdres.WriteMsg();
+                            if (msgres == "")
+                            {
+                                send(cmdres.RawDataChar, 0, cmdres.RawDataChar.Length);
+                            }
+                            else
+                            {
+                                ShowLogData.add(DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + ":[" + userToken.ConnectedSocket.RemoteEndPoint.ToString() + "]发送失败：" + msgres);
+                                LogHelper.Info(DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + ":[" + userToken.ConnectedSocket.RemoteEndPoint.ToString() + "]发送失败：" + msgres);
+                            }
+
+                            MsgList = null;
+                            WaterDeviceService.Remove(cKey);
+                        }
+
+                        if (userToken.DeviceList != null)
+                        {
+                            userToken.DeviceList.Online = 1;
+                            userToken.DeviceList.LastUpdate = DateTime.Now;
+                            userToken.DeviceList.TerminalState = EnumUtils.GetDescription(typeof(WaterBaseProtocol.AFN), AFN);
+                            updateDeviceList(userToken.DeviceList);
+
+                            string FullDeviceNo = DeviceModule.GetFullDeviceNoByID(userToken.DeviceList.Id);
+                            OnlineDeviceService.AddOnline(FullDeviceNo, userToken.DeviceList);
+                            DeviceEvent deviceEvent = new DeviceEvent();
+                            DeviceEventModule.InitDeviceEvent(deviceEvent);
+                            deviceEvent.DeviceNo = FullDeviceNo;
+                            deviceEvent.EventTime = userToken.DeviceList.LastUpdate;
+                            deviceEvent.EventType = userToken.DeviceList.TerminalState;
+                            deviceEvent.DeviceTime = userToken.DeviceList.LastUpdate;
+                            deviceEvent.Remark = cmdreceive == null ? userToken.DeviceList.TerminalState : cmdreceive.ToString();
+                            deviceEvent.RawData = message_water.RawDataStr;
+                            saveDeviceEvent(deviceEvent);
+                            proxySendDeviceList(userToken.DeviceList, deviceEvent);
+
+                        }
+
+                        #endregion
+                    }
+
+                    else if (AFN == (byte)WaterBaseProtocol.AFN._29 && UpOrDown == (int)WaterBaseProtocol.UpOrDown.Up)
+                    {
+                        #region _29
+                        waterInfo += EnumUtils.GetDescription(typeof(WaterBaseProtocol.AFN), AFN);
+                        ShowLogData.add(DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + ":[" + userToken.ConnectedSocket.RemoteEndPoint.ToString() + "]接收：" + waterInfo);
+                        LogHelper.Info(DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + ":[" + userToken.ConnectedSocket.RemoteEndPoint.ToString() + "]接收：" + waterInfo);
+
+                        WaterCmd_29_2 cmdreceive = null;
+                        if (DataEndChar == (byte)WaterBaseProtocol.DataEndChar_Up.ETX
+                            || DataEndChar == (byte)WaterBaseProtocol.DataEndChar_Up.ETB && DataBeginChar == (byte)WaterBaseProtocol.DataBeginChar.STX)
+                        {
+                            cmdreceive = new WaterCmd_29_2();
+                            cmdreceive.MsgList = MsgList;
+                            string msgreceive = cmdreceive.ReadMsg();
+                            if (msgreceive == "")
+                            {
+                                ShowLogData.add(DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + ":[" + userToken.ConnectedSocket.RemoteEndPoint.ToString() + "]接收分析：" + cmdreceive.ToString());
+                                LogHelper.Info(DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + ":[" + userToken.ConnectedSocket.RemoteEndPoint.ToString() + "]接收分析：" + cmdreceive.ToString());
+                            }
+                            else
+                            {
+                                ShowLogData.add(DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + ":[" + userToken.ConnectedSocket.RemoteEndPoint.ToString() + "]接收出错：" + msgreceive);
+                                LogHelper.Info(DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + ":[" + userToken.ConnectedSocket.RemoteEndPoint.ToString() + "]接收出错：" + msgreceive);
+                            }
+
+                            if (ToWaterDtuCommand.GetBaseMessageToDtuByKey(cKey + "-" + AFN) != null)
+                            {
+                                ToWaterDtuCommand.AddBaseMessageFromDtu(cKey + "-" + AFN, cmdreceive);
+                                ShowLogData.add("添加发送命令响应保存！" + cKey + "-" + AFN + "：" + cmdreceive.UserDataAll);
+                            }
+                            else
+                            {
+                                ShowLogData.add("无法添加发送命令响应保存！" + cKey + "-" + AFN + "：" + cmdreceive.UserDataAll);
+                            }
+
+                            WaterCmd_29_3 cmdres = new WaterCmd_29_3();
+                            cmdres.CenterStation = message_water.CenterStation;
+                            cmdres.RemoteStation = message_water.RemoteStation;
+                            cmdres.TotalPackage = message_water.TotalPackage;
+                            cmdres.CurrentPackage = message_water.CurrentPackage;
+                            cmdres.PW = message_water.PW;
+                            if (message_water.DataEndChar == (byte)WaterBaseProtocol.DataEndChar_Up.ETB)
+                                cmdres.DataEndChar = (byte)WaterBaseProtocol.DataEndChar_Down.ACK;
+                            else
+                                cmdres.DataEndChar = (byte)WaterBaseProtocol.DataEndChar_Down.EOT;
+                            cmdres.SerialNumber = cmdreceive.SerialNumber;
+                            cmdres.SendTime = DateTime.Now;
+
+                            string msgres = cmdres.WriteMsg();
+                            if (msgres == "")
+                            {
+                                send(cmdres.RawDataChar, 0, cmdres.RawDataChar.Length);
+                            }
+                            else
+                            {
+                                ShowLogData.add(DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + ":[" + userToken.ConnectedSocket.RemoteEndPoint.ToString() + "]发送失败：" + msgres);
+                                LogHelper.Info(DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + ":[" + userToken.ConnectedSocket.RemoteEndPoint.ToString() + "]发送失败：" + msgres);
+                            }
+
+                            MsgList = null;
+                            WaterDeviceService.Remove(cKey);
+                        }
+
+                        if (userToken.DeviceList != null)
+                        {
+                            userToken.DeviceList.Online = 1;
+                            userToken.DeviceList.LastUpdate = DateTime.Now;
+                            userToken.DeviceList.TerminalState = EnumUtils.GetDescription(typeof(WaterBaseProtocol.AFN), AFN);
+                            updateDeviceList(userToken.DeviceList);
+
+                            string FullDeviceNo = DeviceModule.GetFullDeviceNoByID(userToken.DeviceList.Id);
+                            OnlineDeviceService.AddOnline(FullDeviceNo, userToken.DeviceList);
+                            DeviceEvent deviceEvent = new DeviceEvent();
+                            DeviceEventModule.InitDeviceEvent(deviceEvent);
+                            deviceEvent.DeviceNo = FullDeviceNo;
+                            deviceEvent.EventTime = userToken.DeviceList.LastUpdate;
+                            deviceEvent.EventType = userToken.DeviceList.TerminalState;
+                            deviceEvent.DeviceTime = userToken.DeviceList.LastUpdate;
+                            deviceEvent.Remark = cmdreceive == null ? userToken.DeviceList.TerminalState : cmdreceive.ToString();
+                            deviceEvent.RawData = message_water.RawDataStr;
+                            saveDeviceEvent(deviceEvent);
+                            proxySendDeviceList(userToken.DeviceList, deviceEvent);
+
+                        }
+
+                        #endregion
+                    }
+
+                    //kqz 2017-1-1 添加
                     return true;
                 }
                 else

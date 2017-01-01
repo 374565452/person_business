@@ -3377,6 +3377,94 @@ namespace WaterMonitorSystem.WebServices
                     return JavaScriptConvert.SerializeObject(obj2);
                 }
             }
+            //kqz 2017-1-1 添加
+            else if (ctrlName == "水位预警阈值设置")
+            {
+
+                string[] Params_Ps = Params.Trim('|').Split('|');    
+                if (Params_Ps.Length != 3)
+                {
+                    obj2["Message"] = "生成命令失败！" + Params;
+                    return JavaScriptConvert.SerializeObject(obj2);
+                }
+                WaterCmd_28_1 cmd = new WaterCmd_28_1();
+                cmd.CenterStation = WaterBaseProtocol.CenterStation;
+                cmd.RemoteStation = RemoteStation.PadLeft(10, '0');
+                cmd.PW = WaterBaseProtocol.PW;
+                cmd.SerialNumber = 0;
+                cmd.SendTime = DateTime.Now;
+
+                try
+                {
+                    cmd.YellowLevel = Convert.ToByte(Params_Ps[0]);
+                }
+                catch
+                {
+                    obj2["Message"] = "生成命令失败！" + "水位预警阈值黄色预警值类型非法";
+                    return JavaScriptConvert.SerializeObject(obj2);
+                }
+                try
+                {
+                    cmd.OrangeLevel = Convert.ToByte(Params_Ps[1]);
+                }
+                catch
+                {
+                    obj2["Message"] = "生成命令失败！" + "水位预警阈值橙色预警值类型非法";
+                    return JavaScriptConvert.SerializeObject(obj2);
+                }
+            
+                try
+                {
+                    cmd.RedLevel = Convert.ToByte(Params_Ps[2]);
+                }
+                catch
+                {
+                    obj2["Message"] = "生成命令失败！" + "水位预警阈值红色预警值类型非法";
+                    return JavaScriptConvert.SerializeObject(obj2);
+                }
+
+                string msg = cmd.WriteMsg();
+                if (msg == "")
+                {
+                    op.OperationType = EnumUtils.GetDescription(typeof(WaterBaseProtocol.AFN), cmd.AFN);
+                    op.RawData = cmd.RawDataStr;
+
+                    myLogger.Info(op.OperationType + "：" + cmd.RawDataStr);
+                    cmd_send = cmd.RawDataChar;
+                }
+                else
+                {
+                    obj2["Message"] = "生成命令失败！" + msg;
+                    return JavaScriptConvert.SerializeObject(obj2);
+                }
+            }
+            //kqz 2017-1-1 添加
+            //kqz 2017-1-1 添加
+            else if (ctrlName == "水位预警阈值读取")
+            {
+                WaterCmd_29_1 cmd = new WaterCmd_29_1();
+                cmd.CenterStation = WaterBaseProtocol.CenterStation;
+                cmd.RemoteStation = RemoteStation.PadLeft(10, '0');
+                cmd.PW = WaterBaseProtocol.PW;
+                cmd.SerialNumber = 0;
+                cmd.SendTime = DateTime.Now;
+
+                string msg = cmd.WriteMsg();
+                if (msg == "")
+                {
+                    op.OperationType = EnumUtils.GetDescription(typeof(WaterBaseProtocol.AFN), cmd.AFN);
+                    op.RawData = cmd.RawDataStr;
+
+                    myLogger.Info(op.OperationType + "：" + cmd.RawDataStr);
+                    cmd_send = cmd.RawDataChar;
+                }
+                else
+                {
+                    obj2["Message"] = "生成命令失败！" + msg;
+                    return JavaScriptConvert.SerializeObject(obj2);
+                }
+            }
+            //kqz 2017-1-1 添加
             else if (ctrlName == "拍照")
             {
                 WaterCmd_36_1 cmd = new WaterCmd_36_1();
@@ -3553,14 +3641,30 @@ namespace WaterMonitorSystem.WebServices
                         msg_obj = cmd.ReadMsg(cmd_receive);
                         info_obj = msg_obj == "" ? cmd.ToString() : "";
                     }
+                    //kqz 2017-1-1 添加
+                    else if (ctrlName == "水位预警阈值设置")
+                    {
+                        WaterCmd_28_2 cmd = new WaterCmd_28_2();
+                        msg_obj = cmd.ReadMsg(cmd_receive);
+                        info_obj = msg_obj == "" ? cmd.ToString() : "";
+                    }
+                    //kqz 2017-1-1 添加
                     else if (ctrlName == "扩展参数读取")
                     {
                         WaterCmd_26_2 cmd = new WaterCmd_26_2();
                         msg_obj = cmd.ReadMsg(cmd_receive);
                         info_obj = msg_obj == "" ? cmd.ToString() : "";
-                        obj2["Vals"] = cmd.RType + "," + cmd.IsSend+","+cmd.NumAuthenType;
+                        obj2["Vals"] = cmd.RType + "," + cmd.IsSend + "," + cmd.NumAuthenType;
                     }
-
+                    //kqz 2017-1-1 添加
+                    else if (ctrlName == "水位预警阈值读取")
+                    {
+                        WaterCmd_29_2 cmd = new WaterCmd_29_2();
+                        msg_obj = cmd.ReadMsg(cmd_receive);
+                        info_obj = msg_obj == "" ? cmd.ToString() : "";
+                        obj2["Vals"] = cmd.YellowLevel + "," + cmd.OrangeLevel + "," + cmd.RedLevel;
+                    }
+                    //kqz 2017-1-1 添加
                     obj2["Result"] = msg_obj == "";
                     obj2["Info"] = info_obj;
                     obj2["Message"] = msg_obj == "" ? "" : ctrlName + "数据解析出错！" + msg_obj;

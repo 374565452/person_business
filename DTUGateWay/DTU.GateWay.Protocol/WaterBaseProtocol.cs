@@ -104,6 +104,19 @@ namespace DTU.GateWay.Protocol
             /// </summary>
             [Description("语音播报")]
             _27 = 0x27,
+
+            //kqz 2017-1-1 添加
+            /// <summary>
+            /// 水位预警阈值设置
+            /// </summary>
+            [Description("水位预警阈值设置")]
+            _28 = 0x28,
+            /// <summary>
+            /// 水位预警阈值读取
+            /// </summary>
+            [Description("水位预警阈值读取")]
+            _29 = 0x29,
+            //kqz 2017-1-1 添加
             /// <summary>
             /// 链路维持报
             /// </summary>
@@ -297,7 +310,7 @@ namespace DTU.GateWay.Protocol
         public enum DataEndChar_Down
         {
             /// <summary>
-            /// 下行查询与控制
+            /// 下行查询与控制 下行结束符
             /// </summary>
             [Description("下行查询与控制")]
             ENQ = 0x05,

@@ -131,6 +131,12 @@
     <Compile Include="WaterCmd_27_1.cs" />
     <Compile Include="WaterCmd_27_2.cs" />
     <Compile Include="WaterCmd_27_3.cs" />
+    <Compile Include="WaterCmd_28_1.cs" />
+    <Compile Include="WaterCmd_28_2.cs" />
+    <Compile Include="WaterCmd_28_3.cs" />
+    <Compile Include="WaterCmd_29_1.cs" />
+    <Compile Include="WaterCmd_29_2.cs" />
+    <Compile Include="WaterCmd_29_3.cs" />
     <Compile Include="WaterCmd_2F_1.cs" />
     <Compile Include="WaterCmd_30_1.cs" />
     <Compile Include="WaterCmd_30_2.cs" />
