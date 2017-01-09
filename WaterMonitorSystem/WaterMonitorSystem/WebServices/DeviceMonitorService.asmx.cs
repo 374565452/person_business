@@ -3396,7 +3396,7 @@ namespace WaterMonitorSystem.WebServices
 
                 try
                 {
-                    cmd.YellowLevel = Convert.ToByte(Params_Ps[0]);
+                    cmd.YellowLevel = Convert.ToInt16(Params_Ps[0]);
                 }
                 catch
                 {
@@ -3405,7 +3405,7 @@ namespace WaterMonitorSystem.WebServices
                 }
                 try
                 {
-                    cmd.OrangeLevel = Convert.ToByte(Params_Ps[1]);
+                    cmd.OrangeLevel = Convert.ToInt16(Params_Ps[1]);
                 }
                 catch
                 {
@@ -3415,7 +3415,7 @@ namespace WaterMonitorSystem.WebServices
             
                 try
                 {
-                    cmd.RedLevel = Convert.ToByte(Params_Ps[2]);
+                    cmd.RedLevel = Convert.ToInt16(Params_Ps[2]);
                 }
                 catch
                 {
