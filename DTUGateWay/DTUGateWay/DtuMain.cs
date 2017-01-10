@@ -91,7 +91,7 @@ namespace DTUGateWay
                     }
                 }
             }
-
+            //MessageBox.Show(Common.HexStringUtility.StrToHexString("c").Length.ToString());
             setUpTime();
             CheckForIllegalCrossThreadCalls = false;// 新创建的线程可以访问窗体中的控件
             xmlHelper = new XmlHelper(xmlConfig);//xml配置文件路径实例化
