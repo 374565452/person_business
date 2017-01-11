@@ -86,7 +86,7 @@ namespace DTU.GateWay.Protocol
         }
         public string WriteMsg()
         {
-            UserData = "";
+            /*UserData = "";
             UserData += SerialNumber.ToString("X").PadLeft(4, '0');
             UserData += SendTime.ToString("yyMMddHHmmss").PadLeft(12, '0');
 
@@ -95,12 +95,30 @@ namespace DTU.GateWay.Protocol
             UserData += RedLevel.ToString("X").PadLeft(4, '0');
 
             UserDataBytes = HexStringUtility.HexStringToByteArray(UserData);
-            return WriteMsgBase();
+            return WriteMsgBase();*/
+            UserDataAll += SerialNumber.ToString("X").PadLeft(4, '0');
+            UserDataAll += SendTime.ToString("yyMMddHHmmss").PadLeft(12, '0');
+            UserDataAll += YellowLevel.ToString("X").PadLeft(4, '0');
+            UserDataAll += OrangeLevel.ToString("X").PadLeft(4, '0');
+            UserDataAll += RedLevel.ToString("X").PadLeft(4, '0');
+            byte[] UserDataBytesAllTmp;
+            WaterBaseMessage[] MsgListTmp;
+            string msg = WaterBaseMessageService.GetMsgList_WriteMsg(this, UserDataAll, out UserDataBytesAllTmp, out MsgListTmp);
+            if (msg == "")
+            {
+                UserDataBytesAll = UserDataBytesAllTmp;
+                MsgList = MsgListTmp;
+            }
+            else
+            {
+                if (ShowLog) logHelper.Error(msg);
+            }
+            return msg;
         }
 
         public string ReadMsg()
         {
-            if (UserDataBytes == null || UserDataBytes.Length == 0)
+            /*if (UserDataBytes == null || UserDataBytes.Length == 0)
             {
                 if (ShowLog) logHelper.Error("无信息，无法分析！");
                 return "无信息，无法分析！";
@@ -155,7 +173,22 @@ namespace DTU.GateWay.Protocol
                 if (ShowLog) logHelper.Error(ex.Message + Environment.NewLine + "获取水位红色预警阈值出错" + " " + RawDataStr);
                 return "获取水位红色预警阈值出错";
             }
-            return "";
+            return "";*/
+            string UserDataAllTmp;
+            byte[] UserDataBytesAllTmp;
+            string msg = WaterBaseMessageService.ReadMsg(MsgList, out UserDataAllTmp, out UserDataBytesAllTmp);
+            if (msg == "")
+            {
+                UserDataAll = UserDataAllTmp;
+                UserDataBytesAll = UserDataBytesAllTmp;
+
+                return ReadMsg(UserDataAll);
+            }
+            else
+            {
+                if (ShowLog) logHelper.Error(msg);
+                return msg;
+            }
         }
         public string ReadMsg(string UserDataAll)
         {
@@ -175,7 +208,7 @@ namespace DTU.GateWay.Protocol
 
             try
             {
-                YellowLevel = Convert.ToInt16(UserData.Substring(16, 4), 16);
+                YellowLevel = Convert.ToInt16(UserDataAll.Substring(16, 4), 16);
             }
             catch (Exception ex)
             {
@@ -184,7 +217,7 @@ namespace DTU.GateWay.Protocol
             }
             try
             {
-                OrangeLevel = Convert.ToInt16(UserData.Substring(20, 4), 16);
+                OrangeLevel = Convert.ToInt16(UserDataAll.Substring(20, 4), 16);
             }
             catch (Exception ex)
             {
@@ -193,7 +226,7 @@ namespace DTU.GateWay.Protocol
             }
             try
             {
-                RedLevel = Convert.ToInt16(UserData.Substring(24, 4), 16);
+                RedLevel = Convert.ToInt16(UserDataAll.Substring(24, 4), 16);
             }
             catch (Exception ex)
             {

@@ -3975,7 +3975,7 @@ namespace WaterMonitorSystem.WebServices
                 op.RawData = cmd.RawDataStr;
 
                 myLogger.Info(op.OperationType + "：" + cmd.RawDataStr);
-System.Diagnostics.Debug.Print(op.OperationType +" :"+cmd.RawDataStr);
+//System.Diagnostics.Debug.Print(op.OperationType +" :"+cmd.RawDataStr);
                 cmd_send = cmd.RawDataChar;
             }
             else
@@ -4048,6 +4048,7 @@ System.Diagnostics.Debug.Print(op.OperationType +" :"+cmd.RawDataStr);
             timeDelay = 0;
             while (timeDelay < tcpService.TcpWait)
             {
+          //      System.Diagnostics.Debug.Print("接收到的数据为====" + tcpService.socketData.Buffer.Length);
                 if (tcpService.socketData.Buffer.Length >= CommandCommon.CMD_MIN_LENGTH)
                 {
                     byte[] re = tcpService.socketData.Buffer.Buffer;

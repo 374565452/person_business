@@ -1239,7 +1239,8 @@ namespace SimClient
                                         {
                                             byte RType = cmdreceive.RType;
                                             byte IsSend = cmdreceive.IsSend;
-                                            SetCalResult("类型值：" + RType + "，是否发送值：" + IsSend);
+                                            byte numAuthType = cmdreceive.NumAuthenType;
+                                            SetCalResult("类型值：" + RType + "，是否发送值：" + IsSend +",认证方式：" +(numAuthType==0?"密码":"白名单"));
                                             SetCalResult2(this.textBox2, RType.ToString());
                                             SetCalResult2(this.textBox3, IsSend.ToString());
 
@@ -1317,6 +1318,8 @@ namespace SimClient
                                             }
                                             catch { cmdres.IsSend = 0; SetCalResult("是否发送预警短信错误：" + this.textBox3.Text.Trim()); }
 
+                                            cmdres.NumAuthenType = 1;//始终显示白名单验证方式。
+
                                             string msgres = cmdres.WriteMsg();
                                             if (msgres == "")
                                             {
@@ -1372,6 +1375,117 @@ namespace SimClient
                                             cmdres.SerialNumber = count;
                                             cmdres.SendTime = DateTime.Now;
                                             
+                                            string msgres = cmdres.WriteMsg();
+                                            if (msgres == "")
+                                            {
+                                                WaterBaseMessage[] list = cmdres.MsgList;
+                                                foreach (WaterBaseMessage wbm in list)
+                                                {
+                                                    if (wbm.RawDataStr != null)
+                                                    {
+                                                        SendMsg(wbm.RawDataStr);
+                                                    }
+                                                    else
+                                                    {
+                                                        SetCalResult("数据发送：" + EnumUtils.GetDescription(typeof(WaterBaseProtocol.AFN), message.AFN) + " 失败");
+                                                    }
+                                                }
+                                            }
+                                            else
+                                            {
+                                                SetCalResult("数据发送：" + EnumUtils.GetDescription(typeof(WaterBaseProtocol.AFN), message.AFN) + " 失败：" + msgres);
+                                            }
+                                        }
+                                        #endregion
+                                    }
+                                    else if (message.AFN == (byte)WaterBaseProtocol.AFN._28)
+                                    {
+                                        #region _28
+                                        SetCalResult("数据接收：" + EnumUtils.GetDescription(typeof(WaterBaseProtocol.AFN), message.AFN));
+                                        WaterCmd_28_1 cmdreceive = new WaterCmd_28_1();
+                                        cmdreceive.UserDataBytes = message.UserDataBytes;
+                                        cmdreceive.UserData = message.UserData;
+                                        string msgreceive = cmdreceive.ReadMsg();
+                                        if (msgreceive != "")
+                                        {
+                                            SetCalResult("数据接收：" + msgreceive);
+                                        }
+                                        else
+                                        {
+                                            SetCalResult("黄色预警值：" + cmdreceive.YellowLevel);
+                                            SetCalResult("橙色预警值：" + cmdreceive.OrangeLevel);
+                                            SetCalResult("红色预警值：" + cmdreceive.RedLevel);
+                                            //SetCalResult("播报次数：" + cmdreceive.PlayCount);
+                                            //SetCalResult("播报角色：" + cmdreceive.PlayRole);
+                                            //SetCalResult("播报速度：" + cmdreceive.PlaySpeed);
+                                            //SetCalResult("播报内容：" + cmdreceive.PlayContext);
+
+                                            count++;
+                                            if (count == 0)
+                                            {
+                                                count = 1;
+                                            }
+                                            WaterCmd_28_2 cmdres = new WaterCmd_28_2();
+                                            cmdres.CenterStation = message.CenterStation;
+                                            cmdres.RemoteStation = message.RemoteStation;
+                                            cmdres.PW = message.PW;
+
+                                            cmdres.SerialNumber = count;
+                                            cmdres.SendTime = DateTime.Now;
+
+                                            string msgres = cmdres.WriteMsg();
+                                            if (msgres == "")
+                                            {
+                                                WaterBaseMessage[] list = cmdres.MsgList;
+                                                foreach (WaterBaseMessage wbm in list)
+                                                {
+                                                    if (wbm.RawDataStr != null)
+                                                    {
+                                                        SendMsg(wbm.RawDataStr);
+                                                    }
+                                                    else
+                                                    {
+                                                        SetCalResult("数据发送：" + EnumUtils.GetDescription(typeof(WaterBaseProtocol.AFN), message.AFN) + " 失败");
+                                                    }
+                                                }
+                                            }
+                                            else
+                                            {
+                                                SetCalResult("数据发送：" + EnumUtils.GetDescription(typeof(WaterBaseProtocol.AFN), message.AFN) + " 失败：" + msgres);
+                                            }
+                                        }
+                                        #endregion
+                                    }
+                                    else if (message.AFN == (byte)WaterBaseProtocol.AFN._29)
+                                    {
+                                        #region _29
+                                        SetCalResult("数据接收：" + EnumUtils.GetDescription(typeof(WaterBaseProtocol.AFN), message.AFN));
+                                        WaterCmd_29_1 cmdreceive = new WaterCmd_29_1();
+                                        cmdreceive.UserDataBytes = message.UserDataBytes;
+                                        cmdreceive.UserData = message.UserData;
+                                        string msgreceive = cmdreceive.ReadMsg();
+                                        if (msgreceive != "")
+                                        {
+                                            SetCalResult("数据接收：" + msgreceive);
+                                        }
+                                        else
+                                        {
+                                            count++;
+                                            if (count == 0)
+                                            {
+                                                count = 1;
+                                            }
+                                            WaterCmd_29_2 cmdres = new WaterCmd_29_2();
+                                            cmdres.CenterStation = message.CenterStation;
+                                            cmdres.RemoteStation = message.RemoteStation;
+                                            cmdres.PW = message.PW;
+
+                                            cmdres.SerialNumber = count;
+                                            cmdres.SendTime = DateTime.Now;
+                                            cmdres.YellowLevel = 1211;
+                                            cmdres.OrangeLevel = 1212;
+                                            cmdres.RedLevel = 1213;
+
                                             string msgres = cmdres.WriteMsg();
                                             if (msgres == "")
                                             {

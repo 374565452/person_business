@@ -1367,8 +1367,9 @@
                                 $("#Text19").val(vals[11]);
                             }
                         } else if (ctrlName == "扩展参数读取") {
+                            //alert("aaaaaaaaaaaaaa"+data.Vals);
                             var vals = data.Vals.split(',');
-                            if (vals.length == 2) {
+                            if (vals.length == 3) {
                                 $("#Select16").val(vals[0]);
                                 $("#Select17").val(vals[1]);
                                 //kqz 2017-1-10  增加
@@ -1379,7 +1380,7 @@
                             //kqz 2017-1-10  增加
                         else if (ctrlName == "水位预警阈值读取") {
                             var vals = data.Vals.split(',');
-                            if (vals.length == 2) {
+                            if (vals.length == 3) {
                                 $("#Text120").val(vals[0]);
                                 $("#Text121").val(vals[1]);
                                 $("#Text122").val(vals[2]);
