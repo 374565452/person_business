@@ -45,7 +45,9 @@ namespace Common
                 throw new Exception("调用CRC16校验算法,（低字节在前，高字节在后）时发生异常，异常信息：被校验的数组长度为0。");
             byte[] temdata = new byte[data.Length + 2];
             int xda, xdapoly;
-            byte i, j, xdabit;
+            int i, j;
+            byte  xdabit;
+            //原来的代码为byte i,j,xdabit
             xda = 0xFFFF;
             xdapoly = 0xA001;
             for (i = 0; i < data.Length; i++)

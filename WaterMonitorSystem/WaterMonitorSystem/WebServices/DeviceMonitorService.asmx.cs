@@ -3510,6 +3510,7 @@ namespace WaterMonitorSystem.WebServices
                 else
                 {
                     byte[] cmd_receive = HexStringUtility.HexStringToByteArray(resMsg.Message);
+ //System.Diagnostics.Debug.Print(resMsg.Message);
                     string msg_obj = "非法";
                     string info_obj = "";
                     if (ctrlName == "设置IC卡状态")
@@ -3960,6 +3961,7 @@ namespace WaterMonitorSystem.WebServices
             }
 
             cmd.PlayContext = PlayContext.Trim();
+  // System.Diagnostics.Debug.Print(cmd.PlayContext);
             if (cmd.PlayContext.Length == 0 || cmd.PlayContext.Length > 400)
             {
                 obj2["Message"] = "生成命令失败！" + "播报内容字数范围1-400！" + cmd.PlayContext.Length;
@@ -3973,6 +3975,7 @@ namespace WaterMonitorSystem.WebServices
                 op.RawData = cmd.RawDataStr;
 
                 myLogger.Info(op.OperationType + "：" + cmd.RawDataStr);
+System.Diagnostics.Debug.Print(op.OperationType +" :"+cmd.RawDataStr);
                 cmd_send = cmd.RawDataChar;
             }
             else
