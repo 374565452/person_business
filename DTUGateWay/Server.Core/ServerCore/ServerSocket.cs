@@ -655,7 +655,10 @@ namespace Server.Core.ServerCore
                 ShowLogData.add(info);
                 LogHelper.Info(info);
             }
-
+            */
+            //start update by kqz 2017-2-3修改，由之前的注释修改成不注释
+            //由于在关闭掉客户端的时候，没有将此连接上来的客户端从已经连接的客户端集合中删除掉，所以导致一个客户端成功连接上后，再次断开
+            //下次连接，如果IP地址不同则连接不成功现象。
             //并将此客户端资源回收到池中
             this.asyncSocketUserTokenPool.push(token);
             if (showInfoLog)
@@ -673,7 +676,7 @@ namespace Server.Core.ServerCore
                 ShowLogData.add(info);
                 LogHelper.Info(info);
             }
-            */
+           // end update by kqz 2017-2-3修改，由之前的注释修改成不注释
             token.ConnectedSocket.Close();
             token.ConnectedSocket = null;
             token.isClose = false;
