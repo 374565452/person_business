@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -19,18 +20,35 @@ namespace AudioRecording
 
         private WaveFileWriter waveFileWriter = null;
 
+        private string filePath = null;
+
+        public RecordFlagModel RecordFlagModel
+        {
+            get;
+            set;
+        }
+
         public RecordingFrm()
         {
             InitializeComponent();
             cleanUp();
-
+            RecordFlagModel = new AudioRecording.RecordFlagModel();
             waveInSource = new WaveIn();
             //waveInSource.WaveFormat = new WaveFormat(44100, 1);
             waveInSource.WaveFormat = new WaveFormat(8000, 1);
             waveInSource.DataAvailable += waveInSource_DataAvailable;
             waveInSource.RecordingStopped += waveInSource_RecordingStopped;
-
-            waveFileWriter = new WaveFileWriter(@"D:\Test0001.wav", waveInSource.WaveFormat);
+            string path = Application.StartupPath + "\\record";
+            if (!Directory.Exists(path))
+            {
+                Directory.CreateDirectory(path);
+            }
+            string fileName = Utils.random_str(20) + ".wav";
+            path += "\\" + fileName;
+            RecordFlagModel.Flag = false;
+            RecordFlagModel.RecprdFileName = fileName;
+            RecordFlagModel.RecordFileFullPath = path;
+            waveFileWriter = new WaveFileWriter(path, waveInSource.WaveFormat);
             try
             {
                 waveInSource.StartRecording();
@@ -42,8 +60,10 @@ namespace AudioRecording
                 waveInSource.Dispose();
                 waveInSource = null;
                 MessageBox.Show("录音出错，请检查麦克风或话筒等输入设备！");
+                this.Dispose();
+                this.Close();
             }
-
+           
             startTime = DateTime.Now;
             recordingTimer.Enabled = true;
             recordingTimer.Start();
@@ -59,6 +79,11 @@ namespace AudioRecording
                 waveFileWriter.Flush();
                 waveFileWriter.Dispose();
                 waveFileWriter = null;
+                RecordFlagModel.Flag = true;
+                //在这里交窗口进行关闭掉
+                this.Dispose();
+                this.Close();
+
             }
         }
 
@@ -100,10 +125,13 @@ namespace AudioRecording
 
         private void stopBtn_Click(object sender, EventArgs e)
         {
+            if (waveInSource != null)
+            {
+                waveInSource.StopRecording();
+            }
             recordingTimer.Enabled = false;
             recordingTimer.Stop();
-            this.Dispose();
-            this.Close();
+           
         }
     }
 }

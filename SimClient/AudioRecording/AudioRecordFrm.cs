@@ -13,6 +13,7 @@ namespace AudioRecording
 {
     public partial class AudioRecordFrm : Form
     {
+        private Dictionary<String, String> pList = new Dictionary<String, String>();
         public AudioRecordFrm()
         {
             InitializeComponent();
@@ -35,7 +36,19 @@ namespace AudioRecording
                 return;
             }
             RecordingFrm recordingFrm = new RecordingFrm();
+            recordingFrm.FormClosing += recordingFrm_FormClosing;
             recordingFrm.ShowDialog();
+        }
+
+        void recordingFrm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            //throw new NotImplementedException();
+            RecordFlagModel model = (sender as RecordingFrm).RecordFlagModel;
+            if (model.Flag == true)
+            {
+                pList.Add(model.RecprdFileName, model.RecordFileFullPath);
+                this.listBox1.Items.Add(model.RecprdFileName);
+            }
         }
 
         private void delBtn_Click(object sender, EventArgs e)
