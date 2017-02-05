@@ -134,6 +134,7 @@
             this.playBtn.TabIndex = 1;
             this.playBtn.Text = "试听";
             this.playBtn.UseVisualStyleBackColor = true;
+            this.playBtn.Click += new System.EventHandler(this.playBtn_Click);
             // 
             // uploadBtn
             // 

@@ -75,6 +75,12 @@
     <Compile Include="RecordingFrm.Designer.cs">
       <DependentUpon>RecordingFrm.cs</DependentUpon>
     </Compile>
+    <Compile Include="RecordPlayFrm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="RecordPlayFrm.Designer.cs">
+      <DependentUpon>RecordPlayFrm.cs</DependentUpon>
+    </Compile>
     <Compile Include="UploadFileResult.cs" />
     <Compile Include="UploadWaitFrm.cs">
       <SubType>Form</SubType>
@@ -101,6 +107,9 @@
     </Compile>
     <EmbeddedResource Include="RecordingFrm.resx">
       <DependentUpon>RecordingFrm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="RecordPlayFrm.resx">
+      <DependentUpon>RecordPlayFrm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UploadWaitFrm.resx">
       <DependentUpon>UploadWaitFrm.cs</DependentUpon>

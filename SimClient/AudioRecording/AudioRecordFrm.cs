@@ -217,5 +217,18 @@ namespace AudioRecording
                 
             }
         }
+
+        private void playBtn_Click(object sender, EventArgs e)
+        {
+            if (recordListBox.SelectedIndex == -1)
+            {
+                MessageBox.Show("请选中需要上传的录音文件！");
+                return;
+            }
+            //m_backgroudWorker.RunWorkerAsync();
+            string playFilePath = pList[recordListBox.SelectedItem.ToString()];
+            RecordPlayFrm ppf = new RecordPlayFrm(playFilePath);
+            ppf.ShowDialog();
+        }
     }
 }
