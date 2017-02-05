@@ -43,7 +43,8 @@ namespace AudioRecording
             {
                 Directory.CreateDirectory(path);
             }
-            string fileName = Utils.random_str(20) + ".wav";
+            //string fileName = Utils.random_str(20)+"-"+DateTime.Now.ToString("yyyy-MM-dd-HH-mm-ss") + ".wav";
+            string fileName =  DateTime.Now.ToString("yyyy-MM-dd-HH-mm-ss") + ".wav";
             path += "\\" + fileName;
             RecordFlagModel.Flag = false;
             RecordFlagModel.RecprdFileName = fileName;

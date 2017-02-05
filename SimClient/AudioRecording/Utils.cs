@@ -1,13 +1,40 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web;
 
 namespace AudioRecording
 {
     public class Utils
     {
+
+        public static string uploadFile(string fileName,string filePath, string url)
+        {
+            FileStream fs = new FileStream(filePath, FileMode.Open, FileAccess.Read);
+
+            byte[] byteFile = new byte[fs.Length];
+
+            fs.Read(byteFile, 0, Convert.ToInt32(fs.Length));
+
+            fs.Close();
+
+            string postData = "f="+fileName+"&u=" + HttpUtility.UrlEncode(Convert.ToBase64String(byteFile));
+
+            WebClient webclient = new WebClient();
+
+            webclient.Headers.Add("Content-Type", "application/x-www-form-urlencoded");
+
+            byte[] byteArray = Encoding.UTF8.GetBytes(postData);
+
+            byte[] buffer = webclient.UploadData(url, "POST", byteArray);
+
+            string msg = Encoding.UTF8.GetString(buffer);
+            return msg;
+        }
 
         public static string random_str(int length)
         {

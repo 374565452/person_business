@@ -35,11 +35,15 @@
     <Reference Include="NAudio">
       <HintPath>..\..\NAudio.dll</HintPath>
     </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\..\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="NSpeex">
       <HintPath>..\..\NSpeex.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Web" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -71,6 +75,13 @@
     <Compile Include="RecordingFrm.Designer.cs">
       <DependentUpon>RecordingFrm.cs</DependentUpon>
     </Compile>
+    <Compile Include="UploadFileResult.cs" />
+    <Compile Include="UploadWaitFrm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UploadWaitFrm.Designer.cs">
+      <DependentUpon>UploadWaitFrm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Utils.cs" />
     <EmbeddedResource Include="AudioRecordFrm.resx">
       <DependentUpon>AudioRecordFrm.cs</DependentUpon>
@@ -90,6 +101,9 @@
     </Compile>
     <EmbeddedResource Include="RecordingFrm.resx">
       <DependentUpon>RecordingFrm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UploadWaitFrm.resx">
+      <DependentUpon>UploadWaitFrm.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -111,6 +125,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\recording.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="img\timg.gif" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
