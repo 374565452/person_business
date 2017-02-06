@@ -230,5 +230,10 @@ namespace AudioRecording
             RecordPlayFrm ppf = new RecordPlayFrm(playFilePath);
             ppf.ShowDialog();
         }
+
+        private void configToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }
