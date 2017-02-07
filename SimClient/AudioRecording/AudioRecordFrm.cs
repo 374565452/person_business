@@ -23,6 +23,13 @@ namespace AudioRecording
 
         private UploadWaitFrm waitFrm;
 
+        private string configFilePath = Application.StartupPath + "\\config\\setup.xml";
+
+        private string uploadServerIp;
+        private string uploadServerPort;
+
+        private XmlHelper xmlHelper;
+
         public AudioRecordFrm()
         {
             CheckForIllegalCrossThreadCalls = true;
@@ -36,6 +43,16 @@ namespace AudioRecording
             m_backgroudWorker.RunWorkerCompleted += m_backgroudWorker_RunWorkerCompleted;
 
             loadRecorderFile();
+
+            xmlHelper = new XmlHelper(configFilePath);
+            loadConfiguration();
+        }
+
+        private void loadConfiguration()
+        {
+            xmlHelper.loadXml();
+            uploadServerIp = xmlHelper.getValue("uploadServerIp");
+            uploadServerPort = xmlHelper.getValue("uploadServerPort");
         }
 
         void m_backgroudWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
@@ -67,8 +84,10 @@ namespace AudioRecording
             }
             waitFrm = new UploadWaitFrm();
             waitFrm.ShowDialog();*/
-
-            string url = "http://localhost:58622/uploadFile.ashx";
+            //http://localhost:39991/UploadRecordFile.ashx
+            string url = string.Format("http://{0}:{1}/UploadRecordFile.ashx", uploadServerIp, uploadServerPort);
+            Debug.Print(url);
+            //string url = "http://localhost:58622/UploadFile.ashx";
 
             //string path = "D:\\vs_git\\123.mp3";
             //string fileName = recordListBox.SelectedItem.ToString();
@@ -233,7 +252,12 @@ namespace AudioRecording
 
         private void configToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
+            ConfigFrm cf = new ConfigFrm(configFilePath, uploadServerIp, uploadServerPort);
+            if (cf.ShowDialog() == DialogResult.OK)
+            {
+               // MessageBox.Show("aaaaaaaaaaaaaaaaaa");
+                loadConfiguration();
+            }
         }
     }
 }

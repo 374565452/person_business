@@ -11,9 +11,13 @@ namespace AudioRecording
         public XmlHelper(string xmlPath)
         {
             this.xmlFilePath = xmlPath;
+            //this.xml.Load(this.xmlFilePath);
+            loadXml();
+        }
+        public void loadXml()
+        {
             this.xml.Load(this.xmlFilePath);
         }
-
         public string getValue(string key)
         {
             string xpath = "//configuration/appSettings/add[@key='" + key + "']";

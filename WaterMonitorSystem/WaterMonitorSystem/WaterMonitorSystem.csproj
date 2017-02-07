@@ -1111,6 +1111,10 @@
     <Compile Include="tcpSend.ashx.cs">
       <DependentUpon>tcpSend.ashx</DependentUpon>
     </Compile>
+    <Compile Include="UploadFileResult.cs" />
+    <Compile Include="UploadRecordFile.ashx.cs">
+      <DependentUpon>UploadRecordFile.ashx</DependentUpon>
+    </Compile>
     <Compile Include="WebServices\AndroidService.asmx.cs">
       <DependentUpon>AndroidService.asmx</DependentUpon>
       <SubType>Component</SubType>
@@ -1212,6 +1216,7 @@
     <None Include="Properties\PublishProfiles\WaterMonitorSystem.pubxml" />
     <Content Include="tcpSend.ashx" />
     <None Include="Properties\PublishProfiles\water_monitor.pubxml" />
+    <Content Include="UploadRecordFile.ashx" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
