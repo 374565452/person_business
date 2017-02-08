@@ -34,8 +34,10 @@ namespace AudioRecording
             cleanUp();
             RecordFlagModel = new AudioRecording.RecordFlagModel();
             waveInSource = new WaveIn();
-            //waveInSource.WaveFormat = new WaveFormat(44100, 1);
-            waveInSource.WaveFormat = new WaveFormat(8000, 1);
+            waveInSource.WaveFormat = new WaveFormat(44100, 8,1);
+            //waveInSource.WaveFormat = new WaveFormat(8000, 1);
+            waveInSource.BufferMilliseconds = 1000;
+
             waveInSource.DataAvailable += waveInSource_DataAvailable;
             waveInSource.RecordingStopped += waveInSource_RecordingStopped;
             string path = Application.StartupPath + "\\record";
