@@ -28,6 +28,9 @@ namespace AudioRecording
         private string uploadServerIp;
         private string uploadServerPort;
 
+        private string sampleRate;
+        private string sampleBits;
+
         private XmlHelper xmlHelper;
 
         public AudioRecordFrm()
@@ -53,6 +56,8 @@ namespace AudioRecording
             xmlHelper.loadXml();
             uploadServerIp = xmlHelper.getValue("uploadServerIp");
             uploadServerPort = xmlHelper.getValue("uploadServerPort");
+            sampleRate = xmlHelper.getValue("sampleRate");
+            sampleBits = xmlHelper.getValue("sampleBits");
         }
 
         void m_backgroudWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
@@ -143,7 +148,7 @@ namespace AudioRecording
                 MessageBox.Show("未检测到录音设备，请插入麦克风或话筒等输入设备！");
                 return;
             }
-            RecordingFrm recordingFrm = new RecordingFrm();
+            RecordingFrm recordingFrm = new RecordingFrm(sampleRate,sampleBits);
             recordingFrm.FormClosing += recordingFrm_FormClosing;
             recordingFrm.ShowDialog();
         }
@@ -252,7 +257,7 @@ namespace AudioRecording
 
         private void configToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            ConfigFrm cf = new ConfigFrm(configFilePath, uploadServerIp, uploadServerPort);
+            ConfigFrm cf = new ConfigFrm(configFilePath, uploadServerIp, uploadServerPort,sampleRate,sampleBits);
             if (cf.ShowDialog() == DialogResult.OK)
             {
                // MessageBox.Show("aaaaaaaaaaaaaaaaaa");

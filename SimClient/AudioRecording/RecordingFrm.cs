@@ -28,13 +28,25 @@ namespace AudioRecording
             set;
         }
 
-        public RecordingFrm()
+        public RecordingFrm(string sampleRate,string sampleBits)
         {
             InitializeComponent();
             cleanUp();
             RecordFlagModel = new AudioRecording.RecordFlagModel();
             waveInSource = new WaveIn();
-            waveInSource.WaveFormat = new WaveFormat(44100, 8,1);
+            int rate = 8000;
+            int bits = 8;
+            try
+            {
+                rate = int.Parse(sampleRate);
+                bits = int.Parse(sampleBits);
+            }
+            catch (Exception)
+            {
+                rate = 8000;
+                bits = 8;
+            }
+            waveInSource.WaveFormat = new WaveFormat(rate, bits,1);
             //waveInSource.WaveFormat = new WaveFormat(8000, 1);
             waveInSource.BufferMilliseconds = 1000;
 
