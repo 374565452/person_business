@@ -35,9 +35,9 @@ $(document).ready(function () {
     else if (date.getMinutes() >= 45)
         date = date.DateAdd('h', -9);
 
-   // var str = date.Format("yyyyMMddHH4500000");
+    var str = date.Format("yyyyMMddHH4500000");
    // alert(str);
-   // $("#divWXYTInfo").html("<img src=\"http://i.weather.com.cn/i/product/pic/m/sevp_nsmc_wxcl_asc_e99_achn_lno_py_" + str + ".jpg\" style=\"width:100%;\" alt=\"" + str + "\" />");
+    $("#divWXYTInfo").html("<img src=\"http://i.weather.com.cn/i/product/pic/m/sevp_nsmc_wxcl_asc_e99_achn_lno_py_" + str + ".jpg\" style=\"width:100%;\" alt=\"" + str + "\" />");
 
     ShowAndHideInfo();
 });
