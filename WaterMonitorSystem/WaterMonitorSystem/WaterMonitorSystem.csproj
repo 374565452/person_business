@@ -453,8 +453,11 @@
     <Content Include="App_Themes\menu.css" />
     <Content Include="css\animate.min.css" />
     <Content Include="css\base.css" />
+    <Content Include="css\images\ui-bg_fine-grain_15_ffffff_60x60.png" />
+    <Content Include="css\jquery-ui-1.8.16.custom.css" />
     <Content Include="css\select.css" />
     <Content Include="css\style.css" />
+    <Content Include="css\styles.css" />
     <Content Include="css\副本 base.css" />
     <Content Include="DataMonitor\MonitorList.html" />
     <Content Include="DataMonitor\SendFile.html" />
@@ -481,7 +484,7 @@
     <Content Include="DataReport\VillageWaterStatistic.html" />
     <Content Include="DataReport\VillageWaterChart2.html" />
     <Content Include="DataReport\VillageWaterStatistic2.html" />
-    <Content Include="default.html" />
+    <Content Include="default_bak.html" />
     <Content Include="FileOperate.aspx" />
     <Content Include="Global.asax" />
     <Content Include="GlobalView\BDMap.html" />
@@ -510,9 +513,11 @@
     <Content Include="Images\7.png" />
     <Content Include="Images\8.png" />
     <Content Include="Images\9.png" />
+    <Content Include="Images\aiwrap.png" />
     <Content Include="Images\anquantuichu.gif" />
     <Content Include="Images\B.jpg" />
     <Content Include="Images\beijing.gif" />
+    <Content Include="Images\bg.jpg" />
     <Content Include="Images\bj.jpg" />
     <Content Include="Images\bj1.jpg" />
     <Content Include="Images\bj2.jpg" />
@@ -1061,6 +1066,7 @@
     <Content Include="WebServices\UserAdminService.asmx" />
     <Content Include="WebServices\WaterRightService.asmx" />
     <Content Include="WebServices\WaterUserService.asmx" />
+    <Content Include="default.html" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="accept.aspx.cs">
