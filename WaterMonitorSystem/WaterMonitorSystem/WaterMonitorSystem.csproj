@@ -586,7 +586,7 @@
     <Content Include="Images\leftmenubg.gif" />
     <Content Include="Images\lefttop.gif" />
     <Content Include="Images\libg.png" />
-    <Content Include="Images\light.png" />
+    <Content Include="images2\light.png" />
     <Content Include="Images\list.gif" />
     <Content Include="Images\list1.gif" />
     <Content Include="Images\loading.gif" />
