@@ -1,36 +1,120 @@
 ﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>节水增效管理平台</title>
-    <link href="css/login_style.css" rel="stylesheet" type="text/css" />
-    <script type="text/javascript" src="js/jquery-1.11.1.min.js"></script>
-    <script src="js/cloud.js" type="text/javascript"></script>
-   
-    <script src="js/cookie.js" type="text/javascript"></script>
-    <script type="text/javascript">
-        $(function () {
-            $('.loginbox').css({ 'position': 'absolute', 'left': ($(window).width() - 692) / 2 });
-            $(window).resize(function () {
-                $('.loginbox').css({ 'position': 'absolute', 'left': ($(window).width() - 692) / 2 });
-            });
-        });
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <title>水资源管理平台</title>
+    <link rel="shortcut icon" type="image/x-icon" href="images/ico.ico" media="screen" />
+    <link rel="stylesheet" type="text/css" href="App_Themes/easyui/themes/default/easyui.css" />
+    <link rel="stylesheet" type="text/css" href="App_Themes/easyui/themes/icon.css" />
 
-   
-/*
-        jQuery(function () {
-            $('input').keyup(function (event) {
+    <link href="css/styles.css" type="text/css" media="screen" rel="stylesheet" />
+    <link href="css/jquery-ui-1.8.16.custom.css" rel="stylesheet" />
+ 
+</head>
+    <style type="text/css">
+        #divMask {
+            display: none;
+            position: absolute;
+            top: 0%;
+            left: 0%;
+            width: 100%;
+            height: 100%;
+            background-color: #333333;
+            z-index: 1001;
+            -moz-opacity: 0.5;
+            opacity: .50;
+            filter: alpha(opacity=50);
+        }
 
-                if (event.keyCode == "13") {
-                    login();
-                    return false;
-                }
+        #divShowMsg {
+            font-size: 15px;
+            text-align: center;
+            display: none;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 200px;
+            line-height: 30px;
+            padding: 8px;
+            border: 2px solid #E8E9F7;
+            background-color: white;
+            z-index: 1002;
+            border-radius: 15px;
+        }
 
-            });
+            #divShowMsg #divMaskOK {
+                text-align: center;
+                padding: 5px;
+            }
 
-        });*/
-    </script>
-     <script src="js/easyui/jquery.easyui.min.js"></script>
+            #divShowMsg .btnMaskOK {
+                width: 100px;
+                border: #0186d1 1px solid;
+                background: #0186d1;
+                color: #FFF;
+                cursor: pointer;
+                transition: all 0.3s linear;
+                -webkit-transition: all 0.3s linear;
+                border-radius: 5px;
+            }
+
+        #imgList {
+            height: 100%;
+            width: 100%;
+            background-color: #eeeeee;
+        }
+
+            #imgList img {
+                height: 100%;
+                width: 100%;
+                display: none;
+            }
+
+        #divCC {
+            position: absolute;
+            height: 100%;
+            width: 100%;
+            background-color: #ffffff;
+            z-index: 888;
+            left: 0;
+            top: 0;
+            filter: alpha(opacity:0);
+            opacity: 0;
+        }
+
+        #shade {
+            background-color: #000;
+            position: absolute;
+            z-index: 1002;
+            display: none;
+            width: 100%;
+            height: 100%;
+            opacity: 0.6;
+            filter: alpha(opacity=60);
+            -moz-opacity: 0.6;
+            margin: 0px;
+            left: 0px;
+            top: 0px;
+            right: 0px;
+            bottom: 0px;
+        }
+
+        #ZZDiv {
+            height: 250px;
+            width: 450px;
+            border: 5px solid #999;
+            margin-right: auto;
+            margin-left: auto;
+            margin-top: 200px;
+            z-index: 1003;
+            display: none;
+            position: relative;
+            background-color: #FFF;
+        }
+
+    </style>
+      <script src="js/jquery-1.11.1.min.js"></script>
+    <script src="js/easyui/jquery.easyui.min.js"></script>
     <script src="js/CheckBrowser.js"></script>
     <script src="js/wow.min.js"></script>
     <script type="text/javascript" src="js/PSExtend.js"></script>
@@ -65,14 +149,14 @@
                 return;
             }
             isLogging = true;
-            var userName = $("#txtaccount").val();
-            var password = $("#txtpassword").val();
+            var userName = $("#user_name").val();
+            var password = $("#user_password").val();
             var vcode = "";
             if (userName.trim() == "") {
                 //alert("请输入用户名");
                 $.messager.alert("提示信息", "请输入用户名");
                 isLogging = false;
-                $("#txtaccount").focus();
+                $("#user_name").focus();
                 return;
             }
 
@@ -193,7 +277,7 @@
                 }).blur();
             };
 
-            //showImg(0);
+           //showImg(0);
         });
 
         function showImg(k) {
@@ -213,47 +297,41 @@
         }
     </script>
 
-</head>
-<body style="background-color: #1c77ac; background-image: url(Images/light.png); background-repeat: no-repeat; background-position: center top; overflow: hidden;">
-    <form id="form1" runat="server">
-        <div id="mainBody">
-            <div id="cloud1" class="cloud"></div>
-            <div id="cloud2" class="cloud"></div>
-        </div>
-
-        <div class="logintop">
-            <span>欢迎登录节水增效管理平台</span>
-            <ul>
-               
-            </ul>
-        </div>
-
-        <div class="loginbody">
-            
-            <span class="systemlogo"></span>
-
-            <div class="loginbox">
-                <div style="position:absolute; right:0; top:30px;  width:140px; height:80px;"><img src="images/zxct.png" style="height:40px;" /></div>
-                <ul>
-                    <li>
-                        <input name="" type="text" class="loginuser" id="txtaccount" " /></li>
-                    <li>
-                        <input name="" type="password" class="loginpwd" id="txtpassword"    /></li>
-                    <li>
-                        <input id="loginbtn" name="" type="button" class="loginbtn" value="登录" onclick="LoginInfo()"/>
-                    </li>
-                </ul>
-
-
+<body id="login">
+    <div id="wrappertop">
+    </div>
+    <div id="wrapper">
+        <div id="content">
+            <div id="header">
+                <h1>
+                    <a href="">
+                       <!--؅׃Logo <img src="logo.png"   height="50"  width="100"  alt="logo">--></a></h1>
             </div>
-
+            <div id="darkbanner" class="banner320">
+                <h2>平台登陆</h2>
+            </div>
+            <div id="darkbannerwrap">
+            </div>
+            <form name="form1">
+            <fieldset class="form">
+                <p>
+                    <label class="loginlabel" for="user_name">
+                        账号:</label>
+                    <input class="logininput ui-keyboard-input ui-widget-content ui-corner-all" name="user_name"
+                        id="user_name" type="text" value="" />
+                </p>
+                <p>
+                    <label class="loginlabel" for="user_password">
+                        密码:</label>
+                    <span>
+                        <input class="logininput  logininput ui-keyboard-input ui-widget-content ui-corner-all"   name="user_password" id="user_password" type="password" /></span>
+                </p>
+                <p style="margin-left:100px;">
+                <button id="loginbtn" type="button" class="positive" name="Submit" onclick="LoginInfo()" >
+                    <img src="Images/key.png" alt="Announcement" />登陆</button>
+               </p>
+            </fieldset>
         </div>
-
-
-
-        <div class="loginbm"><span style=" color:white; font-size:15px; font-weight:bold; letter-spacing:3px;">水利部灌排中心监制</span></div>
-
-
-    </form>
+    </div>
+   
 </body>
-</html>
