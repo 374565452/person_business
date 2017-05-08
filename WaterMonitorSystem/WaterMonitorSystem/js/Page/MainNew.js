@@ -13,6 +13,7 @@ var alarmnameflag = false;
 
 var divContainerWidth;
 $(document).ready(function () {
+    //alert("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
     if (window.name == "") {
         try {
             //使浏览器窗口最大化
