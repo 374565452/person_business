@@ -60,6 +60,17 @@ namespace CardOperationSystem
 
             this.listBox1.SelectedIndex = -1;
             this.listBox2.Items.Clear();
+
+            this.famen5764.Text = "";
+            this.famen4956.Text = "";
+            this.famen4148.Text = "";
+            this.famen3340.Text = "";
+            this.famen2532.Text = "";
+            this.famen1724.Text = "";
+            this.famen1_8.Text = "";
+            this.faMenCounter.Text = 0 + "";
+            this.needFamenCtr.SelectedIndex = 0;
+
         }
 
         public string getCardType()
@@ -389,6 +400,173 @@ namespace CardOperationSystem
                     return;
                 }
             }
+            //start add by kqz 2017-5-8 22:19
+            sec = 4;
+             result_AuthIC = CardCommon.AuthIC(icdev, mode, sec, key);
+            pf.AuthLog(InfoSys.CardTypeStrUser, InfoSys.MethodReadCard, sec, result_AuthIC);
+            if (result_AuthIC == InfoSys.StrAuthSuccess)
+            {
+                //读取数据块0，地址码5（7字节）地址码6（7字节）
+                block = 0;
+                result_ReadIC = CardCommon.ReadIC(icdev, sec, block);
+                if (result_ReadIC.Length == 32)
+                {
+                    string need = result_ReadIC.Substring(0, 2);
+                    if (Int32.Parse(need) == 1)
+                    {
+                        this.needFamenCtr.SelectedIndex = 1;
+                    }
+                    else
+                    {
+                        this.needFamenCtr.SelectedIndex = 0;
+                    }
+                    this.faMenCounter.Text = Int32.Parse(result_ReadIC.Substring(2, 2)).ToString();
+                }
+                else
+                {
+                    this.lbState.Text = InfoSys.InfoReadFailure(sec, block, InfoSys.CardTypeStrUser, InfoSys.StrReadFailure);
+                    pf.Log(this.lbState.Text);
+                    pf.EndLog(InfoSys.CardTypeStrUser, InfoSys.MethodReadCard);
+                    return;
+                }
+
+                block = 1;
+
+                result_ReadIC = CardCommon.ReadIC(icdev, sec, block);
+                if (result_ReadIC.Length == 32)
+                {
+                    this.famen1_8.Text = result_ReadIC;
+                }
+                else
+                {
+                    this.lbState.Text = InfoSys.InfoReadFailure(sec, block, InfoSys.CardTypeStrUser, InfoSys.StrReadFailure);
+                    pf.Log(this.lbState.Text);
+                    pf.EndLog(InfoSys.CardTypeStrUser, InfoSys.MethodReadCard);
+                    return;
+                }
+
+                block = 2;
+
+                result_ReadIC = CardCommon.ReadIC(icdev, sec, block);
+                if (result_ReadIC.Length == 32)
+                {
+                    this.famen916.Text = result_ReadIC;
+                }
+                else
+                {
+                    this.lbState.Text = InfoSys.InfoReadFailure(sec, block, InfoSys.CardTypeStrUser, InfoSys.StrReadFailure);
+                    pf.Log(this.lbState.Text);
+                    pf.EndLog(InfoSys.CardTypeStrUser, InfoSys.MethodReadCard);
+                    return;
+                }
+
+            }
+
+            sec = 5;
+            result_AuthIC = CardCommon.AuthIC(icdev, mode, sec, key);
+            pf.AuthLog(InfoSys.CardTypeStrUser, InfoSys.MethodReadCard, sec, result_AuthIC);
+            if (result_AuthIC == InfoSys.StrAuthSuccess)
+            {
+                //读取数据块0，地址码5（7字节）地址码6（7字节）
+                block = 0;
+                result_ReadIC = CardCommon.ReadIC(icdev, sec, block);
+                if (result_ReadIC.Length == 32)
+                {
+                    this.famen1724.Text = result_ReadIC;
+                }
+                else
+                {
+                    this.lbState.Text = InfoSys.InfoReadFailure(sec, block, InfoSys.CardTypeStrUser, InfoSys.StrReadFailure);
+                    pf.Log(this.lbState.Text);
+                    pf.EndLog(InfoSys.CardTypeStrUser, InfoSys.MethodReadCard);
+                    return;
+                }
+
+                block = 1;
+
+                result_ReadIC = CardCommon.ReadIC(icdev, sec, block);
+                if (result_ReadIC.Length == 32)
+                {
+                    this.famen2532.Text = result_ReadIC;
+                }
+                else
+                {
+                    this.lbState.Text = InfoSys.InfoReadFailure(sec, block, InfoSys.CardTypeStrUser, InfoSys.StrReadFailure);
+                    pf.Log(this.lbState.Text);
+                    pf.EndLog(InfoSys.CardTypeStrUser, InfoSys.MethodReadCard);
+                    return;
+                }
+
+                block = 2;
+
+                result_ReadIC = CardCommon.ReadIC(icdev, sec, block);
+                if (result_ReadIC.Length == 32)
+                {
+                    this.famen3340.Text = result_ReadIC;
+                }
+                else
+                {
+                    this.lbState.Text = InfoSys.InfoReadFailure(sec, block, InfoSys.CardTypeStrUser, InfoSys.StrReadFailure);
+                    pf.Log(this.lbState.Text);
+                    pf.EndLog(InfoSys.CardTypeStrUser, InfoSys.MethodReadCard);
+                    return;
+                }
+
+            }
+
+            sec = 6;
+            result_AuthIC = CardCommon.AuthIC(icdev, mode, sec, key);
+            pf.AuthLog(InfoSys.CardTypeStrUser, InfoSys.MethodReadCard, sec, result_AuthIC);
+            if (result_AuthIC == InfoSys.StrAuthSuccess)
+            {
+                //读取数据块0，地址码5（7字节）地址码6（7字节）
+                block = 0;
+                result_ReadIC = CardCommon.ReadIC(icdev, sec, block);
+                if (result_ReadIC.Length == 32)
+                {
+                    this.famen4148.Text = result_ReadIC;
+                }
+                else
+                {
+                    this.lbState.Text = InfoSys.InfoReadFailure(sec, block, InfoSys.CardTypeStrUser, InfoSys.StrReadFailure);
+                    pf.Log(this.lbState.Text);
+                    pf.EndLog(InfoSys.CardTypeStrUser, InfoSys.MethodReadCard);
+                    return;
+                }
+
+                block = 1;
+
+                result_ReadIC = CardCommon.ReadIC(icdev, sec, block);
+                if (result_ReadIC.Length == 32)
+                {
+                    this.famen4956.Text = result_ReadIC;
+                }
+                else
+                {
+                    this.lbState.Text = InfoSys.InfoReadFailure(sec, block, InfoSys.CardTypeStrUser, InfoSys.StrReadFailure);
+                    pf.Log(this.lbState.Text);
+                    pf.EndLog(InfoSys.CardTypeStrUser, InfoSys.MethodReadCard);
+                    return;
+                }
+
+                block = 2;
+
+                result_ReadIC = CardCommon.ReadIC(icdev, sec, block);
+                if (result_ReadIC.Length == 32)
+                {
+                    this.famen5764.Text = result_ReadIC;
+                }
+                else
+                {
+                    this.lbState.Text = InfoSys.InfoReadFailure(sec, block, InfoSys.CardTypeStrUser, InfoSys.StrReadFailure);
+                    pf.Log(this.lbState.Text);
+                    pf.EndLog(InfoSys.CardTypeStrUser, InfoSys.MethodReadCard);
+                    return;
+                }
+
+            }
+
+            //end add
 
             if (this.lbCardType.Text == InfoSys.CardTypeUser)
             {
@@ -608,6 +786,136 @@ namespace CardOperationSystem
                 }
             }
 
+            /**
+            * start add by kqz 2017-5-8 21:58 
+            * */
+            sec = 4;
+            result_AuthIC = CardCommon.AuthIC(icdev, mode, sec, key);
+            pf.AuthLog(InfoSys.CardTypeStrUser, InfoSys.MethodModifyCard, sec, result_AuthIC);
+            if (result_AuthIC == InfoSys.StrAuthSuccess)
+            {
+                block = 0;
+                int needCtrl = 0;
+                if (needFamenCtr.SelectedIndex == 1)
+                {
+                    needCtrl = 1;
+                }
+                int famenCount = Int32.Parse(this.faMenCounter.Text.Trim());
+                string data = needCtrl.ToString("X").PadLeft(2, '0') + famenCount.ToString("X").PadLeft(2, '0');
+                data = data.PadRight(32, '0');
+                result_WriteIC = CardCommon.WriteIC(icdev, sec, block, data);
+                if (result_WriteIC != "")
+                {
+                    this.lbState.Text = InfoSys.InfoWriteFailure(sec, block, InfoSys.CardTypeStrUser, InfoSys.StrOpenFailure);
+                    pf.Log(this.lbState.Text);
+                    pf.EndLog(InfoSys.CardTypeStrUser, InfoSys.MethodOpenCard);
+                    return;
+                }
+
+                block = 1;
+                data = this.famen1_8.Text.Trim().PadRight(32, '0');
+                result_WriteIC = CardCommon.WriteIC(icdev, sec, block, data);
+                if (result_WriteIC != "")
+                {
+                    this.lbState.Text = InfoSys.InfoWriteFailure(sec, block, InfoSys.CardTypeStrUser, InfoSys.StrOpenFailure);
+                    pf.Log(this.lbState.Text);
+                    pf.EndLog(InfoSys.CardTypeStrUser, InfoSys.MethodOpenCard);
+                    return;
+                }
+
+                block = 2;
+                data = this.famen916.Text.Trim().PadRight(32, '0');
+                result_WriteIC = CardCommon.WriteIC(icdev, sec, block, data);
+                if (result_WriteIC != "")
+                {
+                    this.lbState.Text = InfoSys.InfoWriteFailure(sec, block, InfoSys.CardTypeStrUser, InfoSys.StrOpenFailure);
+                    pf.Log(this.lbState.Text);
+                    pf.EndLog(InfoSys.CardTypeStrUser, InfoSys.MethodOpenCard);
+                    return;
+                }
+            }
+
+
+            sec = 5;
+            result_AuthIC = CardCommon.AuthIC(icdev, mode, sec, key);
+            pf.AuthLog(InfoSys.CardTypeStrUser, InfoSys.MethodModifyCard, sec, result_AuthIC);
+            if (result_AuthIC == InfoSys.StrAuthSuccess)
+            {
+                block = 0;
+                string data = this.famen1724.Text.Trim().PadRight(32, '0');
+                result_WriteIC = CardCommon.WriteIC(icdev, sec, block, data);
+                if (result_WriteIC != "")
+                {
+                    this.lbState.Text = InfoSys.InfoWriteFailure(sec, block, InfoSys.CardTypeStrUser, InfoSys.StrOpenFailure);
+                    pf.Log(this.lbState.Text);
+                    pf.EndLog(InfoSys.CardTypeStrUser, InfoSys.MethodOpenCard);
+                    return;
+                }
+
+                block = 1;
+                data = this.famen2532.Text.Trim().PadRight(32, '0');
+                result_WriteIC = CardCommon.WriteIC(icdev, sec, block, data);
+                if (result_WriteIC != "")
+                {
+                    this.lbState.Text = InfoSys.InfoWriteFailure(sec, block, InfoSys.CardTypeStrUser, InfoSys.StrOpenFailure);
+                    pf.Log(this.lbState.Text);
+                    pf.EndLog(InfoSys.CardTypeStrUser, InfoSys.MethodOpenCard);
+                    return;
+                }
+
+                block = 2;
+                data = this.famen3340.Text.Trim().PadRight(32, '0');
+                result_WriteIC = CardCommon.WriteIC(icdev, sec, block, data);
+                if (result_WriteIC != "")
+                {
+                    this.lbState.Text = InfoSys.InfoWriteFailure(sec, block, InfoSys.CardTypeStrUser, InfoSys.StrOpenFailure);
+                    pf.Log(this.lbState.Text);
+                    pf.EndLog(InfoSys.CardTypeStrUser, InfoSys.MethodOpenCard);
+                    return;
+                }
+            }
+
+            sec = 6;
+            result_AuthIC = CardCommon.AuthIC(icdev, mode, sec, key);
+            pf.AuthLog(InfoSys.CardTypeStrUser, InfoSys.MethodModifyCard, sec, result_AuthIC);
+            if (result_AuthIC == InfoSys.StrAuthSuccess)
+            {
+                block = 0;
+                string data = this.famen4148.Text.Trim().PadRight(32, '0');
+                result_WriteIC = CardCommon.WriteIC(icdev, sec, block, data);
+                if (result_WriteIC != "")
+                {
+                    this.lbState.Text = InfoSys.InfoWriteFailure(sec, block, InfoSys.CardTypeStrUser, InfoSys.StrOpenFailure);
+                    pf.Log(this.lbState.Text);
+                    pf.EndLog(InfoSys.CardTypeStrUser, InfoSys.MethodOpenCard);
+                    return;
+                }
+
+                block = 1;
+                data = this.famen4956.Text.Trim().PadRight(32, '0');
+                result_WriteIC = CardCommon.WriteIC(icdev, sec, block, data);
+                if (result_WriteIC != "")
+                {
+                    this.lbState.Text = InfoSys.InfoWriteFailure(sec, block, InfoSys.CardTypeStrUser, InfoSys.StrOpenFailure);
+                    pf.Log(this.lbState.Text);
+                    pf.EndLog(InfoSys.CardTypeStrUser, InfoSys.MethodOpenCard);
+                    return;
+                }
+
+                block = 2;
+                data = this.famen5764.Text.Trim().PadRight(32, '0');
+                result_WriteIC = CardCommon.WriteIC(icdev, sec, block, data);
+                if (result_WriteIC != "")
+                {
+                    this.lbState.Text = InfoSys.InfoWriteFailure(sec, block, InfoSys.CardTypeStrUser, InfoSys.StrOpenFailure);
+                    pf.Log(this.lbState.Text);
+                    pf.EndLog(InfoSys.CardTypeStrUser, InfoSys.MethodOpenCard);
+                    return;
+                }
+            }
+
+            //end add by kqz 
+
             for (int i = 0; i < pf.getSize(); i++)
             {
                 result_AuthIC = CardCommon.AuthIC(icdev, mode, i, key);
@@ -617,6 +925,7 @@ namespace CardOperationSystem
                     block = 3;
                     CardCommon.WritePWD(icdev, i, block, keyNew, InfoSys.KeyControl, keyNew);
                 }
+               
             }
 
             SerialNumber_old = "";
@@ -836,6 +1145,136 @@ namespace CardOperationSystem
                     return;
                 }
             }
+
+            /**
+           * start add by kqz 2017-5-8 21:58 
+           * */
+            sec = 4;
+            result_AuthIC = CardCommon.AuthIC(icdev, mode, sec, key);
+            pf.AuthLog(InfoSys.CardTypeStrUser, InfoSys.MethodModifyCard, sec, result_AuthIC);
+            if (result_AuthIC == InfoSys.StrAuthSuccess)
+            {
+                block = 0;
+                int needCtrl = 0;
+                if (needFamenCtr.SelectedIndex == 1)
+                {
+                    needCtrl = 1;
+                }
+                int famenCount = Int32.Parse(this.faMenCounter.Text.Trim());
+                string data = needCtrl.ToString("X").PadLeft(2, '0') + famenCount.ToString("X").PadLeft(2, '0');
+                data = data.PadRight(32, '0');
+                result_WriteIC = CardCommon.WriteIC(icdev, sec, block, data);
+                if (result_WriteIC != "")
+                {
+                    this.lbState.Text = InfoSys.InfoWriteFailure(sec, block, InfoSys.CardTypeStrUser, InfoSys.StrOpenFailure);
+                    pf.Log(this.lbState.Text);
+                    pf.EndLog(InfoSys.CardTypeStrUser, InfoSys.MethodOpenCard);
+                    return;
+                }
+
+                block = 1;
+                data = this.famen1_8.Text.Trim().PadRight(32, '0');
+                result_WriteIC = CardCommon.WriteIC(icdev, sec, block, data);
+                if (result_WriteIC != "")
+                {
+                    this.lbState.Text = InfoSys.InfoWriteFailure(sec, block, InfoSys.CardTypeStrUser, InfoSys.StrOpenFailure);
+                    pf.Log(this.lbState.Text);
+                    pf.EndLog(InfoSys.CardTypeStrUser, InfoSys.MethodOpenCard);
+                    return;
+                }
+
+                block = 2;
+                data = this.famen916.Text.Trim().PadRight(32, '0');
+                result_WriteIC = CardCommon.WriteIC(icdev, sec, block, data);
+                if (result_WriteIC != "")
+                {
+                    this.lbState.Text = InfoSys.InfoWriteFailure(sec, block, InfoSys.CardTypeStrUser, InfoSys.StrOpenFailure);
+                    pf.Log(this.lbState.Text);
+                    pf.EndLog(InfoSys.CardTypeStrUser, InfoSys.MethodOpenCard);
+                    return;
+                }
+            }
+
+
+            sec = 5;
+            result_AuthIC = CardCommon.AuthIC(icdev, mode, sec, key);
+            pf.AuthLog(InfoSys.CardTypeStrUser, InfoSys.MethodModifyCard, sec, result_AuthIC);
+            if (result_AuthIC == InfoSys.StrAuthSuccess)
+            {
+                block = 0;
+                string data = this.famen1724.Text.Trim().PadRight(32, '0');
+                result_WriteIC = CardCommon.WriteIC(icdev, sec, block, data);
+                if (result_WriteIC != "")
+                {
+                    this.lbState.Text = InfoSys.InfoWriteFailure(sec, block, InfoSys.CardTypeStrUser, InfoSys.StrOpenFailure);
+                    pf.Log(this.lbState.Text);
+                    pf.EndLog(InfoSys.CardTypeStrUser, InfoSys.MethodOpenCard);
+                    return;
+                }
+
+                block = 1;
+                data = this.famen2532.Text.Trim().PadRight(32, '0');
+                result_WriteIC = CardCommon.WriteIC(icdev, sec, block, data);
+                if (result_WriteIC != "")
+                {
+                    this.lbState.Text = InfoSys.InfoWriteFailure(sec, block, InfoSys.CardTypeStrUser, InfoSys.StrOpenFailure);
+                    pf.Log(this.lbState.Text);
+                    pf.EndLog(InfoSys.CardTypeStrUser, InfoSys.MethodOpenCard);
+                    return;
+                }
+
+                block = 2;
+                data = this.famen3340.Text.Trim().PadRight(32, '0');
+                result_WriteIC = CardCommon.WriteIC(icdev, sec, block, data);
+                if (result_WriteIC != "")
+                {
+                    this.lbState.Text = InfoSys.InfoWriteFailure(sec, block, InfoSys.CardTypeStrUser, InfoSys.StrOpenFailure);
+                    pf.Log(this.lbState.Text);
+                    pf.EndLog(InfoSys.CardTypeStrUser, InfoSys.MethodOpenCard);
+                    return;
+                }
+            }
+
+            sec = 6;
+            result_AuthIC = CardCommon.AuthIC(icdev, mode, sec, key);
+            pf.AuthLog(InfoSys.CardTypeStrUser, InfoSys.MethodModifyCard, sec, result_AuthIC);
+            if (result_AuthIC == InfoSys.StrAuthSuccess)
+            {
+                block = 0;
+                string data = this.famen4148.Text.Trim().PadRight(32, '0');
+                result_WriteIC = CardCommon.WriteIC(icdev, sec, block, data);
+                if (result_WriteIC != "")
+                {
+                    this.lbState.Text = InfoSys.InfoWriteFailure(sec, block, InfoSys.CardTypeStrUser, InfoSys.StrOpenFailure);
+                    pf.Log(this.lbState.Text);
+                    pf.EndLog(InfoSys.CardTypeStrUser, InfoSys.MethodOpenCard);
+                    return;
+                }
+
+                block = 1;
+                data = this.famen4956.Text.Trim().PadRight(32, '0');
+                result_WriteIC = CardCommon.WriteIC(icdev, sec, block, data);
+                if (result_WriteIC != "")
+                {
+                    this.lbState.Text = InfoSys.InfoWriteFailure(sec, block, InfoSys.CardTypeStrUser, InfoSys.StrOpenFailure);
+                    pf.Log(this.lbState.Text);
+                    pf.EndLog(InfoSys.CardTypeStrUser, InfoSys.MethodOpenCard);
+                    return;
+                }
+
+                block = 2;
+                data = this.famen5764.Text.Trim().PadRight(32, '0');
+                result_WriteIC = CardCommon.WriteIC(icdev, sec, block, data);
+                if (result_WriteIC != "")
+                {
+                    this.lbState.Text = InfoSys.InfoWriteFailure(sec, block, InfoSys.CardTypeStrUser, InfoSys.StrOpenFailure);
+                    pf.Log(this.lbState.Text);
+                    pf.EndLog(InfoSys.CardTypeStrUser, InfoSys.MethodOpenCard);
+                    return;
+                }
+            }
+
+            //end add by kqz 
 
             SerialNumber_old = "";
             this.lbCardType.Text = InfoSys.CardTypeUser;

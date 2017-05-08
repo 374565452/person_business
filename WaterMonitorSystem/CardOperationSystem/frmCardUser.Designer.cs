@@ -76,13 +76,34 @@
             this.cAddress = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.button9 = new System.Windows.Forms.Button();
             this.button8 = new System.Windows.Forms.Button();
+            this.needFamenCtr = new System.Windows.Forms.ComboBox();
+            this.label19 = new System.Windows.Forms.Label();
+            this.label20 = new System.Windows.Forms.Label();
+            this.faMenCounter = new System.Windows.Forms.TextBox();
+            this.label21 = new System.Windows.Forms.Label();
+            this.famen1_8 = new System.Windows.Forms.TextBox();
+            this.famen916 = new System.Windows.Forms.TextBox();
+            this.label22 = new System.Windows.Forms.Label();
+            this.famen1724 = new System.Windows.Forms.TextBox();
+            this.label23 = new System.Windows.Forms.Label();
+            this.famen2532 = new System.Windows.Forms.TextBox();
+            this.label24 = new System.Windows.Forms.Label();
+            this.famen3340 = new System.Windows.Forms.TextBox();
+            this.label25 = new System.Windows.Forms.Label();
+            this.famen4148 = new System.Windows.Forms.TextBox();
+            this.label26 = new System.Windows.Forms.Label();
+            this.famen4956 = new System.Windows.Forms.TextBox();
+            this.label27 = new System.Windows.Forms.Label();
+            this.famen5764 = new System.Windows.Forms.TextBox();
+            this.label28 = new System.Windows.Forms.Label();
+            this.label29 = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
             // btnCancel
             // 
-            this.btnCancel.Location = new System.Drawing.Point(450, 444);
+            this.btnCancel.Location = new System.Drawing.Point(419, 722);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(75, 23);
             this.btnCancel.TabIndex = 134;
@@ -92,7 +113,7 @@
             // 
             // button4
             // 
-            this.button4.Location = new System.Drawing.Point(288, 444);
+            this.button4.Location = new System.Drawing.Point(257, 722);
             this.button4.Name = "button4";
             this.button4.Size = new System.Drawing.Size(75, 23);
             this.button4.TabIndex = 133;
@@ -156,7 +177,7 @@
             // 
             // button3
             // 
-            this.button3.Location = new System.Drawing.Point(207, 444);
+            this.button3.Location = new System.Drawing.Point(176, 722);
             this.button3.Name = "button3";
             this.button3.Size = new System.Drawing.Size(75, 23);
             this.button3.TabIndex = 126;
@@ -167,7 +188,7 @@
             // lbState
             // 
             this.lbState.AutoSize = true;
-            this.lbState.Location = new System.Drawing.Point(125, 480);
+            this.lbState.Location = new System.Drawing.Point(94, 758);
             this.lbState.Name = "lbState";
             this.lbState.Size = new System.Drawing.Size(29, 12);
             this.lbState.TabIndex = 125;
@@ -212,7 +233,7 @@
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(369, 444);
+            this.button2.Location = new System.Drawing.Point(338, 722);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(75, 23);
             this.button2.TabIndex = 120;
@@ -222,7 +243,7 @@
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(122, 444);
+            this.button1.Location = new System.Drawing.Point(91, 722);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(75, 23);
             this.button1.TabIndex = 119;
@@ -447,7 +468,7 @@
             this.groupBox1.Controls.Add(this.button8);
             this.groupBox1.Location = new System.Drawing.Point(543, 422);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(660, 487);
+            this.groupBox1.Size = new System.Drawing.Size(660, 810);
             this.groupBox1.TabIndex = 201;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "用水户选择";
@@ -469,7 +490,7 @@
             this.dataGridView1.RowHeadersWidth = 20;
             this.dataGridView1.RowTemplate.Height = 23;
             this.dataGridView1.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dataGridView1.Size = new System.Drawing.Size(648, 432);
+            this.dataGridView1.Size = new System.Drawing.Size(648, 810);
             this.dataGridView1.TabIndex = 2;
             this.dataGridView1.DoubleClick += new System.EventHandler(this.dataGridView1_DoubleClick);
             // 
@@ -524,11 +545,184 @@
             this.button8.UseVisualStyleBackColor = true;
             this.button8.Click += new System.EventHandler(this.button8_Click);
             // 
+            // needFamenCtr
+            // 
+            this.needFamenCtr.FormattingEnabled = true;
+            this.needFamenCtr.Items.AddRange(new object[] {
+            "不需要阀门控制",
+            "需要阀门控制"});
+            this.needFamenCtr.Location = new System.Drawing.Point(128, 436);
+            this.needFamenCtr.Name = "needFamenCtr";
+            this.needFamenCtr.Size = new System.Drawing.Size(123, 20);
+            this.needFamenCtr.TabIndex = 202;
+            // 
+            // label19
+            // 
+            this.label19.AutoSize = true;
+            this.label19.Location = new System.Drawing.Point(57, 439);
+            this.label19.Name = "label19";
+            this.label19.Size = new System.Drawing.Size(65, 12);
+            this.label19.TabIndex = 203;
+            this.label19.Text = "阀门控制：";
+            // 
+            // label20
+            // 
+            this.label20.AutoSize = true;
+            this.label20.Location = new System.Drawing.Point(267, 444);
+            this.label20.Name = "label20";
+            this.label20.Size = new System.Drawing.Size(65, 12);
+            this.label20.TabIndex = 204;
+            this.label20.Text = "阀门总数：";
+            // 
+            // faMenCounter
+            // 
+            this.faMenCounter.Location = new System.Drawing.Point(349, 441);
+            this.faMenCounter.Name = "faMenCounter";
+            this.faMenCounter.Size = new System.Drawing.Size(105, 21);
+            this.faMenCounter.TabIndex = 205;
+            // 
+            // label21
+            // 
+            this.label21.AutoSize = true;
+            this.label21.Location = new System.Drawing.Point(53, 474);
+            this.label21.Name = "label21";
+            this.label21.Size = new System.Drawing.Size(83, 12);
+            this.label21.TabIndex = 206;
+            this.label21.Text = "阀门编号1-8：";
+            // 
+            // famen1_8
+            // 
+            this.famen1_8.Location = new System.Drawing.Point(142, 471);
+            this.famen1_8.Name = "famen1_8";
+            this.famen1_8.Size = new System.Drawing.Size(393, 21);
+            this.famen1_8.TabIndex = 207;
+            // 
+            // famen916
+            // 
+            this.famen916.Location = new System.Drawing.Point(142, 498);
+            this.famen916.Name = "famen916";
+            this.famen916.Size = new System.Drawing.Size(393, 21);
+            this.famen916.TabIndex = 209;
+            // 
+            // label22
+            // 
+            this.label22.AutoSize = true;
+            this.label22.Location = new System.Drawing.Point(53, 501);
+            this.label22.Name = "label22";
+            this.label22.Size = new System.Drawing.Size(89, 12);
+            this.label22.TabIndex = 208;
+            this.label22.Text = "阀门编号9-16：";
+            // 
+            // famen1724
+            // 
+            this.famen1724.Location = new System.Drawing.Point(142, 525);
+            this.famen1724.Name = "famen1724";
+            this.famen1724.Size = new System.Drawing.Size(393, 21);
+            this.famen1724.TabIndex = 211;
+            // 
+            // label23
+            // 
+            this.label23.AutoSize = true;
+            this.label23.Location = new System.Drawing.Point(53, 528);
+            this.label23.Name = "label23";
+            this.label23.Size = new System.Drawing.Size(95, 12);
+            this.label23.TabIndex = 210;
+            this.label23.Text = "阀门编号17-24：";
+            // 
+            // famen2532
+            // 
+            this.famen2532.Location = new System.Drawing.Point(142, 552);
+            this.famen2532.Name = "famen2532";
+            this.famen2532.Size = new System.Drawing.Size(393, 21);
+            this.famen2532.TabIndex = 213;
+            // 
+            // label24
+            // 
+            this.label24.AutoSize = true;
+            this.label24.Location = new System.Drawing.Point(53, 555);
+            this.label24.Name = "label24";
+            this.label24.Size = new System.Drawing.Size(95, 12);
+            this.label24.TabIndex = 212;
+            this.label24.Text = "阀门编号25-32：";
+            // 
+            // famen3340
+            // 
+            this.famen3340.Location = new System.Drawing.Point(142, 579);
+            this.famen3340.Name = "famen3340";
+            this.famen3340.Size = new System.Drawing.Size(393, 21);
+            this.famen3340.TabIndex = 215;
+            // 
+            // label25
+            // 
+            this.label25.AutoSize = true;
+            this.label25.Location = new System.Drawing.Point(53, 582);
+            this.label25.Name = "label25";
+            this.label25.Size = new System.Drawing.Size(95, 12);
+            this.label25.TabIndex = 214;
+            this.label25.Text = "阀门编号33-40：";
+            // 
+            // famen4148
+            // 
+            this.famen4148.Location = new System.Drawing.Point(142, 606);
+            this.famen4148.Name = "famen4148";
+            this.famen4148.Size = new System.Drawing.Size(393, 21);
+            this.famen4148.TabIndex = 217;
+            // 
+            // label26
+            // 
+            this.label26.AutoSize = true;
+            this.label26.Location = new System.Drawing.Point(53, 609);
+            this.label26.Name = "label26";
+            this.label26.Size = new System.Drawing.Size(95, 12);
+            this.label26.TabIndex = 216;
+            this.label26.Text = "阀门编号41-48：";
+            // 
+            // famen4956
+            // 
+            this.famen4956.Location = new System.Drawing.Point(142, 633);
+            this.famen4956.Name = "famen4956";
+            this.famen4956.Size = new System.Drawing.Size(393, 21);
+            this.famen4956.TabIndex = 219;
+            // 
+            // label27
+            // 
+            this.label27.AutoSize = true;
+            this.label27.Location = new System.Drawing.Point(53, 636);
+            this.label27.Name = "label27";
+            this.label27.Size = new System.Drawing.Size(95, 12);
+            this.label27.TabIndex = 218;
+            this.label27.Text = "阀门编号49-56：";
+            // 
+            // famen5764
+            // 
+            this.famen5764.Location = new System.Drawing.Point(142, 660);
+            this.famen5764.Name = "famen5764";
+            this.famen5764.Size = new System.Drawing.Size(393, 21);
+            this.famen5764.TabIndex = 221;
+            // 
+            // label28
+            // 
+            this.label28.AutoSize = true;
+            this.label28.Location = new System.Drawing.Point(53, 663);
+            this.label28.Name = "label28";
+            this.label28.Size = new System.Drawing.Size(95, 12);
+            this.label28.TabIndex = 220;
+            this.label28.Text = "阀门编号57-64：";
+            // 
+            // label29
+            // 
+            this.label29.AutoSize = true;
+            this.label29.Location = new System.Drawing.Point(67, 693);
+            this.label29.Name = "label29";
+            this.label29.Size = new System.Drawing.Size(353, 12);
+            this.label29.TabIndex = 222;
+            this.label29.Text = "阀门编号格式为：00两个字节代表一个编号，每一组最长为16字节";
+            // 
             // frmCardUser
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(684, 511);
+            this.ClientSize = new System.Drawing.Size(684, 771);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.button10);
             this.Controls.Add(this.button7);
@@ -570,6 +764,27 @@
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
+            this.Controls.Add(this.label29);
+            this.Controls.Add(this.famen5764);
+            this.Controls.Add(this.label28);
+            this.Controls.Add(this.famen4956);
+            this.Controls.Add(this.label27);
+            this.Controls.Add(this.famen4148);
+            this.Controls.Add(this.label26);
+            this.Controls.Add(this.famen3340);
+            this.Controls.Add(this.label25);
+            this.Controls.Add(this.famen2532);
+            this.Controls.Add(this.label24);
+            this.Controls.Add(this.famen1724);
+            this.Controls.Add(this.label23);
+            this.Controls.Add(this.famen916);
+            this.Controls.Add(this.label22);
+            this.Controls.Add(this.famen1_8);
+            this.Controls.Add(this.label21);
+            this.Controls.Add(this.faMenCounter);
+            this.Controls.Add(this.label20);
+            this.Controls.Add(this.label19);
+            this.Controls.Add(this.needFamenCtr);
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "frmCardUser";
@@ -633,5 +848,26 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn cAddress;
         private System.Windows.Forms.Button button9;
         private System.Windows.Forms.Button button8;
+        private System.Windows.Forms.ComboBox needFamenCtr;
+        private System.Windows.Forms.Label label19;
+        private System.Windows.Forms.Label label20;
+        private System.Windows.Forms.TextBox faMenCounter;
+        private System.Windows.Forms.Label label21;
+        private System.Windows.Forms.TextBox famen1_8;
+        private System.Windows.Forms.TextBox famen916;
+        private System.Windows.Forms.Label label22;
+        private System.Windows.Forms.TextBox famen1724;
+        private System.Windows.Forms.Label label23;
+        private System.Windows.Forms.TextBox famen2532;
+        private System.Windows.Forms.Label label24;
+        private System.Windows.Forms.TextBox famen3340;
+        private System.Windows.Forms.Label label25;
+        private System.Windows.Forms.TextBox famen4148;
+        private System.Windows.Forms.Label label26;
+        private System.Windows.Forms.TextBox famen4956;
+        private System.Windows.Forms.Label label27;
+        private System.Windows.Forms.TextBox famen5764;
+        private System.Windows.Forms.Label label28;
+        private System.Windows.Forms.Label label29;
     }
 }
