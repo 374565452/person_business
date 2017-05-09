@@ -408,19 +408,13 @@ namespace CardOperationSystem
             {
                 //读取数据块0，地址码5（7字节）地址码6（7字节）
                 block = 0;
-                result_ReadIC = CardCommon.ReadIC(icdev, sec, block);
-                if (result_ReadIC.Length == 32)
+                byte[] data_byte;
+                data_byte = CardCommon.ReadICByte(icdev, sec, block);
+                if (data_byte != null)
                 {
-                    string need = result_ReadIC.Substring(0, 2);
-                    if (Int32.Parse(need) == 1)
-                    {
-                        this.needFamenCtr.SelectedIndex = 1;
-                    }
-                    else
-                    {
-                        this.needFamenCtr.SelectedIndex = 0;
-                    }
-                    this.faMenCounter.Text = Int32.Parse(result_ReadIC.Substring(2, 2)).ToString();
+                    int selected =(int) data_byte[0];
+                    this.needFamenCtr.SelectedIndex = selected;
+                    this.faMenCounter.Text = data_byte[1].ToString();
                 }
                 else
                 {
@@ -432,10 +426,10 @@ namespace CardOperationSystem
 
                 block = 1;
 
-                result_ReadIC = CardCommon.ReadIC(icdev, sec, block);
-                if (result_ReadIC.Length == 32)
+                data_byte = CardCommon.ReadICByte(icdev, sec, block);
+                if (data_byte != null)
                 {
-                    this.famen1_8.Text = result_ReadIC;
+                    this.famen1_8.Text = parseByteToString(data_byte);
                 }
                 else
                 {
@@ -446,11 +440,10 @@ namespace CardOperationSystem
                 }
 
                 block = 2;
-
-                result_ReadIC = CardCommon.ReadIC(icdev, sec, block);
-                if (result_ReadIC.Length == 32)
+                data_byte = CardCommon.ReadICByte(icdev, sec, block);
+                if (data_byte != null)
                 {
-                    this.famen916.Text = result_ReadIC;
+                    this.famen916.Text = parseByteToString(data_byte);
                 }
                 else
                 {
@@ -469,10 +462,11 @@ namespace CardOperationSystem
             {
                 //读取数据块0，地址码5（7字节）地址码6（7字节）
                 block = 0;
-                result_ReadIC = CardCommon.ReadIC(icdev, sec, block);
-                if (result_ReadIC.Length == 32)
+                byte[] data_byte;
+                data_byte = CardCommon.ReadICByte(icdev, sec, block);
+                if (data_byte != null)
                 {
-                    this.famen1724.Text = result_ReadIC;
+                    this.famen1724.Text = parseByteToString(data_byte);
                 }
                 else
                 {
@@ -484,10 +478,10 @@ namespace CardOperationSystem
 
                 block = 1;
 
-                result_ReadIC = CardCommon.ReadIC(icdev, sec, block);
-                if (result_ReadIC.Length == 32)
+                data_byte = CardCommon.ReadICByte(icdev, sec, block);
+                if (data_byte != null)
                 {
-                    this.famen2532.Text = result_ReadIC;
+                    this.famen2532.Text = parseByteToString(data_byte);
                 }
                 else
                 {
@@ -499,10 +493,10 @@ namespace CardOperationSystem
 
                 block = 2;
 
-                result_ReadIC = CardCommon.ReadIC(icdev, sec, block);
-                if (result_ReadIC.Length == 32)
+                data_byte = CardCommon.ReadICByte(icdev, sec, block);
+                if (data_byte != null)
                 {
-                    this.famen3340.Text = result_ReadIC;
+                    this.famen3340.Text = parseByteToString(data_byte);
                 }
                 else
                 {
@@ -521,10 +515,11 @@ namespace CardOperationSystem
             {
                 //读取数据块0，地址码5（7字节）地址码6（7字节）
                 block = 0;
-                result_ReadIC = CardCommon.ReadIC(icdev, sec, block);
-                if (result_ReadIC.Length == 32)
+                byte[] data_byte;
+                data_byte = CardCommon.ReadICByte(icdev, sec, block);
+                if (data_byte != null)
                 {
-                    this.famen4148.Text = result_ReadIC;
+                    this.famen4148.Text = parseByteToString(data_byte);
                 }
                 else
                 {
@@ -533,13 +528,12 @@ namespace CardOperationSystem
                     pf.EndLog(InfoSys.CardTypeStrUser, InfoSys.MethodReadCard);
                     return;
                 }
-
                 block = 1;
 
-                result_ReadIC = CardCommon.ReadIC(icdev, sec, block);
-                if (result_ReadIC.Length == 32)
+                data_byte = CardCommon.ReadICByte(icdev, sec, block);
+                if (data_byte != null)
                 {
-                    this.famen4956.Text = result_ReadIC;
+                    this.famen4956.Text = parseByteToString(data_byte);
                 }
                 else
                 {
@@ -551,10 +545,10 @@ namespace CardOperationSystem
 
                 block = 2;
 
-                result_ReadIC = CardCommon.ReadIC(icdev, sec, block);
-                if (result_ReadIC.Length == 32)
+                data_byte = CardCommon.ReadICByte(icdev, sec, block);
+                if (data_byte != null)
                 {
-                    this.famen5764.Text = result_ReadIC;
+                    this.famen5764.Text = parseByteToString(data_byte);
                 }
                 else
                 {
@@ -599,6 +593,21 @@ namespace CardOperationSystem
             }
 
             pf.EndLog(InfoSys.CardTypeStrUser, InfoSys.MethodReadCard);
+        }
+
+        private string parseByteToString(byte[] data)
+        {
+            string str="";
+            //string.Format("{0:D2}-{1:D2}",
+            for (int i = 0; i < data.Length; i+=2)
+            {
+                str += string.Format("{0:D2}-{1:D2}", data[i], data[i + 1]);
+                if (i != data.Length - 2)
+                {
+                    str += ",";
+                }
+            }
+            return str;
         }
 
         private void button2_Click(object sender, EventArgs e)
@@ -801,10 +810,14 @@ namespace CardOperationSystem
                     needCtrl = 1;
                 }
                 int famenCount = Int32.Parse(this.faMenCounter.Text.Trim());
-                string data = needCtrl.ToString("X").PadLeft(2, '0') + famenCount.ToString("X").PadLeft(2, '0');
-                data = data.PadRight(32, '0');
-                result_WriteIC = CardCommon.WriteIC(icdev, sec, block, data);
-                if (result_WriteIC != "")
+                //string data = needCtrl.ToString("X").PadLeft(2, '0') + famenCount.ToString("X").PadLeft(2, '0');
+                //data = data.PadRight(32, '0');
+                byte[] data_byte = new byte[2];
+                data_byte[0] =(byte) (needCtrl & 0xFF);
+                data_byte[1] = (byte)(famenCount & 0xFF);
+                bool res = false;
+                res = CardCommon.WriteICByte(icdev, sec, block, data_byte);
+                if (!res)
                 {
                     this.lbState.Text = InfoSys.InfoWriteFailure(sec, block, InfoSys.CardTypeStrUser, InfoSys.StrOpenFailure);
                     pf.Log(this.lbState.Text);
@@ -813,9 +826,29 @@ namespace CardOperationSystem
                 }
 
                 block = 1;
-                data = this.famen1_8.Text.Trim().PadRight(32, '0');
-                result_WriteIC = CardCommon.WriteIC(icdev, sec, block, data);
-                if (result_WriteIC != "")
+                string famen18 = this.famen1_8.Text.Trim();
+                if (famen18 == null || famen18.Equals(""))
+                {
+                    res = CardCommon.WriteICByte(icdev, sec, block, null);
+                }
+                else
+                {
+                    data_byte = parseTextToByteArray(famen18);
+                    if (data_byte != null)
+                    {
+                        res = CardCommon.WriteICByte(icdev, sec, block, data_byte);
+                    }
+                    else
+                    {
+                        this.lbState.Text = "阀门编号输入格式不正确！！！！";
+                        pf.Log(this.lbState.Text);
+                        pf.EndLog(InfoSys.CardTypeStrUser, InfoSys.MethodOpenCard);
+                        return;
+                    }
+                }
+                //data = this.famen1_8.Text.Trim().PadRight(32, '0');
+                //result_WriteIC = CardCommon.WriteIC(icdev, sec, block, data);
+                if (!res )
                 {
                     this.lbState.Text = InfoSys.InfoWriteFailure(sec, block, InfoSys.CardTypeStrUser, InfoSys.StrOpenFailure);
                     pf.Log(this.lbState.Text);
@@ -824,9 +857,29 @@ namespace CardOperationSystem
                 }
 
                 block = 2;
-                data = this.famen916.Text.Trim().PadRight(32, '0');
-                result_WriteIC = CardCommon.WriteIC(icdev, sec, block, data);
-                if (result_WriteIC != "")
+                string famen9_16 = this.famen916.Text.Trim();
+                if (famen9_16 == null || famen9_16.Equals(""))
+                {
+                    res = CardCommon.WriteICByte(icdev, sec, block, null);
+                }
+                else
+                {
+                    data_byte = parseTextToByteArray(famen9_16);
+                    if (data_byte != null)
+                    {
+                        res = CardCommon.WriteICByte(icdev, sec, block, data_byte);
+                    }
+                    else
+                    {
+                        this.lbState.Text = "阀门编号输入格式不正确！！！！";
+                        pf.Log(this.lbState.Text);
+                        pf.EndLog(InfoSys.CardTypeStrUser, InfoSys.MethodOpenCard);
+                        return;
+                    }
+                }
+                //data = this.famen1_8.Text.Trim().PadRight(32, '0');
+                //result_WriteIC = CardCommon.WriteIC(icdev, sec, block, data);
+                if (!res)
                 {
                     this.lbState.Text = InfoSys.InfoWriteFailure(sec, block, InfoSys.CardTypeStrUser, InfoSys.StrOpenFailure);
                     pf.Log(this.lbState.Text);
@@ -842,7 +895,38 @@ namespace CardOperationSystem
             if (result_AuthIC == InfoSys.StrAuthSuccess)
             {
                 block = 0;
-                string data = this.famen1724.Text.Trim().PadRight(32, '0');
+                byte[] data_byte;
+                bool res = false;
+                string famen17_24 = this.famen1724.Text.Trim();
+                if (famen17_24 == null || famen17_24.Equals(""))
+                {
+                    res = CardCommon.WriteICByte(icdev, sec, block, null);
+                }
+                else
+                {
+                    data_byte = parseTextToByteArray(famen17_24);
+                    if (data_byte != null)
+                    {
+                        res = CardCommon.WriteICByte(icdev, sec, block, data_byte);
+                    }
+                    else
+                    {
+                        this.lbState.Text = "阀门编号输入格式不正确！！！！";
+                        pf.Log(this.lbState.Text);
+                        pf.EndLog(InfoSys.CardTypeStrUser, InfoSys.MethodOpenCard);
+                        return;
+                    }
+                }
+                //data = this.famen1_8.Text.Trim().PadRight(32, '0');
+                //result_WriteIC = CardCommon.WriteIC(icdev, sec, block, data);
+                if (!res)
+                {
+                    this.lbState.Text = InfoSys.InfoWriteFailure(sec, block, InfoSys.CardTypeStrUser, InfoSys.StrOpenFailure);
+                    pf.Log(this.lbState.Text);
+                    pf.EndLog(InfoSys.CardTypeStrUser, InfoSys.MethodOpenCard);
+                    return;
+                }
+                /*string data = this.famen1724.Text.Trim().PadRight(32, '0');
                 result_WriteIC = CardCommon.WriteIC(icdev, sec, block, data);
                 if (result_WriteIC != "")
                 {
@@ -850,10 +934,37 @@ namespace CardOperationSystem
                     pf.Log(this.lbState.Text);
                     pf.EndLog(InfoSys.CardTypeStrUser, InfoSys.MethodOpenCard);
                     return;
-                }
+                }*/
 
                 block = 1;
-                data = this.famen2532.Text.Trim().PadRight(32, '0');
+                string famen25_32 = this.famen2532.Text.Trim();
+                if (famen25_32 == null || famen25_32.Equals(""))
+                {
+                    res = CardCommon.WriteICByte(icdev, sec, block, null);
+                }
+                else
+                {
+                    data_byte = parseTextToByteArray(famen25_32);
+                    if (data_byte != null)
+                    {
+                        res = CardCommon.WriteICByte(icdev, sec, block, data_byte);
+                    }
+                    else
+                    {
+                        this.lbState.Text = "阀门编号输入格式不正确！！！！";
+                        pf.Log(this.lbState.Text);
+                        pf.EndLog(InfoSys.CardTypeStrUser, InfoSys.MethodOpenCard);
+                        return;
+                    }
+                }
+                if (!res)
+                {
+                    this.lbState.Text = InfoSys.InfoWriteFailure(sec, block, InfoSys.CardTypeStrUser, InfoSys.StrOpenFailure);
+                    pf.Log(this.lbState.Text);
+                    pf.EndLog(InfoSys.CardTypeStrUser, InfoSys.MethodOpenCard);
+                    return;
+                }
+                /*data = this.famen2532.Text.Trim().PadRight(32, '0');
                 result_WriteIC = CardCommon.WriteIC(icdev, sec, block, data);
                 if (result_WriteIC != "")
                 {
@@ -861,10 +972,37 @@ namespace CardOperationSystem
                     pf.Log(this.lbState.Text);
                     pf.EndLog(InfoSys.CardTypeStrUser, InfoSys.MethodOpenCard);
                     return;
-                }
+                }*/
 
                 block = 2;
-                data = this.famen3340.Text.Trim().PadRight(32, '0');
+                string famen33_40 = this.famen3340.Text.Trim();
+                if (famen33_40 == null || famen33_40.Equals(""))
+                {
+                    res = CardCommon.WriteICByte(icdev, sec, block, null);
+                }
+                else
+                {
+                    data_byte = parseTextToByteArray(famen33_40);
+                    if (data_byte != null)
+                    {
+                        res = CardCommon.WriteICByte(icdev, sec, block, data_byte);
+                    }
+                    else
+                    {
+                        this.lbState.Text = "阀门编号输入格式不正确！！！！";
+                        pf.Log(this.lbState.Text);
+                        pf.EndLog(InfoSys.CardTypeStrUser, InfoSys.MethodOpenCard);
+                        return;
+                    }
+                }
+                if (!res)
+                {
+                    this.lbState.Text = InfoSys.InfoWriteFailure(sec, block, InfoSys.CardTypeStrUser, InfoSys.StrOpenFailure);
+                    pf.Log(this.lbState.Text);
+                    pf.EndLog(InfoSys.CardTypeStrUser, InfoSys.MethodOpenCard);
+                    return;
+                }
+                /*data = this.famen3340.Text.Trim().PadRight(32, '0');
                 result_WriteIC = CardCommon.WriteIC(icdev, sec, block, data);
                 if (result_WriteIC != "")
                 {
@@ -872,7 +1010,7 @@ namespace CardOperationSystem
                     pf.Log(this.lbState.Text);
                     pf.EndLog(InfoSys.CardTypeStrUser, InfoSys.MethodOpenCard);
                     return;
-                }
+                }*/
             }
 
             sec = 6;
@@ -881,7 +1019,36 @@ namespace CardOperationSystem
             if (result_AuthIC == InfoSys.StrAuthSuccess)
             {
                 block = 0;
-                string data = this.famen4148.Text.Trim().PadRight(32, '0');
+                byte[] data_byte;
+                bool res = false;
+                string famen41_48 = this.famen4148.Text.Trim();
+                if (famen41_48 == null || famen41_48.Equals(""))
+                {
+                    res = CardCommon.WriteICByte(icdev, sec, block, null);
+                }
+                else
+                {
+                    data_byte = parseTextToByteArray(famen41_48);
+                    if (data_byte != null)
+                    {
+                        res = CardCommon.WriteICByte(icdev, sec, block, data_byte);
+                    }
+                    else
+                    {
+                        this.lbState.Text = "阀门编号输入格式不正确！！！！";
+                        pf.Log(this.lbState.Text);
+                        pf.EndLog(InfoSys.CardTypeStrUser, InfoSys.MethodOpenCard);
+                        return;
+                    }
+                }
+                if (!res)
+                {
+                    this.lbState.Text = InfoSys.InfoWriteFailure(sec, block, InfoSys.CardTypeStrUser, InfoSys.StrOpenFailure);
+                    pf.Log(this.lbState.Text);
+                    pf.EndLog(InfoSys.CardTypeStrUser, InfoSys.MethodOpenCard);
+                    return;
+                }
+                /*string data = this.famen4148.Text.Trim().PadRight(32, '0');
                 result_WriteIC = CardCommon.WriteIC(icdev, sec, block, data);
                 if (result_WriteIC != "")
                 {
@@ -889,10 +1056,37 @@ namespace CardOperationSystem
                     pf.Log(this.lbState.Text);
                     pf.EndLog(InfoSys.CardTypeStrUser, InfoSys.MethodOpenCard);
                     return;
-                }
+                }*/
 
                 block = 1;
-                data = this.famen4956.Text.Trim().PadRight(32, '0');
+                string famen49_56 = this.famen4956.Text.Trim();
+                if (famen49_56 == null || famen49_56.Equals(""))
+                {
+                    res = CardCommon.WriteICByte(icdev, sec, block, null);
+                }
+                else
+                {
+                    data_byte = parseTextToByteArray(famen49_56);
+                    if (data_byte != null)
+                    {
+                        res = CardCommon.WriteICByte(icdev, sec, block, data_byte);
+                    }
+                    else
+                    {
+                        this.lbState.Text = "阀门编号输入格式不正确！！！！";
+                        pf.Log(this.lbState.Text);
+                        pf.EndLog(InfoSys.CardTypeStrUser, InfoSys.MethodOpenCard);
+                        return;
+                    }
+                }
+                if (!res)
+                {
+                    this.lbState.Text = InfoSys.InfoWriteFailure(sec, block, InfoSys.CardTypeStrUser, InfoSys.StrOpenFailure);
+                    pf.Log(this.lbState.Text);
+                    pf.EndLog(InfoSys.CardTypeStrUser, InfoSys.MethodOpenCard);
+                    return;
+                }
+                /*data = this.famen4956.Text.Trim().PadRight(32, '0');
                 result_WriteIC = CardCommon.WriteIC(icdev, sec, block, data);
                 if (result_WriteIC != "")
                 {
@@ -900,10 +1094,37 @@ namespace CardOperationSystem
                     pf.Log(this.lbState.Text);
                     pf.EndLog(InfoSys.CardTypeStrUser, InfoSys.MethodOpenCard);
                     return;
-                }
+                }*/
 
                 block = 2;
-                data = this.famen5764.Text.Trim().PadRight(32, '0');
+                string famen57_64 = this.famen5764.Text.Trim();
+                if (famen57_64 == null || famen57_64.Equals(""))
+                {
+                    res = CardCommon.WriteICByte(icdev, sec, block, null);
+                }
+                else
+                {
+                    data_byte = parseTextToByteArray(famen57_64);
+                    if (data_byte != null)
+                    {
+                        res = CardCommon.WriteICByte(icdev, sec, block, data_byte);
+                    }
+                    else
+                    {
+                        this.lbState.Text = "阀门编号输入格式不正确！！！！";
+                        pf.Log(this.lbState.Text);
+                        pf.EndLog(InfoSys.CardTypeStrUser, InfoSys.MethodOpenCard);
+                        return;
+                    }
+                }
+                if (!res)
+                {
+                    this.lbState.Text = InfoSys.InfoWriteFailure(sec, block, InfoSys.CardTypeStrUser, InfoSys.StrOpenFailure);
+                    pf.Log(this.lbState.Text);
+                    pf.EndLog(InfoSys.CardTypeStrUser, InfoSys.MethodOpenCard);
+                    return;
+                }
+                /*data = this.famen5764.Text.Trim().PadRight(32, '0');
                 result_WriteIC = CardCommon.WriteIC(icdev, sec, block, data);
                 if (result_WriteIC != "")
                 {
@@ -911,7 +1132,7 @@ namespace CardOperationSystem
                     pf.Log(this.lbState.Text);
                     pf.EndLog(InfoSys.CardTypeStrUser, InfoSys.MethodOpenCard);
                     return;
-                }
+                }*/
             }
 
             //end add by kqz 
@@ -934,6 +1155,36 @@ namespace CardOperationSystem
             pf.Log(this.lbState.Text);
             pf.EndLog(InfoSys.CardTypeStrUser, InfoSys.MethodOpenCard);
         }
+
+        //start add by kqz 2017-5-9 9:44
+        private byte[] parseTextToByteArray(string text)
+        {
+            string[] oneString = text.Split(',');
+            if (oneString.Length <8 )
+            {
+                byte[] data = new byte[16];
+                int index = 0;
+                foreach (string s in oneString)
+                {
+                    string[] s2 = s.Split('-');
+                    try
+                    {
+
+                        data[index] = byte.Parse(s2[0]);
+                        index++;
+                        data[index] = byte.Parse(s2[1]);
+                        index++;
+                    }
+                    catch (Exception e)
+                    {
+                        return null;
+                    }
+                }
+                return data;
+            }
+            return null;
+        }
+        //end add
 
         private void button3_Click(object sender, EventArgs e)
         {
@@ -1161,10 +1412,14 @@ namespace CardOperationSystem
                     needCtrl = 1;
                 }
                 int famenCount = Int32.Parse(this.faMenCounter.Text.Trim());
-                string data = needCtrl.ToString("X").PadLeft(2, '0') + famenCount.ToString("X").PadLeft(2, '0');
-                data = data.PadRight(32, '0');
-                result_WriteIC = CardCommon.WriteIC(icdev, sec, block, data);
-                if (result_WriteIC != "")
+                //string data = needCtrl.ToString("X").PadLeft(2, '0') + famenCount.ToString("X").PadLeft(2, '0');
+                //data = data.PadRight(32, '0');
+                byte[] data_byte = new byte[2];
+                data_byte[0] = (byte)(needCtrl & 0xFF);
+                data_byte[1] = (byte)(famenCount & 0xFF);
+                bool res = false;
+                res = CardCommon.WriteICByte(icdev, sec, block, data_byte);
+                if (!res)
                 {
                     this.lbState.Text = InfoSys.InfoWriteFailure(sec, block, InfoSys.CardTypeStrUser, InfoSys.StrOpenFailure);
                     pf.Log(this.lbState.Text);
@@ -1173,9 +1428,29 @@ namespace CardOperationSystem
                 }
 
                 block = 1;
-                data = this.famen1_8.Text.Trim().PadRight(32, '0');
-                result_WriteIC = CardCommon.WriteIC(icdev, sec, block, data);
-                if (result_WriteIC != "")
+                string famen18 = this.famen1_8.Text.Trim();
+                if (famen18 == null || famen18.Equals(""))
+                {
+                    res = CardCommon.WriteICByte(icdev, sec, block, null);
+                }
+                else
+                {
+                    data_byte = parseTextToByteArray(famen18);
+                    if (data_byte != null)
+                    {
+                        res = CardCommon.WriteICByte(icdev, sec, block, data_byte);
+                    }
+                    else
+                    {
+                        this.lbState.Text = "阀门编号输入格式不正确！！！！";
+                        pf.Log(this.lbState.Text);
+                        pf.EndLog(InfoSys.CardTypeStrUser, InfoSys.MethodOpenCard);
+                        return;
+                    }
+                }
+                //data = this.famen1_8.Text.Trim().PadRight(32, '0');
+                //result_WriteIC = CardCommon.WriteIC(icdev, sec, block, data);
+                if (!res)
                 {
                     this.lbState.Text = InfoSys.InfoWriteFailure(sec, block, InfoSys.CardTypeStrUser, InfoSys.StrOpenFailure);
                     pf.Log(this.lbState.Text);
@@ -1184,9 +1459,29 @@ namespace CardOperationSystem
                 }
 
                 block = 2;
-                data = this.famen916.Text.Trim().PadRight(32, '0');
-                result_WriteIC = CardCommon.WriteIC(icdev, sec, block, data);
-                if (result_WriteIC != "")
+                string famen9_16 = this.famen916.Text.Trim();
+                if (famen9_16 == null || famen9_16.Equals(""))
+                {
+                    res = CardCommon.WriteICByte(icdev, sec, block, null);
+                }
+                else
+                {
+                    data_byte = parseTextToByteArray(famen9_16);
+                    if (data_byte != null)
+                    {
+                        res = CardCommon.WriteICByte(icdev, sec, block, data_byte);
+                    }
+                    else
+                    {
+                        this.lbState.Text = "阀门编号输入格式不正确！！！！";
+                        pf.Log(this.lbState.Text);
+                        pf.EndLog(InfoSys.CardTypeStrUser, InfoSys.MethodOpenCard);
+                        return;
+                    }
+                }
+                //data = this.famen1_8.Text.Trim().PadRight(32, '0');
+                //result_WriteIC = CardCommon.WriteIC(icdev, sec, block, data);
+                if (!res)
                 {
                     this.lbState.Text = InfoSys.InfoWriteFailure(sec, block, InfoSys.CardTypeStrUser, InfoSys.StrOpenFailure);
                     pf.Log(this.lbState.Text);
@@ -1202,7 +1497,38 @@ namespace CardOperationSystem
             if (result_AuthIC == InfoSys.StrAuthSuccess)
             {
                 block = 0;
-                string data = this.famen1724.Text.Trim().PadRight(32, '0');
+                byte[] data_byte;
+                bool res = false;
+                string famen17_24 = this.famen1724.Text.Trim();
+                if (famen17_24 == null || famen17_24.Equals(""))
+                {
+                    res = CardCommon.WriteICByte(icdev, sec, block, null);
+                }
+                else
+                {
+                    data_byte = parseTextToByteArray(famen17_24);
+                    if (data_byte != null)
+                    {
+                        res = CardCommon.WriteICByte(icdev, sec, block, data_byte);
+                    }
+                    else
+                    {
+                        this.lbState.Text = "阀门编号输入格式不正确！！！！";
+                        pf.Log(this.lbState.Text);
+                        pf.EndLog(InfoSys.CardTypeStrUser, InfoSys.MethodOpenCard);
+                        return;
+                    }
+                }
+                //data = this.famen1_8.Text.Trim().PadRight(32, '0');
+                //result_WriteIC = CardCommon.WriteIC(icdev, sec, block, data);
+                if (!res)
+                {
+                    this.lbState.Text = InfoSys.InfoWriteFailure(sec, block, InfoSys.CardTypeStrUser, InfoSys.StrOpenFailure);
+                    pf.Log(this.lbState.Text);
+                    pf.EndLog(InfoSys.CardTypeStrUser, InfoSys.MethodOpenCard);
+                    return;
+                }
+                /*string data = this.famen1724.Text.Trim().PadRight(32, '0');
                 result_WriteIC = CardCommon.WriteIC(icdev, sec, block, data);
                 if (result_WriteIC != "")
                 {
@@ -1210,10 +1536,37 @@ namespace CardOperationSystem
                     pf.Log(this.lbState.Text);
                     pf.EndLog(InfoSys.CardTypeStrUser, InfoSys.MethodOpenCard);
                     return;
-                }
+                }*/
 
                 block = 1;
-                data = this.famen2532.Text.Trim().PadRight(32, '0');
+                string famen25_32 = this.famen2532.Text.Trim();
+                if (famen25_32 == null || famen25_32.Equals(""))
+                {
+                    res = CardCommon.WriteICByte(icdev, sec, block, null);
+                }
+                else
+                {
+                    data_byte = parseTextToByteArray(famen25_32);
+                    if (data_byte != null)
+                    {
+                        res = CardCommon.WriteICByte(icdev, sec, block, data_byte);
+                    }
+                    else
+                    {
+                        this.lbState.Text = "阀门编号输入格式不正确！！！！";
+                        pf.Log(this.lbState.Text);
+                        pf.EndLog(InfoSys.CardTypeStrUser, InfoSys.MethodOpenCard);
+                        return;
+                    }
+                }
+                if (!res)
+                {
+                    this.lbState.Text = InfoSys.InfoWriteFailure(sec, block, InfoSys.CardTypeStrUser, InfoSys.StrOpenFailure);
+                    pf.Log(this.lbState.Text);
+                    pf.EndLog(InfoSys.CardTypeStrUser, InfoSys.MethodOpenCard);
+                    return;
+                }
+                /*data = this.famen2532.Text.Trim().PadRight(32, '0');
                 result_WriteIC = CardCommon.WriteIC(icdev, sec, block, data);
                 if (result_WriteIC != "")
                 {
@@ -1221,10 +1574,37 @@ namespace CardOperationSystem
                     pf.Log(this.lbState.Text);
                     pf.EndLog(InfoSys.CardTypeStrUser, InfoSys.MethodOpenCard);
                     return;
-                }
+                }*/
 
                 block = 2;
-                data = this.famen3340.Text.Trim().PadRight(32, '0');
+                string famen33_40 = this.famen3340.Text.Trim();
+                if (famen33_40 == null || famen33_40.Equals(""))
+                {
+                    res = CardCommon.WriteICByte(icdev, sec, block, null);
+                }
+                else
+                {
+                    data_byte = parseTextToByteArray(famen33_40);
+                    if (data_byte != null)
+                    {
+                        res = CardCommon.WriteICByte(icdev, sec, block, data_byte);
+                    }
+                    else
+                    {
+                        this.lbState.Text = "阀门编号输入格式不正确！！！！";
+                        pf.Log(this.lbState.Text);
+                        pf.EndLog(InfoSys.CardTypeStrUser, InfoSys.MethodOpenCard);
+                        return;
+                    }
+                }
+                if (!res)
+                {
+                    this.lbState.Text = InfoSys.InfoWriteFailure(sec, block, InfoSys.CardTypeStrUser, InfoSys.StrOpenFailure);
+                    pf.Log(this.lbState.Text);
+                    pf.EndLog(InfoSys.CardTypeStrUser, InfoSys.MethodOpenCard);
+                    return;
+                }
+                /*data = this.famen3340.Text.Trim().PadRight(32, '0');
                 result_WriteIC = CardCommon.WriteIC(icdev, sec, block, data);
                 if (result_WriteIC != "")
                 {
@@ -1232,7 +1612,7 @@ namespace CardOperationSystem
                     pf.Log(this.lbState.Text);
                     pf.EndLog(InfoSys.CardTypeStrUser, InfoSys.MethodOpenCard);
                     return;
-                }
+                }*/
             }
 
             sec = 6;
@@ -1241,7 +1621,36 @@ namespace CardOperationSystem
             if (result_AuthIC == InfoSys.StrAuthSuccess)
             {
                 block = 0;
-                string data = this.famen4148.Text.Trim().PadRight(32, '0');
+                byte[] data_byte;
+                bool res = false;
+                string famen41_48 = this.famen4148.Text.Trim();
+                if (famen41_48 == null || famen41_48.Equals(""))
+                {
+                    res = CardCommon.WriteICByte(icdev, sec, block, null);
+                }
+                else
+                {
+                    data_byte = parseTextToByteArray(famen41_48);
+                    if (data_byte != null)
+                    {
+                        res = CardCommon.WriteICByte(icdev, sec, block, data_byte);
+                    }
+                    else
+                    {
+                        this.lbState.Text = "阀门编号输入格式不正确！！！！";
+                        pf.Log(this.lbState.Text);
+                        pf.EndLog(InfoSys.CardTypeStrUser, InfoSys.MethodOpenCard);
+                        return;
+                    }
+                }
+                if (!res)
+                {
+                    this.lbState.Text = InfoSys.InfoWriteFailure(sec, block, InfoSys.CardTypeStrUser, InfoSys.StrOpenFailure);
+                    pf.Log(this.lbState.Text);
+                    pf.EndLog(InfoSys.CardTypeStrUser, InfoSys.MethodOpenCard);
+                    return;
+                }
+                /*string data = this.famen4148.Text.Trim().PadRight(32, '0');
                 result_WriteIC = CardCommon.WriteIC(icdev, sec, block, data);
                 if (result_WriteIC != "")
                 {
@@ -1249,10 +1658,37 @@ namespace CardOperationSystem
                     pf.Log(this.lbState.Text);
                     pf.EndLog(InfoSys.CardTypeStrUser, InfoSys.MethodOpenCard);
                     return;
-                }
+                }*/
 
                 block = 1;
-                data = this.famen4956.Text.Trim().PadRight(32, '0');
+                string famen49_56 = this.famen4956.Text.Trim();
+                if (famen49_56 == null || famen49_56.Equals(""))
+                {
+                    res = CardCommon.WriteICByte(icdev, sec, block, null);
+                }
+                else
+                {
+                    data_byte = parseTextToByteArray(famen49_56);
+                    if (data_byte != null)
+                    {
+                        res = CardCommon.WriteICByte(icdev, sec, block, data_byte);
+                    }
+                    else
+                    {
+                        this.lbState.Text = "阀门编号输入格式不正确！！！！";
+                        pf.Log(this.lbState.Text);
+                        pf.EndLog(InfoSys.CardTypeStrUser, InfoSys.MethodOpenCard);
+                        return;
+                    }
+                }
+                if (!res)
+                {
+                    this.lbState.Text = InfoSys.InfoWriteFailure(sec, block, InfoSys.CardTypeStrUser, InfoSys.StrOpenFailure);
+                    pf.Log(this.lbState.Text);
+                    pf.EndLog(InfoSys.CardTypeStrUser, InfoSys.MethodOpenCard);
+                    return;
+                }
+                /*data = this.famen4956.Text.Trim().PadRight(32, '0');
                 result_WriteIC = CardCommon.WriteIC(icdev, sec, block, data);
                 if (result_WriteIC != "")
                 {
@@ -1260,10 +1696,37 @@ namespace CardOperationSystem
                     pf.Log(this.lbState.Text);
                     pf.EndLog(InfoSys.CardTypeStrUser, InfoSys.MethodOpenCard);
                     return;
-                }
+                }*/
 
                 block = 2;
-                data = this.famen5764.Text.Trim().PadRight(32, '0');
+                string famen57_64 = this.famen5764.Text.Trim();
+                if (famen57_64 == null || famen57_64.Equals(""))
+                {
+                    res = CardCommon.WriteICByte(icdev, sec, block, null);
+                }
+                else
+                {
+                    data_byte = parseTextToByteArray(famen57_64);
+                    if (data_byte != null)
+                    {
+                        res = CardCommon.WriteICByte(icdev, sec, block, data_byte);
+                    }
+                    else
+                    {
+                        this.lbState.Text = "阀门编号输入格式不正确！！！！";
+                        pf.Log(this.lbState.Text);
+                        pf.EndLog(InfoSys.CardTypeStrUser, InfoSys.MethodOpenCard);
+                        return;
+                    }
+                }
+                if (!res)
+                {
+                    this.lbState.Text = InfoSys.InfoWriteFailure(sec, block, InfoSys.CardTypeStrUser, InfoSys.StrOpenFailure);
+                    pf.Log(this.lbState.Text);
+                    pf.EndLog(InfoSys.CardTypeStrUser, InfoSys.MethodOpenCard);
+                    return;
+                }
+                /*data = this.famen5764.Text.Trim().PadRight(32, '0');
                 result_WriteIC = CardCommon.WriteIC(icdev, sec, block, data);
                 if (result_WriteIC != "")
                 {
@@ -1271,7 +1734,7 @@ namespace CardOperationSystem
                     pf.Log(this.lbState.Text);
                     pf.EndLog(InfoSys.CardTypeStrUser, InfoSys.MethodOpenCard);
                     return;
-                }
+                }*/
             }
 
             //end add by kqz 

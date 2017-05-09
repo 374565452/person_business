@@ -121,11 +121,17 @@ namespace CardOperationSystem
         public static string CardTypeRead = "03";
         public static string CardTypeClear = "04";
         public static string CardTypeNetSet = "05";
+        //start add by kqz 2017-5-9 15:27
+        public static string CardTypeHigh = "06";
+        //end add
 
         public static string CardTypeStrUser = "用户卡";
         public static string CardTypeStrDevice = "设置卡";
         public static string CardTypeStrRead = "读取卡";
         public static string CardTypeStrClear = "清零卡";
+        //start add by kqz 2017-5-9 15:23
+        public static string CardTypeStrHigh = "高级用户卡";
+        //end add
         public static string CardTypeStrNetSet = "网络设置卡";
 
         public static string MethodOpenCard = "开卡";

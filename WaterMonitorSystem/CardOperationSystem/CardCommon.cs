@@ -45,6 +45,48 @@ namespace CardOperationSystem
             return str;
         }
 
+        //start add by kqz 2017-5-9 9:26
+        public static bool WriteICByte(int icdev, int sec, int block, byte[] data)
+        {
+            byte[] databuff = new byte[16];
+            for (int i = 0; i < databuff.Length; i++)
+            {
+                databuff[i] = 0;
+            }
+            if (data.Length >16)
+            {
+                return false;
+            }
+            if (data != null)
+            {
+                System.Array.Copy(data, 0, databuff, 0, data.Length);
+            }
+            if( (mifareone.rf_write(icdev, sec * 4 + block, databuff) == 0))
+            {
+                return true;
+            }
+            return false;
+        }
+
+        public static byte[] ReadICByte(int icdev, int sec, int block)
+        {
+            byte[] data = new byte[16];
+            for (int i = 0; i < 16; i++)
+            {
+                data[i] = 0;
+            }
+            if (mifareone.rf_read(icdev, sec * 4 + block, data) == 0)
+            {
+                return data;
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+        //end add
+
         /// <summary>
         /// 写指定扇区数据块内容
         /// </summary>

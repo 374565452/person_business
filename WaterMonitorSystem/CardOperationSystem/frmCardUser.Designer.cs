@@ -596,6 +596,7 @@
             this.famen1_8.Name = "famen1_8";
             this.famen1_8.Size = new System.Drawing.Size(393, 21);
             this.famen1_8.TabIndex = 207;
+            this.famen1_8.Text = "00-00,00-00,00-00,00-00,00-00,00-00,00-00,00-00";
             // 
             // famen916
             // 
@@ -603,6 +604,7 @@
             this.famen916.Name = "famen916";
             this.famen916.Size = new System.Drawing.Size(393, 21);
             this.famen916.TabIndex = 209;
+            this.famen916.Text = "00-00,00-00,00-00,00-00,00-00,00-00,00-00,00-00";
             // 
             // label22
             // 
@@ -619,6 +621,7 @@
             this.famen1724.Name = "famen1724";
             this.famen1724.Size = new System.Drawing.Size(393, 21);
             this.famen1724.TabIndex = 211;
+            this.famen1724.Text = "00-00,00-00,00-00,00-00,00-00,00-00,00-00,00-00";
             // 
             // label23
             // 
@@ -635,6 +638,7 @@
             this.famen2532.Name = "famen2532";
             this.famen2532.Size = new System.Drawing.Size(393, 21);
             this.famen2532.TabIndex = 213;
+            this.famen2532.Text = "00-00,00-00,00-00,00-00,00-00,00-00,00-00,00-00";
             // 
             // label24
             // 
@@ -651,6 +655,7 @@
             this.famen3340.Name = "famen3340";
             this.famen3340.Size = new System.Drawing.Size(393, 21);
             this.famen3340.TabIndex = 215;
+            this.famen3340.Text = "00-00,00-00,00-00,00-00,00-00,00-00,00-00,00-00";
             // 
             // label25
             // 
@@ -667,6 +672,7 @@
             this.famen4148.Name = "famen4148";
             this.famen4148.Size = new System.Drawing.Size(393, 21);
             this.famen4148.TabIndex = 217;
+            this.famen4148.Text = "00-00,00-00,00-00,00-00,00-00,00-00,00-00,00-00";
             // 
             // label26
             // 
@@ -683,6 +689,7 @@
             this.famen4956.Name = "famen4956";
             this.famen4956.Size = new System.Drawing.Size(393, 21);
             this.famen4956.TabIndex = 219;
+            this.famen4956.Text = "00-00,00-00,00-00,00-00,00-00,00-00,00-00,00-00";
             // 
             // label27
             // 
@@ -699,6 +706,7 @@
             this.famen5764.Name = "famen5764";
             this.famen5764.Size = new System.Drawing.Size(393, 21);
             this.famen5764.TabIndex = 221;
+            this.famen5764.Text = "00-00,00-00,00-00,00-00,00-00,00-00,00-00,00-00";
             // 
             // label28
             // 
@@ -714,9 +722,10 @@
             this.label29.AutoSize = true;
             this.label29.Location = new System.Drawing.Point(67, 693);
             this.label29.Name = "label29";
-            this.label29.Size = new System.Drawing.Size(353, 12);
+            this.label29.Size = new System.Drawing.Size(389, 24);
             this.label29.TabIndex = 222;
-            this.label29.Text = "阀门编号格式为：00两个字节代表一个编号，每一组最长为16字节";
+            this.label29.Text = "阀门编号格式为：00-01代表一个阀门编号，编号与编号之间以“,”间隔\r\n1-8为例：00-01,00-02,00-03,00-04,00-05,00-06,00" +
+    "-07,00-08";
             // 
             // frmCardUser
             // 
