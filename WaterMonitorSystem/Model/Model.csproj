@@ -46,6 +46,8 @@
     <Compile Include="CardClearLog.cs" />
     <Compile Include="CardDevice.cs" />
     <Compile Include="CardDeviceLog.cs" />
+    <Compile Include="CardHigh.cs" />
+    <Compile Include="CardHighLog.cs" />
     <Compile Include="CardNetSet.cs" />
     <Compile Include="CardNetSetLog.cs" />
     <Compile Include="CardRead.cs" />

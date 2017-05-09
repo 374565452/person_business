@@ -1,15 +1,18 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Runtime.Serialization;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace Maticsoft.Model
 {
-    //add by kqz 2017-5-9 17:14
     /// <summary>
-    /// 清除卡操作日志
+    /// 高级用户卡
     /// </summary>
     [Serializable]
     [DataContract]
-    public class CardClearLog
+    public class CardHigh
     {
         /// <summary>
         /// Id
@@ -24,40 +27,27 @@ namespace Maticsoft.Model
         public string SerialNumber { get; set; }
 
         /// <summary>
-        /// 操作人id
+        /// 开卡操作人id
         /// </summary>	
         [DataMember]
-        public long LogUserId { get; set; }
+        public long OpenUserId { get; set; }
 
         /// <summary>
-        /// 操作人名字
+        /// 开卡操作人名字
         /// </summary>	
         [DataMember]
-        public string LogUserName { get; set; }
+        public string OpenUserName { get; set; }
 
         /// <summary>
-        /// 操作地址
+        /// 开卡地址
         /// </summary>	
         [DataMember]
-        public string LogAddress { get; set; }
+        public string OpenAddress { get; set; }
 
         /// <summary>
-        /// 操作时间
+        /// 开卡时间
         /// </summary>	
         [DataMember]
-        public DateTime LogTime { get; set; }
-
-        /// <summary>
-        /// 操作类型
-        /// </summary>	
-        [DataMember]
-        public string LogType { get; set; }
-
-        /// <summary>
-        /// 操作内容
-        /// </summary>	
-        [DataMember]
-        public string LogContent { get; set; }
-
+        public DateTime OpenTime { get; set; }
     }
 }

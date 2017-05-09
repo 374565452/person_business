@@ -454,6 +454,140 @@ namespace WaterMonitorSystem
         }
         #endregion
 
+        //start add by kqz 2017-5-9 17:13
+        #region 高级用户卡
+        //开卡
+        private JavaScriptObject OpenCardHigh(HttpRequest request)
+        {
+            string opUserId = request["opUserId"] ?? "0";
+            string opUserName = request["opUserName"] ?? "";
+            string opPassword = request["opPassword"] ?? "";
+            string NetCardMAC = request["NetCardMAC"] ?? "";
+            string SerialNumber = request["SerialNumber"] ?? "";
+
+            JavaScriptObject result = new JavaScriptObject();
+            result.Add("Result", false);
+            result.Add("Message", "");
+            DateTime dateNow = DateTime.Now;
+            CardHigh obj = null;
+            try
+            {
+                if (CardHighModule.ExistsSerialNumber(SerialNumber))
+                {
+                    result["Message"] = "已存在相同序列号卡，无法开卡！";
+                }
+                else
+                {
+                    obj = new CardHigh();
+                    obj.SerialNumber = SerialNumber;
+                    obj.OpenUserId = long.Parse(opUserId);
+                    obj.OpenUserName = opUserName;
+                    obj.OpenAddress = NetCardMAC;
+                    obj.OpenTime = dateNow;
+
+                    long id = CardHighModule.AddCardClear(obj);
+
+                    if (id > 0)
+                    {
+                        obj.Id = id;
+                        result["Result"] = true;
+                        result["Message"] = id;
+                    }
+                    else
+                    {
+                        result["Message"] = "开卡保存出错！";
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                result["Message"] = "开卡出错！";
+                myLogger.Error(ex.Message);
+            }
+
+            try
+            {
+                CardHighLog objLog = new CardHighLog();
+                objLog.SerialNumber = SerialNumber;
+                objLog.LogUserId = long.Parse(opUserId);
+                objLog.LogUserName = opUserName;
+                objLog.LogAddress = NetCardMAC;
+                objLog.LogTime = dateNow;
+                objLog.LogType = "开卡";
+                objLog.LogContent = result["Result"] + "|" + result["Message"];
+
+                CardHighLogModule.AddCardClearLog(objLog);
+            }
+            catch (Exception ex)
+            {
+                myLogger.Error(ex.Message);
+            }
+
+            return result;
+        }
+
+        //注销卡
+        private JavaScriptObject CancelCardHigh(HttpRequest request)
+        {
+            string opUserId = request["opUserId"] ?? "0";
+            string opUserName = request["opUserName"] ?? "";
+            string opPassword = request["opPassword"] ?? "";
+            string NetCardMAC = request["NetCardMAC"] ?? "";
+            string SerialNumber = request["SerialNumber"] ?? "";
+
+            JavaScriptObject result = new JavaScriptObject();
+            result.Add("Result", false);
+            result.Add("Message", "");
+            DateTime dateNow = DateTime.Now;
+            CardHigh obj = null;
+            try
+            {
+                obj = CardHighModule.GetCardClearBySerialNumber(SerialNumber);
+                if (obj != null)
+                {
+                    if (CardHighModule.DeleteCardClear(obj.Id) == "删除成功")
+                    {
+                        result["Result"] = true;
+                        result["Message"] = "注销成功";
+                    }
+                    else
+                    {
+                        result["Message"] = "注销保存失败";
+                    }
+                }
+                else
+                {
+                    result["Message"] = "卡不存在，无法注销！";
+                }
+            }
+            catch (Exception ex)
+            {
+                result["Message"] = "注销出错！";
+                myLogger.Error(ex.Message);
+            }
+
+            try
+            {
+                CardHighLog objLog = new CardHighLog();
+                objLog.SerialNumber = SerialNumber;
+                objLog.LogUserId = long.Parse(opUserId);
+                objLog.LogUserName = opUserName;
+                objLog.LogAddress = NetCardMAC;
+                objLog.LogTime = dateNow;
+                objLog.LogType = "注销";
+                objLog.LogContent = result["Result"] + "|" + result["Message"];
+
+                CardHighLogModule.AddCardClearLog(objLog);
+            }
+            catch (Exception ex)
+            {
+                myLogger.Error(ex.Message);
+            }
+
+            return result;
+        }
+        #endregion
+        //end add
         #region 网络设置卡
         //开卡
         private JavaScriptObject OpenCardNetSet(HttpRequest request)

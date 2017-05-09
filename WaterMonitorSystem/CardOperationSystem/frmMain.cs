@@ -1009,5 +1009,17 @@ namespace CardOperationSystem
             fQuery = new frmQuery(UserNo, UserName, IdentityNumber, Telephone);
             fQuery.ShowDialog();
         }
+        frmCardHigh fCardHigh = null;
+        private void button9_Click(object sender, EventArgs e)
+        {
+            if (!connectIC)
+            {
+                MessageBox.Show("请等待串口打开成功！");
+                return;
+            }
+
+            fCardHigh = new frmCardHigh(this);
+            fCardHigh.ShowDialog();
+        }
     }
 }

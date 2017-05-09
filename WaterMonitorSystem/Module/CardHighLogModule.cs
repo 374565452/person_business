@@ -1,19 +1,22 @@
 ﻿using DBUtility;
 using Maticsoft.Model;
 using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
+using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace Module
 {
-    
-    public class CardClearLogModule
+    //add by kqz 2017-5-9 17:14
+    public class CardHighLogModule
     {
-        public static long AddCardClearLog(CardClearLog cardClearLog)
+        public static long AddCardClearLog(CardHighLog cardClearLog)
         {
             StringBuilder strSql = new StringBuilder();
-            strSql.Append("insert into CardClearLog(");
+            strSql.Append("insert into CardHighLog(");
             strSql.Append("SerialNumber,LogUserId,LogUserName,LogAddress,LogTime,LogType,LogContent)");
             strSql.Append(" values (");
             strSql.Append("@SerialNumber,@LogUserId,@LogUserName,@LogAddress,@LogTime,@LogType,@LogContent)");
@@ -44,5 +47,6 @@ namespace Module
                 return Convert.ToInt64(obj);
             }
         }
+
     }
 }

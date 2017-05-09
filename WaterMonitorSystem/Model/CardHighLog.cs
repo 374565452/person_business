@@ -1,15 +1,19 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Runtime.Serialization;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace Maticsoft.Model
 {
     //add by kqz 2017-5-9 17:14
-    /// <summary>
+        /// <summary>
     /// 清除卡操作日志
     /// </summary>
     [Serializable]
     [DataContract]
-    public class CardClearLog
+    public class CardHighLog
     {
         /// <summary>
         /// Id
@@ -58,6 +62,5 @@ namespace Maticsoft.Model
         /// </summary>	
         [DataMember]
         public string LogContent { get; set; }
-
     }
 }
