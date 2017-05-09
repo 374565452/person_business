@@ -47,6 +47,10 @@ namespace WaterMonitorSystem
                     case "GetTypeCodeList": result = GetTypeCodeList(request); break;
                     case "OpenCardClear": result = OpenCardClear(request); break;
                     case "CancelCardClear": result = CancelCardClear(request); break;
+                    //start add by kqz 2017-5-9 20:02
+                    case "CancelCardHigh": result = CancelCardHigh(request); break;
+                    case "OpenCardHigh": result = OpenCardHigh(request); break;
+                    //end add
                     case "OpenCardNetSet": result = OpenCardNetSet(request); break;
                     case "ModifyCardNetSet": result = ModifyCardNetSet(request); break;
                     case "CancelCardNetSet": result = CancelCardNetSet(request); break;

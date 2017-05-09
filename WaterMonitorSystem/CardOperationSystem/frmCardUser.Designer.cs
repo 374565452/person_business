@@ -188,7 +188,7 @@
             // lbState
             // 
             this.lbState.AutoSize = true;
-            this.lbState.Location = new System.Drawing.Point(94, 758);
+            this.lbState.Location = new System.Drawing.Point(94, 753);
             this.lbState.Name = "lbState";
             this.lbState.Size = new System.Drawing.Size(29, 12);
             this.lbState.TabIndex = 125;

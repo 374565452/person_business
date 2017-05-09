@@ -1317,14 +1317,14 @@ namespace CardOperationSystem
             IP = this.txtIP.Text.Trim();
             if (IP.Length < 1 || IP.Length > 16)
             {
-                MessageBox.Show("IP地址或域名最长16个英文字符，不能为空");
+                MessageBox.Show("IP地址或域名1最长16个英文字符，不能为空");
                 return false;
             }
 
             Port = this.txtPort.Text.Trim();
             if (!Tools.CheckValue(Port, "int", 0, 0, 1, 65535))
             {
-                MessageBox.Show("端口好范围为 1-65535");
+                MessageBox.Show("端口号1范围为 1-65535");
                 return false;
             }
 
@@ -1362,7 +1362,7 @@ namespace CardOperationSystem
             Port2 = this.txtPort2.Text.Trim();
             if (!Tools.CheckValue(Port2, "int", 0, 0, 1, 65535))
             {
-                MessageBox.Show("端口好范围为 1-65535");
+                MessageBox.Show("端口号2范围为 1-65535");
                 return false;
             }
 
@@ -1399,7 +1399,7 @@ namespace CardOperationSystem
             Port3 = this.txtPort3.Text.Trim();
             if (!Tools.CheckValue(Port3, "int", 0, 0, 1, 65535))
             {
-                MessageBox.Show("端口好范围为 1-65535");
+                MessageBox.Show("端口号2范围为 1-65535");
                 return false;
             }
 

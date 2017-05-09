@@ -128,7 +128,10 @@
             this.Controls.Add(this.label12);
             this.Controls.Add(this.lbCardType);
             this.Controls.Add(this.label1);
+            this.MaximizeBox = false;
+            this.MinimizeBox = false;
             this.Name = "frmCardHigh";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "高级用户卡";
             this.Load += new System.EventHandler(this.frmCardHigh_Load);
             this.ResumeLayout(false);

@@ -61,13 +61,14 @@ namespace CardOperationSystem
             this.listBox1.SelectedIndex = -1;
             this.listBox2.Items.Clear();
 
-            this.famen5764.Text = "";
-            this.famen4956.Text = "";
-            this.famen4148.Text = "";
-            this.famen3340.Text = "";
-            this.famen2532.Text = "";
-            this.famen1724.Text = "";
-            this.famen1_8.Text = "";
+            //this.famen5764.Text = "";
+           //this.famen4956.Text = "";
+            //this.famen4148.Text = "";
+            //this.famen3340.Text = "";
+            //this.famen2532.Text = "";
+            //this.famen1724.Text = "";
+            //this.famen1_8.Text = "";
+            //this.famen916.Text = "";
             this.faMenCounter.Text = 0 + "";
             this.needFamenCtr.SelectedIndex = 0;
 
@@ -1160,7 +1161,7 @@ namespace CardOperationSystem
         private byte[] parseTextToByteArray(string text)
         {
             string[] oneString = text.Split(',');
-            if (oneString.Length <8 )
+            if (oneString.Length <=8 )
             {
                 byte[] data = new byte[16];
                 int index = 0;

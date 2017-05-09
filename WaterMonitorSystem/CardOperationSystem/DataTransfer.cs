@@ -153,6 +153,50 @@ namespace CardOperationSystem
             return retString;
         }
 
+        //start add by kqz 2017-5-9 20:00
+        //高级用户卡开卡
+        public static string OpenCardHigh(string SerialNumber)
+        {
+            IDictionary<string, string> parameters = new Dictionary<string, string>();
+            parameters.Add("Method", "OpenCardHigh");
+            parameters.Add("NetCardMAC", InfoSys.NetCardMAC);
+            parameters.Add("opUserId", InfoSys.UserId.ToString());
+            parameters.Add("opUserName", InfoSys.LoginUserName);
+            parameters.Add("opPassword", InfoSys.LoginPassword);
+            parameters.Add("SerialNumber", SerialNumber);
+
+            JavaScriptObject result = new JavaScriptObject();
+            result.Add("Result", false);
+            result.Add("Message", "清零卡开卡保存出错！");
+
+            string retString = HttpWebResponseUtility.getPostResponse(getLoginUrl(), "OpenCardHigh", parameters, "",
+                JavaScriptConvert.SerializeObject(result));
+
+            return retString;
+        }
+
+        //高级用户卡注销
+        public static string CancelCardHigh(string SerialNumber)
+        {
+            IDictionary<string, string> parameters = new Dictionary<string, string>();
+            parameters.Add("Method", "CancelCardHigh");
+            parameters.Add("NetCardMAC", InfoSys.NetCardMAC);
+            parameters.Add("opUserId", InfoSys.UserId.ToString());
+            parameters.Add("opUserName", InfoSys.LoginUserName);
+            parameters.Add("opPassword", InfoSys.LoginPassword);
+            parameters.Add("SerialNumber", SerialNumber);
+
+            JavaScriptObject result = new JavaScriptObject();
+            result.Add("Result", false);
+            result.Add("Message", "清零卡注销卡保存出错！");
+
+            string retString = HttpWebResponseUtility.getPostResponse(getLoginUrl(), "CancelCardHigh", parameters, "",
+                JavaScriptConvert.SerializeObject(result));
+
+            return retString;
+        }
+
+        //end add
         //网络设置卡开卡
         public static string OpenCardNetSet(string SerialNumber, string IP, string Port, string IsDomain,
             string APNName, string APNUserName, string APNPassword)

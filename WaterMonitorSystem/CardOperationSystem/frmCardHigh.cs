@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -120,7 +121,7 @@ namespace CardOperationSystem
             this.lbSerialNumber.Text = pf.getSnr().ToString("X");
 
             //保存远程服务器数据库
-            string str = DataTransfer.OpenCardClear(this.lbSerialNumber.Text);
+            string str = DataTransfer.OpenCardHigh(this.lbSerialNumber.Text);
             JavaScriptObject result = (JavaScriptObject)JavaScriptConvert.DeserializeObject(str);
             if (!bool.Parse(result["Result"].ToString()))
             {
@@ -223,7 +224,7 @@ namespace CardOperationSystem
             }
 
             //保存远程服务器数据库
-            string str = DataTransfer.CancelCardClear(this.lbSerialNumber.Text);
+            string str = DataTransfer.CancelCardHigh(this.lbSerialNumber.Text);
             JavaScriptObject result = (JavaScriptObject)JavaScriptConvert.DeserializeObject(str);
             if (!bool.Parse(result["Result"].ToString()))
             {
