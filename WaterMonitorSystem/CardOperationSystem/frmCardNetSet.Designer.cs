@@ -55,37 +55,19 @@
             this.lbCardType = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.label14 = new System.Windows.Forms.Label();
-            this.label15 = new System.Windows.Forms.Label();
-            this.label16 = new System.Windows.Forms.Label();
-            this.label17 = new System.Windows.Forms.Label();
             this.label18 = new System.Windows.Forms.Label();
             this.ckbIsDomain2 = new System.Windows.Forms.CheckBox();
             this.label19 = new System.Windows.Forms.Label();
             this.txtPort2 = new System.Windows.Forms.TextBox();
-            this.txtPassword2 = new System.Windows.Forms.TextBox();
-            this.txtUserName2 = new System.Windows.Forms.TextBox();
-            this.txtApn2 = new System.Windows.Forms.TextBox();
             this.txtIP2 = new System.Windows.Forms.TextBox();
-            this.label20 = new System.Windows.Forms.Label();
-            this.label21 = new System.Windows.Forms.Label();
-            this.label22 = new System.Windows.Forms.Label();
             this.label23 = new System.Windows.Forms.Label();
             this.label24 = new System.Windows.Forms.Label();
             this.label25 = new System.Windows.Forms.Label();
-            this.label26 = new System.Windows.Forms.Label();
-            this.label27 = new System.Windows.Forms.Label();
-            this.label28 = new System.Windows.Forms.Label();
             this.label29 = new System.Windows.Forms.Label();
             this.ckbIsDomain3 = new System.Windows.Forms.CheckBox();
             this.label30 = new System.Windows.Forms.Label();
             this.txtPort3 = new System.Windows.Forms.TextBox();
-            this.txtPassword3 = new System.Windows.Forms.TextBox();
-            this.txtUserName3 = new System.Windows.Forms.TextBox();
-            this.txtApn3 = new System.Windows.Forms.TextBox();
             this.txtIP3 = new System.Windows.Forms.TextBox();
-            this.label31 = new System.Windows.Forms.Label();
-            this.label32 = new System.Windows.Forms.Label();
-            this.label33 = new System.Windows.Forms.Label();
             this.label34 = new System.Windows.Forms.Label();
             this.label35 = new System.Windows.Forms.Label();
             this.SuspendLayout();
@@ -137,7 +119,7 @@
             // 
             // btnCancel
             // 
-            this.btnCancel.Location = new System.Drawing.Point(383, 618);
+            this.btnCancel.Location = new System.Drawing.Point(343, 402);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(75, 23);
             this.btnCancel.TabIndex = 127;
@@ -147,7 +129,7 @@
             // 
             // button3
             // 
-            this.button3.Location = new System.Drawing.Point(221, 618);
+            this.button3.Location = new System.Drawing.Point(181, 402);
             this.button3.Name = "button3";
             this.button3.Size = new System.Drawing.Size(75, 23);
             this.button3.TabIndex = 126;
@@ -157,7 +139,7 @@
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(302, 618);
+            this.button2.Location = new System.Drawing.Point(262, 402);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(75, 23);
             this.button2.TabIndex = 125;
@@ -167,7 +149,7 @@
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(140, 618);
+            this.button1.Location = new System.Drawing.Point(100, 402);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(75, 23);
             this.button1.TabIndex = 124;
@@ -277,7 +259,7 @@
             // lbState
             // 
             this.lbState.AutoSize = true;
-            this.lbState.Location = new System.Drawing.Point(138, 676);
+            this.lbState.Location = new System.Drawing.Point(105, 441);
             this.lbState.Name = "lbState";
             this.lbState.Size = new System.Drawing.Size(29, 12);
             this.lbState.TabIndex = 111;
@@ -330,33 +312,6 @@
             this.label14.TabIndex = 149;
             this.label14.Text = "1-65536";
             // 
-            // label15
-            // 
-            this.label15.AutoSize = true;
-            this.label15.Location = new System.Drawing.Point(303, 394);
-            this.label15.Name = "label15";
-            this.label15.Size = new System.Drawing.Size(101, 12);
-            this.label15.TabIndex = 148;
-            this.label15.Text = "最长16个英文字符";
-            // 
-            // label16
-            // 
-            this.label16.AutoSize = true;
-            this.label16.Location = new System.Drawing.Point(303, 357);
-            this.label16.Name = "label16";
-            this.label16.Size = new System.Drawing.Size(101, 12);
-            this.label16.TabIndex = 147;
-            this.label16.Text = "最长16个英文字符";
-            // 
-            // label17
-            // 
-            this.label17.AutoSize = true;
-            this.label17.Location = new System.Drawing.Point(303, 320);
-            this.label17.Name = "label17";
-            this.label17.Size = new System.Drawing.Size(101, 12);
-            this.label17.TabIndex = 146;
-            this.label17.Text = "最长16个英文字符";
-            // 
             // label18
             // 
             this.label18.AutoSize = true;
@@ -392,60 +347,12 @@
             this.txtPort2.Size = new System.Drawing.Size(75, 21);
             this.txtPort2.TabIndex = 139;
             // 
-            // txtPassword2
-            // 
-            this.txtPassword2.Location = new System.Drawing.Point(140, 391);
-            this.txtPassword2.Name = "txtPassword2";
-            this.txtPassword2.Size = new System.Drawing.Size(156, 21);
-            this.txtPassword2.TabIndex = 142;
-            // 
-            // txtUserName2
-            // 
-            this.txtUserName2.Location = new System.Drawing.Point(140, 354);
-            this.txtUserName2.Name = "txtUserName2";
-            this.txtUserName2.Size = new System.Drawing.Size(156, 21);
-            this.txtUserName2.TabIndex = 141;
-            // 
-            // txtApn2
-            // 
-            this.txtApn2.Location = new System.Drawing.Point(140, 317);
-            this.txtApn2.Name = "txtApn2";
-            this.txtApn2.Size = new System.Drawing.Size(156, 21);
-            this.txtApn2.TabIndex = 140;
-            // 
             // txtIP2
             // 
             this.txtIP2.Location = new System.Drawing.Point(140, 243);
             this.txtIP2.Name = "txtIP2";
             this.txtIP2.Size = new System.Drawing.Size(156, 21);
             this.txtIP2.TabIndex = 138;
-            // 
-            // label20
-            // 
-            this.label20.AutoSize = true;
-            this.label20.Location = new System.Drawing.Point(93, 394);
-            this.label20.Name = "label20";
-            this.label20.Size = new System.Drawing.Size(47, 12);
-            this.label20.TabIndex = 137;
-            this.label20.Text = "密码2：";
-            // 
-            // label21
-            // 
-            this.label21.AutoSize = true;
-            this.label21.Location = new System.Drawing.Point(81, 357);
-            this.label21.Name = "label21";
-            this.label21.Size = new System.Drawing.Size(59, 12);
-            this.label21.TabIndex = 136;
-            this.label21.Text = "用户名2：";
-            // 
-            // label22
-            // 
-            this.label22.AutoSize = true;
-            this.label22.Location = new System.Drawing.Point(75, 320);
-            this.label22.Name = "label22";
-            this.label22.Size = new System.Drawing.Size(65, 12);
-            this.label22.TabIndex = 135;
-            this.label22.Text = "APN名称2：";
             // 
             // label23
             // 
@@ -468,43 +375,16 @@
             // label25
             // 
             this.label25.AutoSize = true;
-            this.label25.Location = new System.Drawing.Point(221, 473);
+            this.label25.Location = new System.Drawing.Point(221, 358);
             this.label25.Name = "label25";
             this.label25.Size = new System.Drawing.Size(47, 12);
             this.label25.TabIndex = 166;
             this.label25.Text = "1-65536";
             // 
-            // label26
-            // 
-            this.label26.AutoSize = true;
-            this.label26.Location = new System.Drawing.Point(303, 584);
-            this.label26.Name = "label26";
-            this.label26.Size = new System.Drawing.Size(101, 12);
-            this.label26.TabIndex = 165;
-            this.label26.Text = "最长16个英文字符";
-            // 
-            // label27
-            // 
-            this.label27.AutoSize = true;
-            this.label27.Location = new System.Drawing.Point(303, 547);
-            this.label27.Name = "label27";
-            this.label27.Size = new System.Drawing.Size(101, 12);
-            this.label27.TabIndex = 164;
-            this.label27.Text = "最长16个英文字符";
-            // 
-            // label28
-            // 
-            this.label28.AutoSize = true;
-            this.label28.Location = new System.Drawing.Point(303, 510);
-            this.label28.Name = "label28";
-            this.label28.Size = new System.Drawing.Size(101, 12);
-            this.label28.TabIndex = 163;
-            this.label28.Text = "最长16个英文字符";
-            // 
             // label29
             // 
             this.label29.AutoSize = true;
-            this.label29.Location = new System.Drawing.Point(303, 436);
+            this.label29.Location = new System.Drawing.Point(303, 321);
             this.label29.Name = "label29";
             this.label29.Size = new System.Drawing.Size(161, 12);
             this.label29.TabIndex = 162;
@@ -513,7 +393,7 @@
             // ckbIsDomain3
             // 
             this.ckbIsDomain3.AutoSize = true;
-            this.ckbIsDomain3.Location = new System.Drawing.Point(400, 472);
+            this.ckbIsDomain3.Location = new System.Drawing.Point(400, 357);
             this.ckbIsDomain3.Name = "ckbIsDomain3";
             this.ckbIsDomain3.Size = new System.Drawing.Size(36, 16);
             this.ckbIsDomain3.TabIndex = 161;
@@ -523,7 +403,7 @@
             // label30
             // 
             this.label30.AutoSize = true;
-            this.label30.Location = new System.Drawing.Point(303, 473);
+            this.label30.Location = new System.Drawing.Point(303, 358);
             this.label30.Name = "label30";
             this.label30.Size = new System.Drawing.Size(89, 12);
             this.label30.TabIndex = 160;
@@ -531,70 +411,22 @@
             // 
             // txtPort3
             // 
-            this.txtPort3.Location = new System.Drawing.Point(140, 470);
+            this.txtPort3.Location = new System.Drawing.Point(140, 355);
             this.txtPort3.Name = "txtPort3";
             this.txtPort3.Size = new System.Drawing.Size(75, 21);
             this.txtPort3.TabIndex = 156;
             // 
-            // txtPassword3
-            // 
-            this.txtPassword3.Location = new System.Drawing.Point(140, 581);
-            this.txtPassword3.Name = "txtPassword3";
-            this.txtPassword3.Size = new System.Drawing.Size(156, 21);
-            this.txtPassword3.TabIndex = 159;
-            // 
-            // txtUserName3
-            // 
-            this.txtUserName3.Location = new System.Drawing.Point(140, 544);
-            this.txtUserName3.Name = "txtUserName3";
-            this.txtUserName3.Size = new System.Drawing.Size(156, 21);
-            this.txtUserName3.TabIndex = 158;
-            // 
-            // txtApn3
-            // 
-            this.txtApn3.Location = new System.Drawing.Point(140, 507);
-            this.txtApn3.Name = "txtApn3";
-            this.txtApn3.Size = new System.Drawing.Size(156, 21);
-            this.txtApn3.TabIndex = 157;
-            // 
             // txtIP3
             // 
-            this.txtIP3.Location = new System.Drawing.Point(140, 433);
+            this.txtIP3.Location = new System.Drawing.Point(140, 318);
             this.txtIP3.Name = "txtIP3";
             this.txtIP3.Size = new System.Drawing.Size(156, 21);
             this.txtIP3.TabIndex = 155;
             // 
-            // label31
-            // 
-            this.label31.AutoSize = true;
-            this.label31.Location = new System.Drawing.Point(93, 584);
-            this.label31.Name = "label31";
-            this.label31.Size = new System.Drawing.Size(41, 12);
-            this.label31.TabIndex = 154;
-            this.label31.Text = "密码：";
-            // 
-            // label32
-            // 
-            this.label32.AutoSize = true;
-            this.label32.Location = new System.Drawing.Point(81, 547);
-            this.label32.Name = "label32";
-            this.label32.Size = new System.Drawing.Size(53, 12);
-            this.label32.TabIndex = 153;
-            this.label32.Text = "用户名：";
-            // 
-            // label33
-            // 
-            this.label33.AutoSize = true;
-            this.label33.Location = new System.Drawing.Point(75, 510);
-            this.label33.Name = "label33";
-            this.label33.Size = new System.Drawing.Size(59, 12);
-            this.label33.TabIndex = 152;
-            this.label33.Text = "APN名称：";
-            // 
             // label34
             // 
             this.label34.AutoSize = true;
-            this.label34.Location = new System.Drawing.Point(81, 473);
+            this.label34.Location = new System.Drawing.Point(81, 358);
             this.label34.Name = "label34";
             this.label34.Size = new System.Drawing.Size(53, 12);
             this.label34.TabIndex = 151;
@@ -603,7 +435,7 @@
             // label35
             // 
             this.label35.AutoSize = true;
-            this.label35.Location = new System.Drawing.Point(45, 436);
+            this.label35.Location = new System.Drawing.Point(45, 321);
             this.label35.Name = "label35";
             this.label35.Size = new System.Drawing.Size(95, 12);
             this.label35.TabIndex = 150;
@@ -613,39 +445,21 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(584, 693);
+            this.ClientSize = new System.Drawing.Size(584, 471);
             this.Controls.Add(this.label25);
-            this.Controls.Add(this.label26);
-            this.Controls.Add(this.label27);
-            this.Controls.Add(this.label28);
             this.Controls.Add(this.label29);
             this.Controls.Add(this.ckbIsDomain3);
             this.Controls.Add(this.label30);
             this.Controls.Add(this.txtPort3);
-            this.Controls.Add(this.txtPassword3);
-            this.Controls.Add(this.txtUserName3);
-            this.Controls.Add(this.txtApn3);
             this.Controls.Add(this.txtIP3);
-            this.Controls.Add(this.label31);
-            this.Controls.Add(this.label32);
-            this.Controls.Add(this.label33);
             this.Controls.Add(this.label34);
             this.Controls.Add(this.label35);
             this.Controls.Add(this.label14);
-            this.Controls.Add(this.label15);
-            this.Controls.Add(this.label16);
-            this.Controls.Add(this.label17);
             this.Controls.Add(this.label18);
             this.Controls.Add(this.ckbIsDomain2);
             this.Controls.Add(this.label19);
             this.Controls.Add(this.txtPort2);
-            this.Controls.Add(this.txtPassword2);
-            this.Controls.Add(this.txtUserName2);
-            this.Controls.Add(this.txtApn2);
             this.Controls.Add(this.txtIP2);
-            this.Controls.Add(this.label20);
-            this.Controls.Add(this.label21);
-            this.Controls.Add(this.label22);
             this.Controls.Add(this.label23);
             this.Controls.Add(this.label24);
             this.Controls.Add(this.label13);
@@ -714,37 +528,19 @@
         private System.Windows.Forms.Label lbCardType;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label14;
-        private System.Windows.Forms.Label label15;
-        private System.Windows.Forms.Label label16;
-        private System.Windows.Forms.Label label17;
         private System.Windows.Forms.Label label18;
         private System.Windows.Forms.CheckBox ckbIsDomain2;
         private System.Windows.Forms.Label label19;
         private System.Windows.Forms.TextBox txtPort2;
-        private System.Windows.Forms.TextBox txtPassword2;
-        private System.Windows.Forms.TextBox txtUserName2;
-        private System.Windows.Forms.TextBox txtApn2;
         private System.Windows.Forms.TextBox txtIP2;
-        private System.Windows.Forms.Label label20;
-        private System.Windows.Forms.Label label21;
-        private System.Windows.Forms.Label label22;
         private System.Windows.Forms.Label label23;
         private System.Windows.Forms.Label label24;
         private System.Windows.Forms.Label label25;
-        private System.Windows.Forms.Label label26;
-        private System.Windows.Forms.Label label27;
-        private System.Windows.Forms.Label label28;
         private System.Windows.Forms.Label label29;
         private System.Windows.Forms.CheckBox ckbIsDomain3;
         private System.Windows.Forms.Label label30;
         private System.Windows.Forms.TextBox txtPort3;
-        private System.Windows.Forms.TextBox txtPassword3;
-        private System.Windows.Forms.TextBox txtUserName3;
-        private System.Windows.Forms.TextBox txtApn3;
         private System.Windows.Forms.TextBox txtIP3;
-        private System.Windows.Forms.Label label31;
-        private System.Windows.Forms.Label label32;
-        private System.Windows.Forms.Label label33;
         private System.Windows.Forms.Label label34;
         private System.Windows.Forms.Label label35;
     }
