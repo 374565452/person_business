@@ -1057,19 +1057,19 @@ namespace CardOperationSystem
             }
 
             //start add by kqz 2017-5-9 10:36
-            /*IP2 = this.txtIP2.Text.Trim();
-            if (IP2.Length < 1 || IP2.Length > 16)
-            {
-                MessageBox.Show("IP地址或域名2最长16个英文字符，不能为空");
-                return false;
-            }
+            IP2 = this.txtIP2.Text.Trim();
+            //if (IP2.Length < 1 || IP2.Length > 16)
+            //{
+               // MessageBox.Show("IP地址或域名2最长16个英文字符，不能为空");
+               // return false;
+           // }
 
             Port2 = this.txtPort2.Text.Trim();
-            if (!Tools.CheckValue(Port2, "int", 0, 0, 1, 65535))
-            {
-                MessageBox.Show("端口号2范围为 1-65535");
-                return false;
-            }
+            //if (!Tools.CheckValue(Port2, "int", 0, 0, 1, 65535))
+            //{
+               // MessageBox.Show("端口号2范围为 1-65535");
+                //return false;
+            //}
 
             IsDomain2 = this.ckbIsDomain2.Checked ? "01" : "00";
 
@@ -1094,42 +1094,42 @@ namespace CardOperationSystem
               //  return false;
             //}
 
-            //IP3 = this.txtIP3.Text.Trim();
+            IP3 = this.txtIP3.Text.Trim();
             //if (IP3.Length < 1 || IP3.Length > 16)
             //{
                // MessageBox.Show("IP地址或域名3最长16个英文字符，不能为空");
            //    // return false;
             //}
 
-            //Port3 = this.txtPort3.Text.Trim();
+            Port3 = this.txtPort3.Text.Trim();
             //if (!Tools.CheckValue(Port3, "int", 0, 0, 1, 65535))
-            {
-                MessageBox.Show("端口号2范围为 1-65535");
-                return false;
-            }
+            //{
+              //  MessageBox.Show("端口号2范围为 1-65535");
+                //return false;
+           // }
 
             IsDomain3 = this.ckbIsDomain3.Checked ? "01" : "00";
 
-            APN3 = this.txtApn3.Text.Trim();
-            if (APN3.Length > 16)
-            {
-                MessageBox.Show("APN名称3最长16个英文字符");
-                return false;
-            }
+           // APN3 = this.txtApn3.Text.Trim();
+           // if (APN3.Length > 16)
+           // {
+              //  MessageBox.Show("APN名称3最长16个英文字符");
+               // return false;
+           // }
 
-            UserName3 = this.txtUserName3.Text.Trim();
-            if (UserName3.Length > 16)
-            {
-                MessageBox.Show("用户名3最长16个英文字符");
-                return false;
-            }
+            //UserName3 = this.txtUserName3.Text.Trim();
+            //if (UserName3.Length > 16)
+           // {
+             //   MessageBox.Show("用户名3最长16个英文字符");
+            //    return false;
+          //  }
 
-            Password3 = this.txtPassword3.Text.Trim();
-            if (Password3.Length > 16)
-            {
-                MessageBox.Show("密码3最长16个英文字符");
-                return false;
-            }*/
+          //  Password3 = this.txtPassword3.Text.Trim();
+           // if (Password3.Length > 16)
+           // {
+             //   MessageBox.Show("密码3最长16个英文字符");
+             //   return false;
+           // }*/
             //end add;
 
             return true;
