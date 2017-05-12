@@ -134,20 +134,37 @@ namespace WaterMonitorSystem
                     }
                     else
                     {
-                        int packetSize = 230;
+
+                        /**********start update by kqz 2017-3-8*****************/
+                        //int packetSize = 230; 
+                        int packetSize = 256;
+                        /**********end update by kqz 2017-3-8 20:27****************/
                         string path = System.Web.HttpContext.Current.Request.MapPath("~/UploadFiles/User/" + loginUser.LoginName + "/");
                         DirectoryInfo dir = new DirectoryInfo(path);
                         if (!dir.Exists)
                             dir.Create();
                         file.SaveAs(path + theFileName);
-                        
+
                         byte[] bsOld = new byte[file.ContentLength];
                         file.InputStream.Read(bsOld, 0, bsOld.Length);
                         file.InputStream.Seek(0, SeekOrigin.Begin);
-                        int count = file.ContentLength / packetSize + 1;
+                        //start update by kqz 2017-3-20
+                        int count = 0;
+                        //int count = file.ContentLength / packetSize + 1;
+                        if ((file.ContentLength % packetSize) == 0)
+                        {
+                            count = file.ContentLength / packetSize;
+                        }
+                        else
+                        {
+                            count = file.ContentLength / packetSize + 1;
+                        }
+                        //end update by kqz 2017-3-20
                         //byte[] bsNew = new byte[file.ContentLength];
+
                         for (int i = 0; i < count; i++)
                         {
+                            #region 发送数据
                             try
                             {
                                 byte[] bs;
@@ -157,18 +174,24 @@ namespace WaterMonitorSystem
                                 }
                                 else
                                 {
-                                    bs = new byte[file.ContentLength + 1 - packetSize * i];
+                                    bs = new byte[file.ContentLength - packetSize * i];
                                 }
 
                                 if (i == 0)
                                 {
+                                    bs = new byte[packetSize + 1];
                                     bs[0] = typeStr;
                                     Array.Copy(bsOld, 0, bs, 1, bs.Length - 1);
+                                    //update by kqz 2017-3-20
+                                    //Array.Copy(bsOld, 0, bs, 1, bs.Length - 1);
                                     //Array.Copy(bs, 1, bsNew, 0, bs.Length - 1);
                                 }
                                 else
                                 {
-                                    Array.Copy(bsOld, packetSize * i - 1, bs, 0, bs.Length);
+
+                                    Array.Copy(bsOld, packetSize * i, bs, 0, bs.Length);
+                                    //}
+                                    //Array.Copy(bsOld, packetSize * i - 1, bs, 0, bs.Length);
                                     //Array.Copy(bs, 0, bsNew, packetSize * i - 1, bs.Length);
                                 }
 
@@ -192,12 +215,13 @@ namespace WaterMonitorSystem
                                 op.UserId = loginUser.UserId;
                                 op.UserName = SysUserModule.GetUser(loginUser.UserId).UserName;
                                 op.State = "等待发送";
-                                
+
                                 myLogger.Info(op.OperationType + "：" + cmd.RawDataStr);
                                 byte[] cmd_send = cmd.RawDataChar;
                                 myLogger.Error((i + 1).ToString().PadLeft(count.ToString().Length, '0') + "：" + cmd.RawDataStr);
 
                                 ResMsg resMsg = SendCmd(cmd_send);
+                                #region 判断结果
                                 if (resMsg.Result)
                                 {
                                     if (resMsg.Message == BaseProtocol.DeviceOffline)
@@ -210,6 +234,13 @@ namespace WaterMonitorSystem
                                         BaseMessage message = new BaseMessage();
                                         message.RawDataChar = cmd_receive;
                                         string msg = message.ReadMsg();
+                                        //myLogger.Error("------------------the id is ========= +" +cmd_receive[19] +"  ff \r\n");
+                                        //if (cmd_receive[19] == 0x00)
+                                        //{
+                                        // op.State = "发送失败";
+                                        // infos = "no|" + "终端正忙，请稍候传输数据！";
+                                        //return "发送失败，终端正忙，请稍候传输数据！";
+                                        // }
                                         if (msg == "")
                                         {
                                             CmdResponseToDtuSendFile res = new CmdResponseToDtuSendFile(message);
@@ -238,9 +269,20 @@ namespace WaterMonitorSystem
                                             op.State = "发送失败";
                                             infos = "no|" + msg;
                                         }
+
+                                        if (cmd_receive[19] == 0x00)
+                                        {
+                                            op.State = "发送失败";
+                                            infos = "no|" + "终端正忙，请稍候传输数据！";
+                                            //return "发送失败，终端正忙，请稍候传输数据！";
+                                        }
                                     }
                                 }
-
+                                else
+                                {
+                                    return "发送失败";
+                                }
+                                #endregion
                                 if (infos.StartsWith("no|"))
                                 {
                                     op.State += "|" + infos.Split('|')[1];
@@ -252,13 +294,16 @@ namespace WaterMonitorSystem
                                     return infos;
                                 }
                             }
-                            catch
+                            catch (Exception e)
                             {
-                                myLogger.Error((i + 1).ToString().PadLeft(count.ToString().Length, '0') + "-" + count + "：出错，发送失败");
+
+                                myLogger.Error((i + 1).ToString().PadLeft(count.ToString().Length, '0') + "-" + count + "：出错，发送失败" + e.Message);
                                 return "no|" + (i + 1);
                             }
+                            #endregion
                         }
-                        
+
+
                         infos = "yes|" + theFileName.Split('_')[2];
                     }
                 }

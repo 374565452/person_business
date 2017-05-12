@@ -105,132 +105,139 @@ namespace CardOperationSystem
 
         private void button1_Click(object sender, EventArgs e)
         {
-            this.lbState.Text = "";
-
-            if (checkBox1.Checked)
+            try
             {
-                if (MessageBox.Show("确定减少水电量？",
-                    "减少确认", MessageBoxButtons.YesNo,
-                    MessageBoxIcon.Question, MessageBoxDefaultButton.Button2) != DialogResult.Yes)
+                this.lbState.Text = "";
+
+                if (checkBox1.Checked)
+                {
+                    if (MessageBox.Show("确定减少水电量？",
+                        "减少确认", MessageBoxButtons.YesNo,
+                        MessageBoxIcon.Question, MessageBoxDefaultButton.Button2) != DialogResult.Yes)
+                    {
+                        return;
+                    }
+                }
+                else
+                {
+                    if (MessageBox.Show("确定充值水电量？",
+                        "充值确认", MessageBoxButtons.YesNo,
+                        MessageBoxIcon.Question, MessageBoxDefaultButton.Button2) != DialogResult.Yes)
+                    {
+                        return;
+                    }
+                }
+
+                pfu.getNew();
+
+                getNew();
+
+                if (this.lbCardType.Text.Trim() != InfoSys.CardTypeUser)
+                {
+                    MessageBox.Show("非用户卡不可充值");
+                    return;
+                }
+
+                if (!CheckValue())
                 {
                     return;
                 }
-            }
-            else
-            {
-                if (MessageBox.Show("确定充值水电量？",
-                    "充值确认", MessageBoxButtons.YesNo,
-                    MessageBoxIcon.Question, MessageBoxDefaultButton.Button2) != DialogResult.Yes)
+
+                double d_UnitPriceWater = Tools.StringToDouble(UnitPriceWater, 0);
+                double d_UnitPriceElectric = Tools.StringToDouble(UnitPriceElectric, 0);
+                double d_NumberWater = Tools.StringToDouble(WaterNum, 0);
+                double d_NumberElectric = Tools.StringToDouble(ElectricNum, 0);
+                double d_WaterPrice = Tools.StringToDouble(WaterPrice, 0);
+                double d_ElectricPrice = Tools.StringToDouble(ElectricPrice, 0);
+
+                if (checkBox1.Checked)
                 {
-                    return;
+                    d_NumberWater = -d_NumberWater;
+                    d_NumberElectric = -d_NumberElectric;
+                    d_WaterPrice = -d_WaterPrice;
+                    d_ElectricPrice = -d_ElectricPrice;
                 }
-            }
 
-            pfu.getNew();
+                double d_ResidualWater = Tools.StringToDouble(this.txtResidualWater.Text, 0);
+                double d_ResidualElectric = Tools.StringToDouble(this.txtResidualElectric.Text, 0);
 
-            getNew();
-
-            if (this.lbCardType.Text.Trim() != InfoSys.CardTypeUser)
-            {
-                MessageBox.Show("非用户卡不可充值");
-                return;
-            }
-
-            if (!CheckValue())
-            {
-                return;
-            }
-
-            double d_UnitPriceWater = Tools.StringToDouble(UnitPriceWater, 0);
-            double d_UnitPriceElectric = Tools.StringToDouble(UnitPriceElectric, 0);
-            double d_NumberWater = Tools.StringToDouble(WaterNum, 0);
-            double d_NumberElectric = Tools.StringToDouble(ElectricNum, 0);
-            double d_WaterPrice = Tools.StringToDouble(WaterPrice, 0);
-            double d_ElectricPrice = Tools.StringToDouble(ElectricPrice, 0);     
-
-            if (checkBox1.Checked)
-            {
-                d_NumberWater = -d_NumberWater;
-                d_NumberElectric = -d_NumberElectric;
-                d_WaterPrice = -d_WaterPrice;
-                d_ElectricPrice = -d_ElectricPrice;
-            }
-
-            double d_ResidualWater = Tools.StringToDouble(this.txtResidualWater.Text, 0);
-            double d_ResidualElectric = Tools.StringToDouble(this.txtResidualElectric.Text, 0);
-
-            int i_ResidualWater_new = (int)((d_ResidualWater + d_NumberWater) * 10);
-            if (i_ResidualWater_new < 0) i_ResidualWater_new = 0;
-            if (i_ResidualWater_new > 99999999) i_ResidualWater_new = 99999999;
-            int i_ResidualElectric_new = (int)((d_ResidualElectric + d_NumberElectric) * 10);
-            if (i_ResidualElectric_new < 0) i_ResidualElectric_new = 0;
-            if (i_ResidualElectric_new > 99999999) i_ResidualElectric_new = 99999999;
+                int i_ResidualWater_new = (int)((d_ResidualWater + d_NumberWater) * 10);
+                if (i_ResidualWater_new < 0) i_ResidualWater_new = 0;
+                if (i_ResidualWater_new > 99999999) i_ResidualWater_new = 99999999;
+                int i_ResidualElectric_new = (int)((d_ResidualElectric + d_NumberElectric) * 10);
+                if (i_ResidualElectric_new < 0) i_ResidualElectric_new = 0;
+                if (i_ResidualElectric_new > 99999999) i_ResidualElectric_new = 99999999;
 
 
-            //MessageBox.Show("可以充值");
-            //保存远程服务器数据库
-            string str = DataTransfer.RechargeCardUser(this.lbSerialNumber.Text.Trim(), this.txtUserNo.Text.Trim(),
-                this.txtUserName.Text.Trim(),this.txtIdentityNumber.Text.Trim(),this.txtTelephone.Text.Trim(),
-                d_WaterPrice.ToString(), d_NumberWater.ToString(), d_ElectricPrice.ToString(), d_NumberElectric.ToString(),
-                this.txtWaterUsed.Text, this.txtElectricUsed.Text, this.txtRemark.Text.Trim());
-            JavaScriptObject result = (JavaScriptObject)JavaScriptConvert.DeserializeObject(str);
-            if (!bool.Parse(result["Result"].ToString()))
-            {
-                string txt = result["Message"].ToString();
-                MessageBox.Show(txt);
-                pf.Log(txt);
-                this.lbState.Text = txt;
-                pf.Log(pf.getDateStr() + this.lbState.Text);
-                return;
-            }
-
-            int mode = 4; //以B密码认证
-            int sec = 1; //扇区
-            int block = 0;
-            string key = pf.getKeyB(); //读卡密码
-            string result_WriteIC = "";
-            string result_AuthIC = "";
-
-            //设置扇区2内容
-            sec = 2;
-            //认证卡密码B
-            result_AuthIC = CardCommon.AuthIC(icdev, mode, sec, key);
-            pf.AuthLog(InfoSys.CardTypeStrUser, InfoSys.MethodModifyCard, sec, result_AuthIC);
-            if (result_AuthIC == InfoSys.StrAuthSuccess)
-            {
-
-                //写数据块0，剩余可用水量（4字节）剩余可用电量（4字节）累计用水量（4字节）累计用电量（4字节）
-                block = 0;
-                double d3 = Tools.StringToDouble(this.txtTotalWater.Text, 0);
-                double d4 = Tools.StringToDouble(this.txtTotalElectric.Text, 0);
-                result_WriteIC = CardCommon.WriteIC(icdev, sec, block,
-                    i_ResidualWater_new.ToString().PadLeft(8, '0') +
-                    i_ResidualElectric_new.ToString().PadLeft(8, '0') +
-                    d3.ToString().PadLeft(8, '0') +
-                    d4.ToString().PadLeft(8, '0'));
-                if (result_WriteIC != "")
+                //MessageBox.Show("可以充值");
+                //保存远程服务器数据库
+                string str = DataTransfer.RechargeCardUser(this.lbSerialNumber.Text.Trim(), this.txtUserNo.Text.Trim(),
+                    this.txtUserName.Text.Trim(), this.txtIdentityNumber.Text.Trim(), this.txtTelephone.Text.Trim(),
+                    d_WaterPrice.ToString(), d_NumberWater.ToString(), d_ElectricPrice.ToString(), d_NumberElectric.ToString(),
+                    this.txtWaterUsed.Text, this.txtElectricUsed.Text, this.txtRemark.Text.Trim());
+                JavaScriptObject result = (JavaScriptObject)JavaScriptConvert.DeserializeObject(str);
+                if (!bool.Parse(result["Result"].ToString()))
                 {
-                    this.lbState.Text = "写卡出错，充值失败！";
+                    string txt = result["Message"].ToString();
+                    MessageBox.Show(txt);
+                    pf.Log(txt);
+                    this.lbState.Text = txt;
                     pf.Log(pf.getDateStr() + this.lbState.Text);
                     return;
                 }
 
-            }
-            else
-            {
-                this.lbState.Text = "认证出错，充值失败！";
-                pf.Log(pf.getDateStr() + this.lbState.Text);
+                int mode = 4; //以B密码认证
+                int sec = 1; //扇区
+                int block = 0;
+                string key = pf.getKeyB(); //读卡密码
+                string result_WriteIC = "";
+                string result_AuthIC = "";
+
+                //设置扇区2内容
+                sec = 2;
+                //认证卡密码B
+                result_AuthIC = CardCommon.AuthIC(icdev, mode, sec, key);
+                pf.AuthLog(InfoSys.CardTypeStrUser, InfoSys.MethodModifyCard, sec, result_AuthIC);
+                if (result_AuthIC == InfoSys.StrAuthSuccess)
+                {
+
+                    //写数据块0，剩余可用水量（4字节）剩余可用电量（4字节）累计用水量（4字节）累计用电量（4字节）
+                    block = 0;
+                    double d3 = Tools.StringToDouble(this.txtTotalWater.Text, 0);
+                    double d4 = Tools.StringToDouble(this.txtTotalElectric.Text, 0);
+                    result_WriteIC = CardCommon.WriteIC(icdev, sec, block,
+                        i_ResidualWater_new.ToString().PadLeft(8, '0') +
+                        i_ResidualElectric_new.ToString().PadLeft(8, '0') +
+                        d3.ToString().PadLeft(8, '0') +
+                        d4.ToString().PadLeft(8, '0'));
+                    if (result_WriteIC != "")
+                    {
+                        this.lbState.Text = "写卡出错，充值失败！";
+                        pf.Log(pf.getDateStr() + this.lbState.Text);
+                        return;
+                    }
+
+                }
+                else
+                {
+                    this.lbState.Text = "认证出错，充值失败！";
+                    pf.Log(pf.getDateStr() + this.lbState.Text);
+                    return;
+                }
+
+                this.lbState.Text = "充值成功！";
+                getInfo();
+                this.txtNumberWater.Text = "0";
+                this.txtTotalPriceWater.Text = "0";
+                this.txtNumberElectric.Text = "0";
+                this.txtTotalPriceElectric.Text = "0";
+                pf.Log(pf.getDateStr() + this.lbState.Text + "充值后剩余水量：" + i_ResidualWater_new + "，充值后剩余电量：" + i_ResidualElectric_new);
                 return;
             }
-
-            this.lbState.Text = "充值成功！";
-            getInfo();
-            this.txtNumberWater.Text = "0";
-            this.txtTotalPriceWater.Text = "0";
-            this.txtNumberElectric.Text = "0"; 
-            this.txtTotalPriceElectric.Text = "0";
-            pf.Log(pf.getDateStr() + this.lbState.Text + "充值后剩余水量：" + i_ResidualWater_new + "，充值后剩余电量：" + i_ResidualElectric_new);
-            return;
+            catch (Exception ex)
+            {
+                this.lbState.Text =  ex.Message;
+            }
         }
 
         private void button2_Click(object sender, EventArgs e)
