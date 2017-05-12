@@ -566,7 +566,87 @@ function LinkAlarmData(diviceID) {
     //window.parent.showM(window.parent.menuCObj["报警查询"]);
     window.parent.showM("报警查询", "?devid=" + diviceID);
 }
+//start add by kqz 2017-5-12 17:48
+//ReadParam与SetParam用来支持多个文本框的输入
+function ReadMultiParam(paramName, paramTextId1,paramTextId2) {
+    $.ShowMask("正在读参，请稍等……");
+    $.ajax(
+    {
+        url: "../WebServices/DeviceMonitorService.asmx/GetParam",
+        type: "GET",
+        data: { "loginIdentifer": window.parent.guid, "devID": realDevId, "paramName": paramName },
+        dataType: "text",
+        cache: false,
+        success: function (responseText) {
+            var data = eval("(" + $.xml2json(responseText) + ")");
+            var paramtableData = [];
+            if (data.Result) {
+                /*
+                for (var i = 0; i < data.Params.length; i++) {
+                    if(data.Params[i].Name == paramName)
+                    {
+                        $("#" + paramTextId).val(data.Params[i].Value);
+                        break;
+                    }
+                }
+                */
+                $("#" + paramTextId).val(data.Params);
+                $.HideMask();
+                $.messager.alert("提示信息", "读取成功");
+            } else {
+                $.HideMask();
+                $.messager.alert("提示信息", data.Message);
+            }
+        },
+        error: function (XMLHttpRequest, textStatus, errorThrown) {
+            $.HideMask();
+            $.messager.alert("提示信息", errorThrown + "<br/>" + XMLHttpRequest.responseText);
+        }
+    });
+}
 
+function SetMultiParam(paramName, paramTextId1,paramTextId2) {
+    var paramTextObj = $("#" + paramTextId1);
+    var _strValue = paramTextObj.val();
+    if (_strValue == "" || _strValue == null) {
+        $.messager.alert("提示信息", "请输入参数值！");
+        paramTextObj.focus();
+        return;
+    }
+
+    var paramTextObj = $("#" + paramTextId2);
+    var _strValue2 = paramTextObj.val();
+    if (_strValue2 == "" || _strValue2 == null) {
+        $.messager.alert("提示信息", "请输入参数值！");
+        paramTextObj.focus();
+        return;
+    }
+
+    $.ShowMask("正在设参，请稍等……");
+    $.ajax(
+    {
+        url: "../WebServices/DeviceMonitorService.asmx/SetParam",
+        type: "GET",
+        data: { "loginIdentifer": window.parent.guid, "devID": realDevId, "paramName": paramName, "paramValue": _strValue+"|"+_strValue2 },
+        dataType: "text",
+        cache: false,
+        success: function (responseText) {
+            var data = eval("(" + $.xml2json(responseText) + ")");
+            if (data.Result) {
+                $.HideMask();
+                $.messager.alert("提示信息", "设置成功！");
+            } else {
+                $.HideMask();
+                $.messager.alert("提示信息", data.Message);
+            }
+        },
+        error: function (XMLHttpRequest, textStatus, errorThrown) {
+            $.HideMask();
+            $.messager.alert("提示信息", errorThrown + "<br/>" + XMLHttpRequest.responseText);
+        }
+    });
+}
+//end add
 function ReadParam(paramName,paramTextId) {
     $.ShowMask("正在读参，请稍等……");
     $.ajax(

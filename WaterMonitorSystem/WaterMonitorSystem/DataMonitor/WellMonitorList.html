@@ -929,6 +929,28 @@
                         <span>单位：吨，范围：1～9999999.9</span>
                     </td>
                 </tr>
+                <!--start add by kqz 2017-5-12 17:33-->
+                <tr height="30px">
+                    <td align="right" width="150px">
+                        <span>累计用水量：</span>
+                        <input id="_totalWater" class="textbox" style="height: 21px; width: 65px" onkeypress="javascript:return OnlyNumDot();" />
+                    </td>
+                    <td >
+                        <span>累计用电量：</span>
+                        <input id="_totalPower" class="textbox" style="height: 21px; width: 65px" onkeypress="javascript:return OnlyNumDot();" />
+                    </td>
+                    <td>
+                        <a class="easyui-linkbutton" href="javascript:void(0)" onclick="ReadParam('累计用水电量','_totalWater','_totalPower')" style="margin-left: 3px">读取</a>
+                        <a class="easyui-linkbutton" href="javascript:void(0)" onclick="SetMultiParam('累计用水电量','_totalWater','_totalPower')">设置</a>
+                    </td>
+                </tr>
+                 <tr height="25px">
+                    <td align="right" width="100px"></td>
+                    <td colspan="2">
+                        <span>取值范围：0～9999999.9</span>
+                    </td>
+                </tr>
+                <!--end add -->
                 <!--<tr height="25px">
                     <td align="right" width="100px">
                         
