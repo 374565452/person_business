@@ -50,6 +50,10 @@ namespace CardOperationSystem
             //this.txtUserName3.Text = "";
            // this.txtPassword3.Text = "";
             //end add
+
+            this.txtIP4.Text = "";
+            this.txtPort4.Text = "";
+            this.ckbIsDomain4.Checked = false;
         }
 
         string SerialNumber_old = "";
@@ -94,7 +98,8 @@ namespace CardOperationSystem
             //int len_UserName3 = 0;
             //int len_Password3 = 0;
             //end add
-
+            int len_IP4 = 0;
+            int len_Port4 = 0;
             //读取扇区1内容
             sec = 1;
             //认证卡密码B
@@ -394,6 +399,84 @@ namespace CardOperationSystem
                 }
             }
 
+
+            //读取扇区2内容
+            sec = 5;
+
+            result_AuthIC = CardCommon.AuthIC(icdev, mode, sec, key);
+            pf.AuthLog(InfoSys.CardTypeStrNetSet, InfoSys.MethodReadCard, sec, result_AuthIC);
+            if (result_AuthIC == InfoSys.StrAuthSuccess)
+            {
+                //读数据块0，数据块0为卡类型（1字节）、是否域名访问（1字节）、有效IP地址长度（1字节）、有效端口号长度（1字节）
+                //APN名称长度（1字节）、APN用户名长度（1字节）、APN密码长度（1字节）                
+                block = 0;
+                result_ReadIC = CardCommon.ReadIC(icdev, sec, block);
+                if (result_ReadIC.Length == 32)
+                {
+                    this.lbCardType.Text = result_ReadIC.Substring(0, 2);
+                    if (this.lbCardType.Text != InfoSys.CardTypeNetSet)
+                    {
+                        this.lbState.Text = "非" + InfoSys.CardTypeStrNetSet + "，" + InfoSys.StrCannotRead;
+                        pf.Log(this.lbState.Text);
+                        pf.EndLog(InfoSys.CardTypeStrNetSet, InfoSys.MethodReadCard);
+                        return;
+                    }
+
+                    IsDomain_old = result_ReadIC.Substring(2, 2);
+                    this.ckbIsDomain3.Checked = IsDomain_old == "01";
+
+                    len_IP4 = int.Parse(result_ReadIC.Substring(4, 2), System.Globalization.NumberStyles.HexNumber);
+                    len_Port4 = int.Parse(result_ReadIC.Substring(6, 2), System.Globalization.NumberStyles.HexNumber);
+                    //len_APN3 = int.Parse(result_ReadIC.Substring(8, 2), System.Globalization.NumberStyles.HexNumber);
+                    //len_UserName3 = int.Parse(result_ReadIC.Substring(10, 2), System.Globalization.NumberStyles.HexNumber);
+                    //len_Password3 = int.Parse(result_ReadIC.Substring(12, 2), System.Globalization.NumberStyles.HexNumber);
+                }
+                else
+                {
+                    this.lbState.Text = InfoSys.InfoReadFailure(sec, block, InfoSys.CardTypeStrNetSet, InfoSys.StrReadFailure);
+                    pf.Log(this.lbState.Text);
+                    pf.EndLog(InfoSys.CardTypeStrNetSet, InfoSys.MethodReadCard);
+                    return;
+                }
+
+                //读数据块1，IP地址或域名地址
+                block = 1;
+                result_ReadIC = CardCommon.ReadIC(icdev, sec, block);
+                if (result_ReadIC.Length == 32)
+                {
+                    if (len_IP4 > 0)
+                    {
+                        string v = result_ReadIC.Substring(0, len_IP4 * 2);
+                        this.txtIP4.Text = HexStringUtility.ByteArrayToStr(HexStringUtility.HexStringToByteArray(v));
+                    }
+                }
+                else
+                {
+                    this.lbState.Text = InfoSys.InfoReadFailure(sec, block, InfoSys.CardTypeStrNetSet, InfoSys.StrReadFailure);
+                    pf.Log(this.lbState.Text);
+                    pf.EndLog(InfoSys.CardTypeStrNetSet, InfoSys.MethodReadCard);
+                    return;
+                }
+
+                //读数据块2，端口号（5字节）
+                block = 2;
+                result_ReadIC = CardCommon.ReadIC(icdev, sec, block);
+                if (result_ReadIC.Length == 32)
+                {
+                    if (len_Port4 > 0)
+                    {
+                        string v = result_ReadIC.Substring(0, len_Port4 * 2);
+                        this.txtPort4.Text = HexStringUtility.ByteArrayToStr(HexStringUtility.HexStringToByteArray(v));
+                    }
+                }
+                else
+                {
+                    this.lbState.Text = InfoSys.InfoReadFailure(sec, block, InfoSys.CardTypeStrNetSet, InfoSys.StrReadFailure);
+                    pf.Log(this.lbState.Text);
+                    pf.EndLog(InfoSys.CardTypeStrNetSet, InfoSys.MethodReadCard);
+                    return;
+                }
+            }
             
             //end add
 
@@ -483,12 +566,17 @@ namespace CardOperationSystem
 
             string hex_IP3 = HexStringUtility.StrToHexString(IP3);
             string hex_Port3 = HexStringUtility.StrToHexString(Port3);
+            string hex_IP4 = HexStringUtility.StrToHexString(IP4);
+            string hex_Port4 = HexStringUtility.StrToHexString(Port4);
             //string hex_APN3 = HexStringUtility.StrToHexString(APN3);
             //string hex_UserName3 = HexStringUtility.StrToHexString(UserName3);
             //string hex_Password3 = HexStringUtility.StrToHexString(Password3);
 
             string len_IP3 = (hex_IP3.Length / 2).ToString("X").PadLeft(2, '0');
             string len_Port3 = (hex_Port3.Length / 2).ToString("X").PadLeft(2, '0');
+
+            string len_IP4 = (hex_IP4.Length / 2).ToString("X").PadLeft(2, '0');
+            string len_Port4 = (hex_Port4.Length / 2).ToString("X").PadLeft(2, '0');
             //string len_APN3 = (hex_APN3.Length / 2).ToString("X").PadLeft(2, '0');
             //string len_UserName3 = (hex_UserName3.Length / 2).ToString("X").PadLeft(2, '0');
            // string len_Password3 = (hex_Password3.Length / 2).ToString("X").PadLeft(2, '0');
@@ -686,6 +774,56 @@ namespace CardOperationSystem
                 return;
             }
 
+
+            sec = 5;
+            //认证卡密码B
+            result_AuthIC = CardCommon.AuthIC(icdev, mode, sec, key);
+            pf.AuthLog(InfoSys.CardTypeStrNetSet, InfoSys.MethodOpenCard, sec, result_AuthIC);
+            if (result_AuthIC == InfoSys.StrAuthSuccess)
+            {
+                //写数据块0，数据块0为卡类型（1字节）、是否域名访问（1字节）、有效IP地址长度（1字节）、有效端口号长度（1字节）
+                //APN名称长度（1字节）、APN用户名长度（1字节）、APN密码长度（1字节）
+                block = 0;
+                result_WriteIC = CardCommon.WriteIC(icdev, sec, block, (InfoSys.CardTypeNetSet + IsDomain4 +
+                    len_IP4 + len_Port4).PadRight(32, '0'));
+                if (result_WriteIC != "")
+                {
+                    this.lbState.Text = InfoSys.InfoWriteFailure(sec, block, InfoSys.CardTypeStrNetSet, InfoSys.StrOpenFailure);
+                    pf.Log(this.lbState.Text);
+                    pf.EndLog(InfoSys.CardTypeStrNetSet, InfoSys.MethodOpenCard);
+                    return;
+                }
+
+                //写数据块1，IP地址或域名地址
+                block = 1;
+                result_WriteIC = CardCommon.WriteIC(icdev, sec, block, hex_IP4.PadRight(32, '0'));
+                if (result_WriteIC != "")
+                {
+                    this.lbState.Text = InfoSys.InfoWriteFailure(sec, block, InfoSys.CardTypeStrNetSet, InfoSys.StrOpenFailure);
+                    pf.Log(this.lbState.Text);
+                    pf.EndLog(InfoSys.CardTypeStrNetSet, InfoSys.MethodOpenCard);
+                    return;
+                }
+
+                //写数据块2，端口号（5字节）
+                block = 2;
+                result_WriteIC = CardCommon.WriteIC(icdev, sec, block, hex_Port4.PadRight(32, '0'));
+                if (result_WriteIC != "")
+                {
+                    this.lbState.Text = InfoSys.InfoWriteFailure(sec, block, InfoSys.CardTypeStrNetSet, InfoSys.StrOpenFailure);
+                    pf.Log(this.lbState.Text);
+                    pf.EndLog(InfoSys.CardTypeStrNetSet, InfoSys.MethodOpenCard);
+                    return;
+                }
+            }
+            else
+            {
+                this.lbState.Text = InfoSys.StrCannotOpen + InfoSys.StrOpenFailure;
+                pf.Log(this.lbState.Text);
+                pf.EndLog(InfoSys.CardTypeStrNetSet, InfoSys.MethodOpenCard);
+                return;
+            }
+
             //end add 
 
             for (int i = 0; i < pf.getSize(); i++)
@@ -791,12 +929,17 @@ namespace CardOperationSystem
 
             string hex_IP3 = HexStringUtility.StrToHexString(IP3);
             string hex_Port3 = HexStringUtility.StrToHexString(Port3);
+            string hex_IP4 = HexStringUtility.StrToHexString(IP4);
+            string hex_Port4 = HexStringUtility.StrToHexString(Port4);
            // string hex_APN3 = HexStringUtility.StrToHexString(APN3);
             //string hex_UserName3 = HexStringUtility.StrToHexString(UserName3);
             //string hex_Password3 = HexStringUtility.StrToHexString(Password3);
 
             string len_IP3 = (hex_IP3.Length / 2).ToString("X").PadLeft(2, '0');
             string len_Port3 = (hex_Port3.Length / 2).ToString("X").PadLeft(2, '0');
+
+            string len_IP4 = (hex_IP4.Length / 2).ToString("X").PadLeft(2, '0');
+            string len_Port4 = (hex_Port4.Length / 2).ToString("X").PadLeft(2, '0');
             //string len_APN3 = (hex_APN3.Length / 2).ToString("X").PadLeft(2, '0');
             //string len_UserName3 = (hex_UserName3.Length / 2).ToString("X").PadLeft(2, '0');
             //string len_Password3 = (hex_Password3.Length / 2).ToString("X").PadLeft(2, '0');
@@ -987,6 +1130,55 @@ namespace CardOperationSystem
                 return;
             }
 
+
+            sec = 5;
+            result_AuthIC = CardCommon.AuthIC(icdev, mode, sec, key);
+            pf.AuthLog(InfoSys.CardTypeStrNetSet, InfoSys.MethodOpenCard, sec, result_AuthIC);
+            if (result_AuthIC == InfoSys.StrAuthSuccess)
+            {
+                //写数据块0，数据块0为卡类型（1字节）、是否域名访问（1字节）、有效IP地址长度（1字节）、有效端口号长度（1字节）
+                //APN名称长度（1字节）、APN用户名长度（1字节）、APN密码长度（1字节）
+                block = 0;
+                result_WriteIC = CardCommon.WriteIC(icdev, sec, block, (InfoSys.CardTypeNetSet + IsDomain4 +
+                    len_IP4 + len_Port4).PadRight(32, '0'));
+                if (result_WriteIC != "")
+                {
+                    this.lbState.Text = InfoSys.InfoWriteFailure(sec, block, InfoSys.CardTypeStrNetSet, InfoSys.StrOpenFailure);
+                    pf.Log(this.lbState.Text);
+                    pf.EndLog(InfoSys.CardTypeStrNetSet, InfoSys.MethodOpenCard);
+                    return;
+                }
+
+                //写数据块1，IP地址或域名地址
+                block = 1;
+                result_WriteIC = CardCommon.WriteIC(icdev, sec, block, hex_IP4.PadRight(32, '0'));
+                if (result_WriteIC != "")
+                {
+                    this.lbState.Text = InfoSys.InfoWriteFailure(sec, block, InfoSys.CardTypeStrNetSet, InfoSys.StrOpenFailure);
+                    pf.Log(this.lbState.Text);
+                    pf.EndLog(InfoSys.CardTypeStrNetSet, InfoSys.MethodOpenCard);
+                    return;
+                }
+
+                //写数据块2，端口号（5字节）
+                block = 2;
+                result_WriteIC = CardCommon.WriteIC(icdev, sec, block, hex_Port4.PadRight(32, '0'));
+                if (result_WriteIC != "")
+                {
+                    this.lbState.Text = InfoSys.InfoWriteFailure(sec, block, InfoSys.CardTypeStrNetSet, InfoSys.StrOpenFailure);
+                    pf.Log(this.lbState.Text);
+                    pf.EndLog(InfoSys.CardTypeStrNetSet, InfoSys.MethodOpenCard);
+                    return;
+                }
+            }
+            else
+            {
+                this.lbState.Text = InfoSys.StrCannotOpen + InfoSys.StrOpenFailure;
+                pf.Log(this.lbState.Text);
+                pf.EndLog(InfoSys.CardTypeStrNetSet, InfoSys.MethodOpenCard);
+                return;
+            }
+
             //end add 
 
             SerialNumber_old = "";
@@ -1016,6 +1208,10 @@ namespace CardOperationSystem
         string APN3 = "";
         string UserName3 = "";
         string Password3 = "";
+
+        string IP4 = "";
+        string Port4 = "";
+        string IsDomain4 = "";
         //end add
         private bool CheckValue()
         {
@@ -1109,6 +1305,15 @@ namespace CardOperationSystem
            // }
 
             IsDomain3 = this.ckbIsDomain3.Checked ? "01" : "00";
+
+
+
+            IP4 = this.txtIP4.Text.Trim();
+          
+            Port4 = this.txtPort4.Text.Trim();
+            
+
+            IsDomain4 = this.ckbIsDomain4.Checked ? "01" : "00";
 
            // APN3 = this.txtApn3.Text.Trim();
            // if (APN3.Length > 16)

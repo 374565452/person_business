@@ -70,6 +70,14 @@
             this.txtIP3 = new System.Windows.Forms.TextBox();
             this.label34 = new System.Windows.Forms.Label();
             this.label35 = new System.Windows.Forms.Label();
+            this.label15 = new System.Windows.Forms.Label();
+            this.label16 = new System.Windows.Forms.Label();
+            this.ckbIsDomain4 = new System.Windows.Forms.CheckBox();
+            this.label17 = new System.Windows.Forms.Label();
+            this.txtPort4 = new System.Windows.Forms.TextBox();
+            this.txtIP4 = new System.Windows.Forms.TextBox();
+            this.label20 = new System.Windows.Forms.Label();
+            this.label21 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // label13
@@ -119,7 +127,7 @@
             // 
             // btnCancel
             // 
-            this.btnCancel.Location = new System.Drawing.Point(343, 402);
+            this.btnCancel.Location = new System.Drawing.Point(343, 465);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(75, 23);
             this.btnCancel.TabIndex = 127;
@@ -129,7 +137,7 @@
             // 
             // button3
             // 
-            this.button3.Location = new System.Drawing.Point(181, 402);
+            this.button3.Location = new System.Drawing.Point(181, 465);
             this.button3.Name = "button3";
             this.button3.Size = new System.Drawing.Size(75, 23);
             this.button3.TabIndex = 126;
@@ -139,7 +147,7 @@
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(262, 402);
+            this.button2.Location = new System.Drawing.Point(262, 465);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(75, 23);
             this.button2.TabIndex = 125;
@@ -149,7 +157,7 @@
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(100, 402);
+            this.button1.Location = new System.Drawing.Point(100, 465);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(75, 23);
             this.button1.TabIndex = 124;
@@ -259,7 +267,7 @@
             // lbState
             // 
             this.lbState.AutoSize = true;
-            this.lbState.Location = new System.Drawing.Point(105, 441);
+            this.lbState.Location = new System.Drawing.Point(105, 504);
             this.lbState.Name = "lbState";
             this.lbState.Size = new System.Drawing.Size(29, 12);
             this.lbState.TabIndex = 111;
@@ -428,9 +436,9 @@
             this.label34.AutoSize = true;
             this.label34.Location = new System.Drawing.Point(81, 358);
             this.label34.Name = "label34";
-            this.label34.Size = new System.Drawing.Size(53, 12);
+            this.label34.Size = new System.Drawing.Size(59, 12);
             this.label34.TabIndex = 151;
-            this.label34.Text = "端口号：";
+            this.label34.Text = "端口号3：";
             // 
             // label35
             // 
@@ -441,11 +449,88 @@
             this.label35.TabIndex = 150;
             this.label35.Text = "IP地址或域名3：";
             // 
+            // label15
+            // 
+            this.label15.AutoSize = true;
+            this.label15.Location = new System.Drawing.Point(221, 431);
+            this.label15.Name = "label15";
+            this.label15.Size = new System.Drawing.Size(47, 12);
+            this.label15.TabIndex = 174;
+            this.label15.Text = "1-65536";
+            // 
+            // label16
+            // 
+            this.label16.AutoSize = true;
+            this.label16.Location = new System.Drawing.Point(303, 394);
+            this.label16.Name = "label16";
+            this.label16.Size = new System.Drawing.Size(161, 12);
+            this.label16.TabIndex = 173;
+            this.label16.Text = "最长16个英文字符，不能为空";
+            // 
+            // ckbIsDomain4
+            // 
+            this.ckbIsDomain4.AutoSize = true;
+            this.ckbIsDomain4.Location = new System.Drawing.Point(400, 430);
+            this.ckbIsDomain4.Name = "ckbIsDomain4";
+            this.ckbIsDomain4.Size = new System.Drawing.Size(36, 16);
+            this.ckbIsDomain4.TabIndex = 172;
+            this.ckbIsDomain4.Text = "是";
+            this.ckbIsDomain4.UseVisualStyleBackColor = true;
+            // 
+            // label17
+            // 
+            this.label17.AutoSize = true;
+            this.label17.Location = new System.Drawing.Point(303, 431);
+            this.label17.Name = "label17";
+            this.label17.Size = new System.Drawing.Size(89, 12);
+            this.label17.TabIndex = 171;
+            this.label17.Text = "是否域名访问：";
+            // 
+            // txtPort4
+            // 
+            this.txtPort4.Location = new System.Drawing.Point(140, 428);
+            this.txtPort4.Name = "txtPort4";
+            this.txtPort4.Size = new System.Drawing.Size(75, 21);
+            this.txtPort4.TabIndex = 170;
+            // 
+            // txtIP4
+            // 
+            this.txtIP4.Location = new System.Drawing.Point(140, 391);
+            this.txtIP4.Name = "txtIP4";
+            this.txtIP4.Size = new System.Drawing.Size(156, 21);
+            this.txtIP4.TabIndex = 169;
+            // 
+            // label20
+            // 
+            this.label20.AutoSize = true;
+            this.label20.Location = new System.Drawing.Point(81, 431);
+            this.label20.Name = "label20";
+            this.label20.Size = new System.Drawing.Size(59, 12);
+            this.label20.TabIndex = 168;
+            this.label20.Text = "端口号4：";
+            // 
+            // label21
+            // 
+            this.label21.AutoSize = true;
+            this.label21.Location = new System.Drawing.Point(45, 394);
+            this.label21.Name = "label21";
+            this.label21.Size = new System.Drawing.Size(95, 12);
+            this.label21.TabIndex = 167;
+            this.label21.Text = "IP地址或域名4：";
+            // 
             // frmCardNetSet
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(584, 471);
+            this.ClientSize = new System.Drawing.Size(584, 526);
+            this.Controls.Add(this.label15);
+            this.Controls.Add(this.label16);
+            this.Controls.Add(this.ckbIsDomain4);
+            this.Controls.Add(this.label17);
+            this.Controls.Add(this.txtPort4);
+            this.Controls.Add(this.txtIP4);
+            this.Controls.Add(this.label20);
+            this.Controls.Add(this.label21);
             this.Controls.Add(this.label25);
             this.Controls.Add(this.label29);
             this.Controls.Add(this.ckbIsDomain3);
@@ -543,5 +628,13 @@
         private System.Windows.Forms.TextBox txtIP3;
         private System.Windows.Forms.Label label34;
         private System.Windows.Forms.Label label35;
+        private System.Windows.Forms.Label label15;
+        private System.Windows.Forms.Label label16;
+        private System.Windows.Forms.CheckBox ckbIsDomain4;
+        private System.Windows.Forms.Label label17;
+        private System.Windows.Forms.TextBox txtPort4;
+        private System.Windows.Forms.TextBox txtIP4;
+        private System.Windows.Forms.Label label20;
+        private System.Windows.Forms.Label label21;
     }
 }
